@@ -15,6 +15,7 @@ import javax.swing.SwingConstants;
  *
  * @author cs1
  */
+///CHECKING IF COMMITS WORK
 public class SnakeGame {
 
     public static void main(String[] args) {
