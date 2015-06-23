@@ -94,7 +94,7 @@ public class Snake {
                     sp.writeSquare(pos.x, pos.y, 3);
                 }
             }
-
+            //WHERE I GROW STUFF
             if (sp.readSquare(x, y) == 3) {
                 sp.drawMouse();
                 growAmount = growAmount + 10;
@@ -115,7 +115,7 @@ public class Snake {
         for (int i = 0; i < body.size(); i++) {
             SquareCoords pos = body.get(i);
             sp.writeSquare(pos.x, pos.y, color);
-             switch (dir) {
+            switch (dir) {
             case Up:
                 System.out.println("UP");
                 if(size>10){

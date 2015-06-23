@@ -44,7 +44,7 @@ class sender implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        String text = usertext.getText();
+        //String text = usertext.getText();
     }
 
     @Override
