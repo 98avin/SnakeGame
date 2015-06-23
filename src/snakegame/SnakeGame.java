@@ -6,7 +6,9 @@
 package snakegame;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -21,9 +23,14 @@ public class SnakeGame {
     public static void main(String[] args) {
 
         JFrame mainWindow = new JFrame();
+        mainWindow.setExtendedState(mainWindow.getExtendedState() | JFrame.MAXIMIZED_BOTH);
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        SnakePanel snakeGame = new SnakePanel(81, 159);
-        String[] names ={"Bernie","Bernita","Snaaakeee","Solid","???","Avin","Erik","Richard","Owen","AHHHHHHH"};
+        int size=10;
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = (int)screenSize.getWidth();
+        int height = (int)screenSize.getHeight();
+        SnakePanel snakeGame = new SnakePanel(height/size,width/size,size);
+        String[] names ={"Bernie","Bernita","Snaaakeee","Solid","???","Avin","Erik","Richard","Owen","AHHHHHHH","Liquid","Gaseous","Plasma","Blank"};
         String snakeOneName=names[(int)((Math.random()*1000)%names.length)];
         String snakeTwoName=names[(int)((Math.random()*1000)%names.length)];
         if(snakeTwoName.equals(snakeOneName)){

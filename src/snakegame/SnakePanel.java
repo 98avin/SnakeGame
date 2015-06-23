@@ -18,23 +18,24 @@ public class SnakePanel extends JPanel {
 
     int board[];
     int NumRows, NumCols;
-    final int squareSize = 10;
+    int squareSize;
     KeysPressed keysPressed;
     KeysPressed2 keysPressed2;
 
     static Snake bernie;
     static Snake bernita;
 
-    public SnakePanel(int rows, int cols) {
+    public SnakePanel(int rows, int cols,int squareSize) {
         keysPressed = new KeysPressed();
         keysPressed2 = new KeysPressed2();
         NumRows = rows;
         NumCols = cols;
+        this.squareSize=squareSize;
         board = new int[NumRows * NumCols];
         for (int i = 0; i < NumRows * NumCols; i++) {
             board[i] = 0;
         }
-        setPreferredSize(new Dimension(NumCols * squareSize + 1, squareSize * NumRows + 1));
+        //setPreferredSize(new Dimension(NumCols * squareSize + 1, squareSize * NumRows + 1));
         bernie = new Snake(5, 5, Direction.Right, 1);
         bernita = new Snake(7, 7, Direction.Left, 4);
         this.setFocusable(true);
@@ -87,8 +88,12 @@ public class SnakePanel extends JPanel {
                 board[i] = 0;
             }
         }
+        if (bernie.alive){
         bernie.draw(this);
+        }
+        if (bernita.alive){
         bernita.draw(this);
+        }
         for (int col = 0; col < NumCols; col++) {
             for (int row = 0; row < NumRows; row++) {
 
