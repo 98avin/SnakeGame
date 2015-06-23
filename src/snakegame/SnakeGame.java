@@ -23,7 +23,12 @@ public class SnakeGame {
         JFrame mainWindow = new JFrame();
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         SnakePanel snakeGame = new SnakePanel(81, 159);
-
+        String[] names ={"Bernie","Bernita","Snaaakeee","Solid","???","Avin","Erik","Richard","Owen","AHHHHHHH"};
+        String snakeOneName=names[(int)((Math.random()*1000)%names.length)];
+        String snakeTwoName=names[(int)((Math.random()*1000)%names.length)];
+        if(snakeTwoName.equals(snakeOneName)){
+            snakeTwoName=names[(int)((Math.random()*1000)%names.length)];
+        }
         //Spawns Food
         for (int i = 0; i < 3; i++) {
             snakeGame.drawMouse();
@@ -54,7 +59,9 @@ public class SnakeGame {
                 e.printStackTrace();
             }
             mainWindow.repaint();
-            statusLabel.setText("Bernie: " + Integer.toString(snakeGame.bernie.score) + "   Bernita: " + Integer.toString(snakeGame.bernita.score));
+            
+            statusLabel.setText(snakeOneName + ": "+ Integer.toString(snakeGame.bernie.score) + "   " +snakeTwoName + ": "+ Integer.toString(snakeGame.bernita.score));
+                    
         }
 
     }
