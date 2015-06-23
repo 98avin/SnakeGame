@@ -56,11 +56,15 @@ public class Snake {
                     break;
 
             }
-            /////WEIRD PART THAT AVIN WILL TAKE CARE OF SO DON'T WORRY
+            /////COLLISION MANAGEMENT
             SquareCoords pos = new SquareCoords(0, 0);
             
             if (sp.readSquare(x, y) != 0 && sp.readSquare(x, y) != 3 && sp.readSquare(x, y) != 1 && sp.readSquare(x, y) != 4) {
                 alive = false;
+                for (int i = 0; i < body.size() - 1; i++) {
+                    pos = body.get(i);
+                    sp.writeSquare(pos.x, pos.y, 3);
+                }
             }
             //If Bernie(Player 1) collides into Bernita(Player 2) and Bernie is smaller
             if (this.color == 1 && this.body.size() < sp.bernita.body.size() && sp.readSquare(x, y) == 4) {
