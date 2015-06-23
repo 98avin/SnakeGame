@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package snakegame;
+package snakegame;///YO
 
 import java.util.LinkedList;
 
