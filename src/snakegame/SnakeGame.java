@@ -25,8 +25,8 @@ public class SnakeGame {
         SnakePanel snakeGame = new SnakePanel(81, 159);
 
         //Spawns Food
-        for(int i = 0; i < 3; i++){
-        snakeGame.drawMouse();
+        for (int i = 0; i < 3; i++) {
+            snakeGame.drawMouse();
         }
 
         mainWindow.add(snakeGame);
