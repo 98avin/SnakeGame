@@ -111,16 +111,11 @@ public class SnakePanel extends JPanel {
     }
 
     void drawMouse() {
-        this.writeSquare(random_number(0, NumCols), random_number(0, NumRows), 3);
+        this.writeSquare(random_number(NumCols), random_number(NumRows), 3);
     }
 
-    public static int random_number(int low, int high) {
-        double rand = Math.random(); //generates a random number
-        int rand2 = (int) (rand * 100000); //casts the random number as int
-        int interval = high - low;//interval in which to put the number ie 1-100
-        rand2 = rand2 % interval;//puts the number into the interval
-        rand2 = rand2 + low;//acertains that the number is above the minimum
-        int randNum = rand2;//assigns the random number's value
-        return randNum;//returns the random number's value
+    public static int random_number(int number) {
+        double rand = Math.random()*1000%number; //generates a random number
+        return (int) rand;//returns the random number's value
     }
 }

@@ -28,7 +28,7 @@ public class SnakeGame {
         JFrame mainWindow = new JFrame();
         mainWindow.setExtendedState(mainWindow.getExtendedState() | JFrame.MAXIMIZED_BOTH);
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        int size=25;//Square size
+        int size=10;//Square size
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();       
         int width = (int)screenSize.getWidth();
         int height = (int)screenSize.getHeight();
