@@ -8,6 +8,9 @@ package snakegame;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GraphicsEnvironment;
+import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,11 +28,13 @@ public class SnakeGame {
         JFrame mainWindow = new JFrame();
         mainWindow.setExtendedState(mainWindow.getExtendedState() | JFrame.MAXIMIZED_BOTH);
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        int size=10;
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int size=25;//Square size
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();       
         int width = (int)screenSize.getWidth();
         int height = (int)screenSize.getHeight();
-        SnakePanel snakeGame = new SnakePanel(height/size,width/size,size);
+        Rectangle winSize = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
+        int taskBarHeight = screenSize.height - winSize.height;
+        SnakePanel snakeGame = new SnakePanel((height-taskBarHeight)/size,width/size,size);
         String[] names ={"Bernie","Bernita","Snaaakeee","Solid","???","Avin","Erik","Richard","Owen","AHHHHHHH","Liquid","Gaseous","Plasma","Blank"};
         String snakeOneName=names[(int)((Math.random()*1000)%names.length)];
         String snakeTwoName=names[(int)((Math.random()*1000)%names.length)];
@@ -58,7 +63,7 @@ public class SnakeGame {
             snakeGame.update(snakeGame.keysPressed2.dir, snakeGame.bernita);
 
             try {
-                if (i > 50) {///Accelerates into fast pace so time to adapt
+                if (i > 35) {///Accelerates into fast pace so time to adapt
                     i--;
                 }
                 Thread.sleep(i);
