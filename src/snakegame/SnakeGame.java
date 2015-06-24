@@ -26,7 +26,7 @@ public class SnakeGame {
     public static void main(String[] args) {
 
         JFrame mainWindow = new JFrame();
-        //mainWindow.setExtendedState(mainWindow.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+        mainWindow.setExtendedState(mainWindow.getExtendedState() | JFrame.MAXIMIZED_BOTH);
         mainWindow.setPreferredSize(new Dimension(500,500));
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         int size=10;//Square size
@@ -38,10 +38,10 @@ public class SnakeGame {
         int taskBarHeight = screenSize.height - winSize.height;
         SnakePanel snakeGame = new SnakePanel((height-taskBarHeight)/size,width/size,size);
 
-        JScrollPane scrollpane = new JScrollPane(snakeGame);
+        /*JScrollPane scrollpane = new JScrollPane(snakeGame);
         scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scrollpane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        mainWindow.add(scrollpane);
+        mainWindow.add(scrollpane);*/
         
         String[] names ={"Bernie","Bernita","Snaaakeee","Solid","???","Avin","Erik","Richard","Owen","AHHHHHHH","Liquid","Gaseous","Plasma","Blank"};
         String snakeOneName=names[(int)((Math.random()*1000)%names.length)];

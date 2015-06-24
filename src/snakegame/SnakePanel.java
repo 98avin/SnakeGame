@@ -78,7 +78,7 @@ public class SnakePanel extends JPanel {
     void update(Direction dir, Snake c) {
         c.update(dir, this);
     }
-         Color insane=new Color(0,0,0);
+    Color insane = new Color(0, 0, 0);
 
     @Override
     public void paintComponent(Graphics g) {
@@ -99,24 +99,27 @@ public class SnakePanel extends JPanel {
         int q = (int) (Math.random() * 1000 % 20);
         int w = (int) (Math.random() * 1000 % 15);
         int e = (int) (Math.random() * 1000 % 15);
-        insane =new Color(q, w, e); 
+        insane = new Color(q, w, e);
         for (int col = 0; col < NumCols; col++) {
-            for (int row = 0; row < NumRows; row++) {
-                g.setColor(colors[readSquare(col, row)]);
-                g.fillRect(col * squareSize, row * squareSize, squareSize, squareSize);
-                g.setColor(Color.gray);
-                ///g.drawRect(col * squareSize, row * squareSize, squareSize, squareSize);
+            if (col < bernie.getX() + 30 && col > bernie.getX() - 30||col < bernita.getX() + 30 && col > bernita.getX() - 30) {
+                for (int row = 0; row < NumRows; row++) {
+                    if ((row < bernie.getY() + 25 && row > bernie.getY() - 25)|| (row < bernita.getY() + 25 && row > bernita.getY() - 25)) {
+                        g.setColor(colors[readSquare(col, row)]);
+                        g.fillRect(col * squareSize, row * squareSize, squareSize, squareSize);
+                        g.setColor(Color.gray);
+                        ///g.drawRect(col * squareSize, row * squareSize, squareSize, squareSize);
 
-            }
+                    }
             //g2d.drawImage(null, 0, 0, null);
-            //g2d.drawImage(null, bernie.getX(), bernie.getY(), null);
+                    //g2d.drawImage(null, bernie.getX(), bernie.getY(), null);
 
-            //g.translate(-1, -1);
+                    //g.translate(-1, -1);
+                }
+            }
         }
+}
 
-    }
-
-    void drawMouse() {
+void drawMouse() {
         this.writeSquare(random_number(NumCols), random_number(NumRows), 3);
     }
 
