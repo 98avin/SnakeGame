@@ -19,7 +19,6 @@ public class Snake {
     int growAmount;
     int score = 0;
     int color;
-    int size;
 
     Snake(int x, int y, Direction dir, int color) {
 
@@ -27,7 +26,6 @@ public class Snake {
         this.alive = true;
         this.growAmount = 0;
         this.color = color;
-        this.size = 0;
         body = new LinkedList<SquareCoords>();
         body.addLast(new SquareCoords(x + 5, y + 27));
 
@@ -103,7 +101,6 @@ public class Snake {
             body.addFirst(new SquareCoords(x, y));
             if (growAmount > 0) {
                 growAmount--;
-                size++;
                 return;
             }
             body.removeLast();
