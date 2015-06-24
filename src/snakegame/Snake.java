@@ -19,6 +19,7 @@ public class Snake {
     int growAmount;
     int score = 0;
     int color;
+    int size;
 
     Snake(int x, int y, Direction dir, int color) {
 
@@ -26,6 +27,7 @@ public class Snake {
         this.alive = true;
         this.growAmount = 0;
         this.color = color;
+        this.size = 0;
         body = new LinkedList<SquareCoords>();
         body.addLast(new SquareCoords(x + 5, y + 27));
 
@@ -101,6 +103,7 @@ public class Snake {
             body.addFirst(new SquareCoords(x, y));
             if (growAmount > 0) {
                 growAmount--;
+                size++;
                 return;
             }
             body.removeLast();
@@ -112,6 +115,42 @@ public class Snake {
         for (int i = 0; i < body.size(); i++) {
             SquareCoords pos = body.get(i);
             sp.writeSquare(pos.x, pos.y, color);
+             switch (dir) {
+            case Up:
+                System.out.println("UP");
+                if(size>10){
+                    sp.writeSquare(pos.x-1, pos.y, color);
+                    sp.writeSquare(pos.x+1, pos.y, color);
+                }
+                
+                break;
+
+            case Down:
+                System.out.println("DOWN");
+                if(size>10){
+                    sp.writeSquare(pos.x-1, pos.y, color);
+                    sp.writeSquare(pos.x+1, pos.y, color);
+                }
+                break;
+
+            case Left:
+                System.out.println("LEFT");
+                if(size>10){
+                    sp.writeSquare(pos.x, pos.y-1, color);
+                    sp.writeSquare(pos.x, pos.y+1, color);
+                }
+                break;
+
+            case Right:
+                System.out.println("RIGHT");
+                if(size>10){
+                    sp.writeSquare(pos.x, pos.y-1, color);
+                    sp.writeSquare(pos.x, pos.y+1, color);
+                }
+                break;
+
+        }
         }
     }
+    
 }
