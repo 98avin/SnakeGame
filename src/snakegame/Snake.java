@@ -13,7 +13,7 @@ import java.util.LinkedList;
  * @author cs1
  */
 public class Snake {
-        Direction dir;
+    Direction dir;
     LinkedList<SquareCoords> body;
     boolean alive;
     int growAmount;
