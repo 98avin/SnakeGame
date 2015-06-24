@@ -15,7 +15,7 @@ import javax.swing.SwingConstants;
  *
  * @author cs1
  */
-///CHECKING IF PUSHES WORK AVIN ABRAHAM
+///CHECKING IF PUSHES WORK OWEN SKINNER
 public class SnakeGame {
 
     public static void main(String[] args) {
