@@ -67,15 +67,15 @@ public class Snake {
                 }
             }
             //If Bernie(Player 1) collides into Bernita(Player 2) and Bernie is smaller
-            if (this.color == 1 && this.body.size()+4 < sp.bernita.body.size() && sp.readSquare(x, y) == 4) {
-                alive = false;
+            if (this.color == 1 && this.body.size()+20 < sp.bernita.body.size() && sp.readSquare(x, y) == 4) {
+                sp.bernie.alive = false;
                 for (int i = 0; i < body.size() - 1; i++) {
                     pos = body.get(i);
                     sp.writeSquare(pos.x, pos.y, 3);
                 }
             }
             //If Bernie collides into Bernita and Bernie is bigger
-            if (this.color == 1 && this.body.size() > sp.bernita.body.size()+4 && sp.readSquare(x, y) == 4) {
+            if (this.color == 1 && this.body.size() > sp.bernita.body.size()+20 && sp.readSquare(x, y) == 4) {
                 for (int i = 0; i < sp.bernita.body.size() - 1; i++) {
                     pos = sp.bernita.body.get(i);
                     sp.writeSquare(pos.x, pos.y, 3);
@@ -83,15 +83,15 @@ public class Snake {
                 }
             }
             //If Bernita collides with Bernie and Bernita is smaller
-            if (this.color == 4 && this.body.size()+4 < sp.bernie.body.size() && sp.readSquare(x, y) == 1) {
-                alive = false;
+            if (this.color == 4 && this.body.size()+20 < sp.bernie.body.size() && sp.readSquare(x, y) == 1) {
+                sp.bernita.alive = false;
                 for (int i = 1; i < body.size() - 1; i++) {
                     pos = body.get(i);
                     sp.writeSquare(pos.x, pos.y, 3);
                 }
             }
             //If Bernita collides with Bernie and Bernita is bigger
-            if (this.color == 4 && this.body.size() > sp.bernie.body.size()+4 && sp.readSquare(x, y) == 1) {
+            if (this.color == 4 && this.body.size() > sp.bernie.body.size()+20 && sp.readSquare(x, y) == 1) {
                 for (int i = 0; i < sp.bernie.body.size() - 1; i++) {
                     pos = sp.bernita.body.get(i);
                     sp.writeSquare(pos.x, pos.y, 3);

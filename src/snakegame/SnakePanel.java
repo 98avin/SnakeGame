@@ -25,12 +25,12 @@ public class SnakePanel extends JPanel {
     static Snake bernie;
     static Snake bernita;
 
-    public SnakePanel(int rows, int cols,int squareSize) {
+    public SnakePanel(int rows, int cols, int squareSize) {
         keysPressed = new KeysPressed();
         keysPressed2 = new KeysPressed2();
         NumRows = rows;
         NumCols = cols;
-        this.squareSize=squareSize;
+        this.squareSize = squareSize;
         board = new int[NumRows * NumCols];
         for (int i = 0; i < NumRows * NumCols; i++) {
             board[i] = 0;
@@ -78,34 +78,36 @@ public class SnakePanel extends JPanel {
     void update(Direction dir, Snake c) {
         c.update(dir, this);
     }
-
-    static Color colors[] = {Color.black, Color.green, Color.white, Color.white, Color.blue};
+         Color insane=new Color(0,0,0);
 
     @Override
     public void paintComponent(Graphics g) {
+        
+        Color colors[] = {insane, Color.green, Color.white, Color.white, Color.blue};
         for (int i = 0; i < NumRows * NumCols; i++) {
             if (board[i] != 3) {
                 board[i] = 0;
             }
         }
-        if (bernie.alive){
-        bernie.draw(this);
+        if (bernie.alive) {
+            bernie.draw(this);
         }
-        if (bernita.alive){
-        bernita.draw(this);
+        if (bernita.alive) {
+            bernita.draw(this);
         }
+        int q = (int) (Math.random() * 1000 % 20);
+        int w = (int) (Math.random() * 1000 % 15);
+        int e = (int) (Math.random() * 1000 % 15);
+        insane =new Color(q, w, e); 
         for (int col = 0; col < NumCols; col++) {
             for (int row = 0; row < NumRows; row++) {
-
                 g.setColor(colors[readSquare(col, row)]);
-                g.fillRect(col * squareSize,
-                        row * squareSize,
-                        squareSize,
-                        squareSize);
-
+                g.fillRect(col * squareSize, row * squareSize, squareSize, squareSize);
                 //g.setColor(Color.black);
                 g.drawRect(col * squareSize, row * squareSize, squareSize, squareSize);
+
             }
+            //g.translate(-1, -1);
         }
 
     }
@@ -115,7 +117,7 @@ public class SnakePanel extends JPanel {
     }
 
     public static int random_number(int number) {
-        double rand = Math.random()*1000%number; //generates a random number
+        double rand = Math.random() * 1000 % number; //generates a random number
         return (int) rand;//returns the random number's value
     }
 }

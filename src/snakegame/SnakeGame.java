@@ -9,11 +9,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
-import java.awt.Insets;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 /**
@@ -26,7 +26,7 @@ public class SnakeGame {
     public static void main(String[] args) {
 
         JFrame mainWindow = new JFrame();
-        mainWindow.setExtendedState(mainWindow.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+        //mainWindow.setExtendedState(mainWindow.getExtendedState() | JFrame.MAXIMIZED_BOTH);
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         int size=10;//Square size
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();       
@@ -34,7 +34,10 @@ public class SnakeGame {
         int height = (int)screenSize.getHeight();
         Rectangle winSize = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
         int taskBarHeight = screenSize.height - winSize.height;
-        SnakePanel snakeGame = new SnakePanel((height-taskBarHeight)/size,width/size,size);
+        //SnakePanel snakeGame = new SnakePanel((height-taskBarHeight)/size,width/size,size);
+        SnakePanel snakeGame = new SnakePanel(50,100, size);
+        JScrollPane camera = new JScrollPane(snakeGame);
+        mainWindow.add(snakeGame);
         String[] names ={"Bernie","Bernita","Snaaakeee","Solid","???","Avin","Erik","Richard","Owen","AHHHHHHH","Liquid","Gaseous","Plasma","Blank"};
         String snakeOneName=names[(int)((Math.random()*1000)%names.length)];
         String snakeTwoName=names[(int)((Math.random()*1000)%names.length)];
@@ -42,12 +45,9 @@ public class SnakeGame {
             snakeTwoName=names[(int)((Math.random()*1000)%names.length)];
         }
         //Spawns Food
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 10; i++) {
             snakeGame.drawMouse();
         }
-
-        mainWindow.add(snakeGame);
-
         JLabel statusLabel = new JLabel("SCORE: " + Integer.toString(snakeGame.bernie.score));
         statusLabel.setFont(new Font("Chiller", Font.PLAIN, 75));
         statusLabel.setForeground(Color.white);
