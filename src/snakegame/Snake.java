@@ -30,6 +30,14 @@ public class Snake {
         body.addLast(new SquareCoords(x + 5, y + 27));
 
     }
+    
+    int getX(){
+    return body.get(0).x;
+    }
+    
+    int getY(){
+    return body.get(0).y;
+    }
 
     void update(Direction dir, SnakePanel sp) {
         if (alive != true) {

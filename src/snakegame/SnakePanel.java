@@ -6,8 +6,8 @@
 package snakegame;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 /**
@@ -82,8 +82,9 @@ public class SnakePanel extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-        
-        Color colors[] = {insane, Color.green, Color.white, Color.white, Color.blue};
+        super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+        Color colors[] = {Color.black, Color.green, Color.white, Color.white, Color.blue};
         for (int i = 0; i < NumRows * NumCols; i++) {
             if (board[i] != 3) {
                 board[i] = 0;
@@ -103,10 +104,13 @@ public class SnakePanel extends JPanel {
             for (int row = 0; row < NumRows; row++) {
                 g.setColor(colors[readSquare(col, row)]);
                 g.fillRect(col * squareSize, row * squareSize, squareSize, squareSize);
-                //g.setColor(Color.black);
-                g.drawRect(col * squareSize, row * squareSize, squareSize, squareSize);
+                g.setColor(Color.gray);
+                ///g.drawRect(col * squareSize, row * squareSize, squareSize, squareSize);
 
             }
+            //g2d.drawImage(null, 0, 0, null);
+            //g2d.drawImage(null, bernie.getX(), bernie.getY(), null);
+
             //g.translate(-1, -1);
         }
 
