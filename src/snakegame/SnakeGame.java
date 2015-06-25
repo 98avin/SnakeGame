@@ -27,34 +27,42 @@ public class SnakeGame {
 
         JFrame mainWindow = new JFrame();
         mainWindow.setExtendedState(mainWindow.getExtendedState() | JFrame.MAXIMIZED_BOTH);
-        mainWindow.setPreferredSize(new Dimension(500,500));
+        mainWindow.setPreferredSize(new Dimension(500, 500));
         mainWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        int size=10;//Square size
-        
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();       
-        int width = (int)screenSize.getWidth();
-        int height = (int)screenSize.getHeight();
+        int size = 10;//Square size
+
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int width = (int) screenSize.getWidth();
+        int height = (int) screenSize.getHeight();
         Rectangle winSize = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
         int taskBarHeight = screenSize.height - winSize.height;
-        SnakePanel snakeGame = new SnakePanel((height-taskBarHeight)/size,width/size,size);
+        SnakePanel snakeGame = new SnakePanel((height - taskBarHeight) / size, width / size, size);
 
-        /*JScrollPane scrollpane = new JScrollPane(snakeGame);
-        scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollpane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        mainWindow.add(scrollpane);*/
+        double offsetMaxX = screenSize.getHeight(); // getting the total length of the screen for scrolling
+        double offsetMaxY = screenSize.getWidth(); // same for the screen width
+        int offsetMinX = 0; // just in case
+        int offsetMinY = 0; // owen is a poop
         
-        String[] names ={"Bernie","Bernita","Snaaakeee","Solid","???","Avin","Erik","Richard","Owen","AHHHHHHH","Liquid","Gaseous","Plasma","Blank"};
-        String snakeOneName=names[(int)((Math.random()*1000)%names.length)];
-        String snakeTwoName=names[(int)((Math.random()*1000)%names.length)];
-        if(snakeTwoName.equals(snakeOneName)){
-            snakeTwoName=names[(int)((Math.random()*1000)%names.length)];
+        //void camX = bernie - VIEWPORT_SIZE_X / 2;
+        //void camY = bernita - VIEWPORT_SIZE_Y / 2;
+                
+                /*JScrollPane scrollpane = new JScrollPane(snakeGame);
+                 scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+                 scrollpane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+                 mainWindow.add(scrollpane);*/
+        
+        String[] names = {"Bernie", "Bernita", "Snaaakeee", "Solid", "???", "Avin", "Erik", "Richard", "Owen", "AHHHHHHH", "Liquid", "Gaseous", "Plasma", "Blank"};
+        String snakeOneName = names[(int) ((Math.random() * 1000) % names.length)];
+        String snakeTwoName = names[(int) ((Math.random() * 1000) % names.length)];
+        if (snakeTwoName.equals(snakeOneName)) {
+            snakeTwoName = names[(int) ((Math.random() * 1000) % names.length)];
         }
         //Spawns Food
         for (int i = 0; i < 3; i++) {
             snakeGame.drawMouse();
         }
         mainWindow.add(snakeGame);
-        
+
         JLabel statusLabel = new JLabel("SCORE: " + Integer.toString(snakeGame.bernie.score));
         statusLabel.setFont(new Font("Chiller", Font.PLAIN, 75));
         statusLabel.setForeground(Color.white);
@@ -78,9 +86,9 @@ public class SnakeGame {
                 e.printStackTrace();
             }
             mainWindow.repaint();
-            
-            statusLabel.setText(snakeOneName + ": "+ Integer.toString(snakeGame.bernie.score) + "   " +snakeTwoName + ": "+ Integer.toString(snakeGame.bernita.score));
-                    
+
+            statusLabel.setText(snakeOneName + ": " + Integer.toString(snakeGame.bernie.score) + "   " + snakeTwoName + ": " + Integer.toString(snakeGame.bernita.score));
+
         }
 
     }
