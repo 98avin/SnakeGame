@@ -35,21 +35,10 @@ public class Client extends JFrame {
 
 }
 
-class sender implements KeyListener {
-
-    @Override
-    public void keyTyped(KeyEvent e) {
+class sender implements ActionListener {
+    
+    public void actionPerformed(ActionEvent e) {
         
     }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        //String text = usertext.getText();
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        
-    }
-
+    
 }
