@@ -50,7 +50,8 @@ public class Snake {
             int transval = 1;
             switch (dir) {
                 case Up:
-                    if (sp.checkCamBounds() || sp.checkAtRight()) {
+                System.out.println(sp.checkAtBounds());
+                    if (sp.checkCamBounds() || sp.checkAtBounds()) {
                         y--;
                     }
                     for (int i = 0; i < sp.food.size(); i++) {
@@ -63,7 +64,8 @@ public class Snake {
                     break;
 
                 case Down:
-                    if (sp.checkCamBounds() || sp.checkAtLeft()) {
+                    System.out.println(sp.checkAtBounds());
+                    if (sp.checkCamBounds() || sp.checkAtBounds()) {
                         y++;
                     }
                     for (int i = 0; i < sp.food.size(); i++) {
@@ -76,8 +78,8 @@ public class Snake {
                     break;
 
                 case Left:
-                    System.out.println(sp.checkAtDown());
-                    if (sp.checkCamBounds() || sp.checkAtDown()) {
+                    System.out.println(sp.checkAtBounds());
+                    if (sp.checkCamBounds() || sp.checkAtBounds()) {
                         x--;
                     }
                     for (int i = 0; i < sp.food.size(); i++) {
@@ -90,8 +92,8 @@ public class Snake {
                     break;
 
                 case Right:
-                    System.out.println(sp.checkAtUp());
-                    if (sp.checkCamBounds() || sp.checkAtLeft()) {
+                    System.out.println(sp.checkAtBounds());
+                    if (sp.checkCamBounds() || sp.checkAtBounds()) {
                         x++;
                     }
                     for (int i = 0; i < sp.food.size(); i++) {
