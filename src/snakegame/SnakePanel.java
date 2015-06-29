@@ -40,8 +40,7 @@ public class SnakePanel extends JPanel {
             board[i] = 0;
         }
         //setPreferredSize(new Dimension(NumCols * squareSize + 1, squareSize * NumRows + 1));
-        bernie = new Snake(5, 5, Direction.Right, 1);
-        bernita = new Snake(7, 7, Direction.Left, 4);
+        
         this.setFocusable(true);
         this.addKeyListener(keysPressed);
         this.addKeyListener(keysPressed2);
@@ -51,6 +50,8 @@ public class SnakePanel extends JPanel {
                 System.out.println(cambounds.getBottom());
                 System.out.println(cambounds.getLeft());
                 System.out.println(cambounds.getRight());
+                bernie = new Snake(((NumCols+500)/squareSize), ((NumRows+200)/squareSize), Direction.Right, 1);
+        bernita = new Snake(7, 7, Direction.Left, 4);
     }
 
     public int readSquare(int col, int row) {
@@ -125,26 +126,18 @@ public class SnakePanel extends JPanel {
                 //g.setColor(Color.black);
                 g.drawRect(col * squareSize, row * squareSize, squareSize, squareSize);
                 
-            }
+            }       
             
         }
-        g.setColor(Color.yellow);
-                g.fillRect(NumCols+400, NumRows+100, 500, 500);
-       if(bernie.getY() > cambounds.getTop()&&bernie.getY() < cambounds.getBottom() && bernie.getX() < cambounds.getRight() && bernie.getX() > cambounds.getLeft() ){
-        for(int i =0; i < food.size();i++){
-            g.setColor(colors[2]);
-            g.fillRect(food.get(i).x* squareSize,
-                        food.get(i).y * squareSize,
-                        squareSize,
-                        squareSize);
-        }
-        }
+       // g.setColor(Color.yellow);
+                //g.fillRect(NumCols+400, NumRows+100, 500, 500);
+
     }
     
 void drawMouse() {
         int randX=random_number(NumCols);
         int randY=random_number(NumRows);
-        //this.writeSquare(randX, randY, 3);
+        this.writeSquare(randX, randY, 3);
         food.add(new SquareCoords(randX,randY));
     }
 
@@ -152,4 +145,12 @@ void drawMouse() {
         double rand = Math.random() * 1000 % number; //generates a random number
         return (int) rand;//returns the random number's value
     }
+    
+ boolean checkCamBounds(){
+  if (bernie.getY() > (cambounds.getTop() / squareSize) && bernie.getY() < (cambounds.getBottom() / squareSize) && bernie.getX() < (cambounds.getRight() / squareSize) && bernie.getX() > (cambounds.getLeft() / squareSize)) {
+      return true;
+  }
+  else{return false;}
+  }
+   
 }

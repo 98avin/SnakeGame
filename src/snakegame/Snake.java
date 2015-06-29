@@ -50,34 +50,54 @@ public class Snake {
             int transval = 1;
             switch (dir) {
                 case Up:
-                    y--;
+                    if (sp.checkCamBounds()) {
+                        y--;
+                    }
                     for (int i = 0; i < sp.food.size(); i++) {
-                        sp.food.get(i).translate(0, transval);
-                        sp.repaint();
+                        sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 0);
+                        if (sp.checkCamBounds() == false) {
+                            sp.food.get(i).translate(0, transval);
+                        }
+                        sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 3);
                     }
                     break;
 
                 case Down:
-                    y++;
+                    if (sp.checkCamBounds()) {
+                        y++;
+                    }
                     for (int i = 0; i < sp.food.size(); i++) {
-                        sp.food.get(i).translate(0, -transval);
-                        sp.repaint();
+                        sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 0);
+                        if (sp.checkCamBounds() == false) {
+                            sp.food.get(i).translate(0, -transval);
+                        }
+                        sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 3);
                     }
                     break;
 
                 case Left:
-                    x--;
+                    if (sp.checkCamBounds()) {
+                        x--;
+                    }
                     for (int i = 0; i < sp.food.size(); i++) {
-                        sp.food.get(i).translate(transval, 0);
-                        sp.repaint();
+                        sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 0);
+                        if (sp.checkCamBounds() == false) {
+                            sp.food.get(i).translate(transval, 0);
+                        }
+                        sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 3);
                     }
                     break;
 
                 case Right:
-                    x++;
+                    if (sp.checkCamBounds()) {
+                        x++;
+                    }
                     for (int i = 0; i < sp.food.size(); i++) {
-                        sp.food.get(i).translate(-transval, 0);
-                        sp.repaint();
+                        sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 0);
+                        if (sp.checkCamBounds() == false) {
+                            sp.food.get(i).translate(-transval, 0);
+                        }
+                        sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 3);
                     }
                     break;
 
