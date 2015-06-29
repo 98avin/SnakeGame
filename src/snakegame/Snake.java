@@ -43,6 +43,13 @@ public class Snake {
         if (alive != true) {
             return;
         } else {
+            
+            for(int i = 0; i < sp.food.size(); i++){
+        sp.food.get(i).translate(100,100);
+        sp.repaint();
+        System.out.println("HI I SHOULD BE MOVING");
+        }
+            
             SquareCoords head = body.getFirst();
             int x = head.x;
             int y = head.y;
@@ -120,6 +127,7 @@ public class Snake {
             body.removeLast();
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
     }
 
     void draw(SnakePanel sp) {

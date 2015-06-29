@@ -86,6 +86,7 @@ public class SnakePanel extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
+        System.out.println("REPAINT");
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         Color colors[] = {Color.black, Color.green, Color.white, Color.white, Color.blue};
