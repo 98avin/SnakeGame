@@ -75,13 +75,13 @@ public class SnakeGame {
         while (true) {
 
             snakeGame.update(snakeGame.keysPressed.dir, snakeGame.bernie);
-            snakeGame.update(snakeGame.keysPressed2.dir, snakeGame.bernita);
+            //snakeGame.update(snakeGame.keysPressed2.dir, snakeGame.bernita);
 
             try {
-                if (i > 35) {///Accelerates into fast pace so time to adapt
-                    i--;
-                }
-                Thread.sleep(i);
+                //if (i > 35) {///Accelerates into fast pace so time to adapt
+                //    i--;
+               // }
+                Thread.sleep(35);
             } catch (Exception e) {
                 e.printStackTrace();
             }

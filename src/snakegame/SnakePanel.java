@@ -23,11 +23,13 @@ public class SnakePanel extends JPanel {
     KeysPressed keysPressed;
     KeysPressed2 keysPressed2;
     ArrayList<SquareCoords>food;
+    Rect2d EmptyRect;
 
     static Snake bernie;
     static Snake bernita;
 
     public SnakePanel(int rows, int cols, int squareSize) {
+        EmptyRect = new Rect2d(NumCols-100, NumRows-100, 250, 250);
         keysPressed = new KeysPressed();
         keysPressed2 = new KeysPressed2();
         NumRows = rows;
@@ -97,9 +99,9 @@ public class SnakePanel extends JPanel {
         if (bernie.alive) {
             bernie.draw(this);
         }
-        if (bernita.alive) {
-            bernita.draw(this);
-        }
+       // if (bernita.alive) {
+        //    bernita.draw(this);
+        //}
         int q = (int) (Math.random() * 1000 % 20);
         int w = (int) (Math.random() * 1000 % 15);
         int e = (int) (Math.random() * 1000 % 15);
