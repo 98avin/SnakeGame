@@ -86,7 +86,6 @@ public class SnakePanel extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-        System.out.println("REPAINT");
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         Color colors[] = {Color.black, Color.green, Color.white, Color.white, Color.blue};
@@ -119,13 +118,20 @@ public class SnakePanel extends JPanel {
             }
             
         }
+        for(int i =0; i < food.size();i++){
+            g.setColor(colors[2]);
+            g.fillRect(food.get(i).x* squareSize,
+                        food.get(i).y * squareSize,
+                        squareSize,
+                        squareSize);
+        }
 
     }
     
 void drawMouse() {
         int randX=random_number(NumCols);
         int randY=random_number(NumRows);
-        this.writeSquare(randX, randY, 3);
+        //this.writeSquare(randX, randY, 3);
         food.add(new SquareCoords(randX,randY));
     }
 

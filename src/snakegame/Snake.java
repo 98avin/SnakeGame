@@ -42,13 +42,7 @@ public class Snake {
     void update(Direction dir, SnakePanel sp) {
         if (alive != true) {
             return;
-        } else {
-            
-            for(int i = 0; i < sp.food.size(); i++){
-        sp.food.get(i).translate(100,100);
-        sp.repaint();
-        System.out.println("HI I SHOULD BE MOVING");
-        }
+        } else{
             
             SquareCoords head = body.getFirst();
             int x = head.x;
@@ -56,18 +50,34 @@ public class Snake {
             switch (dir) {
                 case Up:
                     y--;
+                    for(int i = 0; i < sp.food.size(); i++){
+        sp.food.get(i).translate(0,1);
+        sp.repaint();
+        }
                     break;
 
                 case Down:
                     y++;
+                    for(int i = 0; i < sp.food.size(); i++){
+        sp.food.get(i).translate(0,-1);
+        sp.repaint();
+        }
                     break;
 
                 case Left:
                     x--;
+                    for(int i = 0; i < sp.food.size(); i++){
+        sp.food.get(i).translate(1,0);
+        sp.repaint();
+        }
                     break;
 
                 case Right:
                     x++;
+                    for(int i = 0; i < sp.food.size(); i++){
+        sp.food.get(i).translate(-1,0);
+        sp.repaint();
+        }
                     break;
 
             }
