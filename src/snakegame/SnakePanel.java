@@ -23,13 +23,13 @@ public class SnakePanel extends JPanel {
     KeysPressed keysPressed;
     KeysPressed2 keysPressed2;
     ArrayList<SquareCoords>food;
-    Rect2d EmptyRect;
+    Rect2d cambounds;
 
     static Snake bernie;
     static Snake bernita;
 
     public SnakePanel(int rows, int cols, int squareSize) {
-        EmptyRect = new Rect2d(NumCols-100, NumRows-100, 250, 250);
+        cambounds = new Rect2d(NumCols-100, NumRows-100, 250, 250);
         keysPressed = new KeysPressed();
         keysPressed2 = new KeysPressed2();
         NumRows = rows;
@@ -88,7 +88,9 @@ public class SnakePanel extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
+        
         super.paintComponent(g);
+        
         Graphics2D g2d = (Graphics2D) g;
         Color colors[] = {Color.black, Color.green, Color.white, Color.white, Color.blue};
         for (int i = 0; i < NumRows * NumCols; i++) {
@@ -117,9 +119,13 @@ public class SnakePanel extends JPanel {
 
                 //g.setColor(Color.black);
                 g.drawRect(col * squareSize, row * squareSize, squareSize, squareSize);
+                
             }
             
         }
+        g.setColor(Color.yellow);
+                g.fillRect(NumCols-100, NumRows-100, 250, 250);
+       if(bernie.getY() > cambounds.getTop()&&bernie.getY() < cambounds.getBottom() && bernie.getX() < cambounds.getRight() && bernie.getX() > cambounds.getLeft() ){
         for(int i =0; i < food.size();i++){
             g.setColor(colors[2]);
             g.fillRect(food.get(i).x* squareSize,
@@ -127,7 +133,7 @@ public class SnakePanel extends JPanel {
                         squareSize,
                         squareSize);
         }
-
+        }
     }
     
 void drawMouse() {
