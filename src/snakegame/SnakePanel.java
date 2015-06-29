@@ -29,7 +29,7 @@ public class SnakePanel extends JPanel {
     static Snake bernita;
 
     public SnakePanel(int rows, int cols, int squareSize) {
-        cambounds = new Rect2d(NumCols-100, NumRows-100, 250, 250);
+
         keysPressed = new KeysPressed();
         keysPressed2 = new KeysPressed2();
         NumRows = rows;
@@ -46,6 +46,11 @@ public class SnakePanel extends JPanel {
         this.addKeyListener(keysPressed);
         this.addKeyListener(keysPressed2);
         food = new ArrayList<SquareCoords>();
+                cambounds = new Rect2d(NumCols+400, NumRows+100, 500, 500);
+                System.out.println(cambounds.getTop());
+                System.out.println(cambounds.getBottom());
+                System.out.println(cambounds.getLeft());
+                System.out.println(cambounds.getRight());
     }
 
     public int readSquare(int col, int row) {
@@ -124,7 +129,7 @@ public class SnakePanel extends JPanel {
             
         }
         g.setColor(Color.yellow);
-                g.fillRect(NumCols-100, NumRows-100, 250, 250);
+                g.fillRect(NumCols+400, NumRows+100, 500, 500);
        if(bernie.getY() > cambounds.getTop()&&bernie.getY() < cambounds.getBottom() && bernie.getX() < cambounds.getRight() && bernie.getX() > cambounds.getLeft() ){
         for(int i =0; i < food.size();i++){
             g.setColor(colors[2]);
