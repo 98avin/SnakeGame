@@ -154,69 +154,63 @@ public class SnakePanel extends JPanel {
         }
     }
 
-    boolean checkAtBounds(){
- 
+    boolean checkAtBounds() {
+
         System.out.println("------------CHECKING IF AT TOP--------------");
-        int a = ((int) (bernie.getY()));
+        int a = ((int) (bernie.getY()) + 1);
         int b = ((int) (cambounds.getTop() / squareSize));
         System.out.println(a);
         System.out.println(b);
-        if (b-5 <= a && a <= b+5) {
+        if (b - 1 <= a && a <= b + 1) {
             System.out.println("TRUE");
-            System.out.println("-------------CHECK DONE--------------");
+            System.out.println("-------------CHECK DONE--------------\n");
             return true;
+        } else {
+            System.out.println("FALSE");
+            System.out.println("-------------CHECK DONE--------------\n");
         }
-        else{
-        System.out.println("FALSE");
-        System.out.println("-------------CHECK DONE--------------");
-    }
 
- 
         System.out.println("------------CHECKING IF AT BOTTOM--------------");
-        a = ((int) (bernie.getY()));
+        a = ((int) (bernie.getY()) - 1);
         b = ((int) (cambounds.getBottom() / squareSize));
         System.out.println(a);
         System.out.println(b);
-      if (b-5 <= a && a <= b+5) {
+        if (b - 1 <= a && a <= b + 1) {
             System.out.println("TRUE");
-            System.out.println("-------------CHECK DONE--------------");
+            System.out.println("-------------CHECK DONE--------------\n");
             return true;
+        } else {
+            System.out.println("FALSE");
+            System.out.println("-------------CHECK DONE--------------\n");
         }
-        else{
-        System.out.println("FALSE");
-        System.out.println("-------------CHECK DONE--------------");
-    }
 
         System.out.println("------------CHECKING IF AT LEFT--------------");
-        a = ((int) (bernie.getX()));
+        a = ((int) (bernie.getX()) + 1);
         b = ((int) (cambounds.getLeft() / squareSize));
         System.out.println(a);
         System.out.println(b);
-      if (b-5 <= a && a <= b+5) {
+        if (b - 1 <= a && a <= b + 1) {
             System.out.println("TRUE");
-            System.out.println("-------------CHECK DONE--------------");
+            System.out.println("-------------CHECK DONE--------------\n");
             return true;
+        } else {
+            System.out.println("FALSE");
+            System.out.println("-------------CHECK DONE--------------\n");
         }
-        else{
-        System.out.println("FALSE");
-        System.out.println("-------------CHECK DONE--------------");
-    }
-
 
         System.out.println("------------CHECKING IF AT RIGHT--------------");
-        a = ((int) (bernie.getX()));
+        a = ((int) (bernie.getX()) - 1);
         b = ((int) (cambounds.getRight() / squareSize));
         System.out.println(a);
         System.out.println(b);
-       if (b-5 <= a && a <= b+5) {
+        if (b - 1 <= a && a <= b + 1) {
             System.out.println("TRUE");
-            System.out.println("-------------CHECK DONE--------------");
+            System.out.println("-------------CHECK DONE--------------\n");
             return true;
+        } else {
+            System.out.println("FALSE");
+            System.out.println("-------------CHECK DONE--------------\n");
         }
-        else{
-        System.out.println("FALSE");
-        System.out.println("-------------CHECK DONE--------------");
-    }
         return false;
     }
 }
