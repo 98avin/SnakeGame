@@ -153,4 +153,36 @@ void drawMouse() {
   else{return false;}
   }
    
+ boolean checkAtUp(){
+                  System.out.println(bernie.getX());
+       System.out.println((cambounds.getTop() / squareSize));
+  if (bernie.getY() == (cambounds.getTop() / squareSize)) {
+      return true;
+  }
+  else{return false;}
+  }
+ 
+  boolean checkAtDown(){
+
+  if (bernie.getY()+.9 == (cambounds.getBottom() / squareSize)) {
+      return true;
+  }
+  else{return false;}
+  }
+  
+   boolean checkAtLeft(){
+
+  if (bernie.getX()+.8 == (cambounds.getLeft() / squareSize)) {
+      return true;
+  }
+  else{return false;}
+  }
+   
+    boolean checkAtRight(){
+  if (bernie.getX() == (cambounds.getRight() / squareSize)) {
+      return true;
+  }
+  else{return false;}
+  }
+ 
 }
