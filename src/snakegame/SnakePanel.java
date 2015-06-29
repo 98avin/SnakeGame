@@ -8,6 +8,7 @@ package snakegame;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 import javax.swing.JPanel;
 
 /**
@@ -21,6 +22,7 @@ public class SnakePanel extends JPanel {
     int squareSize;
     KeysPressed keysPressed;
     KeysPressed2 keysPressed2;
+    ArrayList<SquareCoords>food;
 
     static Snake bernie;
     static Snake bernita;
@@ -41,6 +43,7 @@ public class SnakePanel extends JPanel {
         this.setFocusable(true);
         this.addKeyListener(keysPressed);
         this.addKeyListener(keysPressed2);
+        food = new ArrayList<SquareCoords>();
     }
 
     public int readSquare(int col, int row) {
@@ -113,12 +116,16 @@ public class SnakePanel extends JPanel {
                 //g.setColor(Color.black);
                 g.drawRect(col * squareSize, row * squareSize, squareSize, squareSize);
             }
+            
         }
 
     }
     
 void drawMouse() {
-        this.writeSquare(random_number(NumCols), random_number(NumRows), 3);
+        int randX=random_number(NumCols);
+        int randY=random_number(NumRows);
+        this.writeSquare(randX, randY, 3);
+        food.add(new SquareCoords(randX,randY));
     }
 
     public static int random_number(int number) {
