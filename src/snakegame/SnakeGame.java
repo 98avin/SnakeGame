@@ -37,14 +37,6 @@ public class SnakeGame {
         Rectangle winSize = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
         int taskBarHeight = screenSize.height - winSize.height;
         SnakePanel snakeGame = new SnakePanel((height - taskBarHeight) / size, width / size, size);
-
-        double offsetMaxX = screenSize.getHeight(); // getting the total length of the screen for scrolling
-        double offsetMaxY = screenSize.getWidth(); // same for the screen width
-        int offsetMinX = 0; // just in case
-        int offsetMinY = 0; // owen is a poop
-        
-        //void camX = bernie - VIEWPORT_SIZE_X / 2;
-        //void camY = bernita - VIEWPORT_SIZE_Y / 2;
                 
                 /*JScrollPane scrollpane = new JScrollPane(snakeGame);
                  scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -75,13 +67,13 @@ public class SnakeGame {
         while (true) {
 
             snakeGame.update(snakeGame.keysPressed.dir, snakeGame.bernie);
-            //snakeGame.update(snakeGame.keysPressed2.dir, snakeGame.bernita);
+            snakeGame.update(snakeGame.keysPressed2.dir, snakeGame.bernita);
 
             try {
-                //if (i > 35) {///Accelerates into fast pace so time to adapt
-                //    i--;
-               // }
-                Thread.sleep(35);
+                if (i > 35) {///Accelerates into fast pace so time to adapt
+                    i--;
+                }
+                Thread.sleep(i);
             } catch (Exception e) {
                 e.printStackTrace();
             }
