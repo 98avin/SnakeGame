@@ -50,8 +50,8 @@ public class Snake {
             int transval = 1;
             switch (dir) {
                 case Up:
-                System.out.println(sp.checkAtBounds());
-                    if (sp.checkCamBounds() || (sp.checkAtBounds()==false)) { //Snake should be able to move only when inbounds of cam-rect, should stop at line but still be able to be moved
+                //System.out.println(sp.checkAtBounds());
+                    if (sp.checkCamBounds() || (sp.checkAtUp()==false)) { //Snake should be able to move only when inbounds of cam-rect, should stop at line but still be able to be moved
                         y--;
                     }
                     for (int i = 0; i < sp.food.size(); i++) {
@@ -64,8 +64,8 @@ public class Snake {
                     break;
 
                 case Down:
-                    System.out.println(sp.checkAtBounds());
-                    if (sp.checkCamBounds() || sp.checkAtBounds()) {
+                    //System.out.println(sp.checkAtBounds());
+                    if (sp.checkCamBounds() || (sp.checkAtDown() == false)) {
                         y++;
                     }
                     for (int i = 0; i < sp.food.size(); i++) {
@@ -78,8 +78,8 @@ public class Snake {
                     break;
 
                 case Left:
-                    System.out.println(sp.checkAtBounds());
-                    if (sp.checkCamBounds() || sp.checkAtBounds()) {
+                    //System.out.println(sp.checkAtBounds());
+                    if (sp.checkCamBounds() || (sp.checkAtLeft() == false)) {
                         x--;
                     }
                     for (int i = 0; i < sp.food.size(); i++) {
@@ -92,8 +92,8 @@ public class Snake {
                     break;
 
                 case Right:
-                    System.out.println(sp.checkAtBounds());
-                    if (sp.checkCamBounds() || sp.checkAtBounds()) {
+                    //System.out.println(sp.checkAtBounds());
+                    if (sp.checkCamBounds() || (sp.checkAtRight() == false)) {
                         x++;
                     }
                     for (int i = 0; i < sp.food.size(); i++) {

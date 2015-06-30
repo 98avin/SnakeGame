@@ -154,7 +154,7 @@ public class SnakePanel extends JPanel {
         }
     }
 
-        boolean CheckAtUp(){
+        boolean checkAtUp(){
         System.out.println("------------CHECKING IF AT TOP--------------");
         int a = ((int) (bernie.getY()));
         int b = ((int) (cambounds.getTop() / squareSize));
