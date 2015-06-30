@@ -160,7 +160,7 @@ public class Snake {
 
                 }
             }
-            //EVERYTHING WE NEED TO FIX INVOLVING THE COLLAPSING SNAKE IS RIGHT HERE
+            //EVERYTHING WE NEED TO FIX INVOLVING THE COLLAPSING SNAKE IS RIGHT HERE!
             body.addFirst(new SquareCoords(x, y));
             if (growAmount > 0) {
                 growAmount--;
