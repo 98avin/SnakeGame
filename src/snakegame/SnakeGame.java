@@ -37,20 +37,8 @@ public class SnakeGame {
         Rectangle winSize = GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds();
         int taskBarHeight = screenSize.height - winSize.height;
         SnakePanel snakeGame = new SnakePanel((height - taskBarHeight) / size, width / size, size);
-
-        double offsetMaxX = screenSize.getHeight(); // getting the total length of the screen for scrolling
-        double offsetMaxY = screenSize.getWidth(); // same for the screen width
-        int offsetMinX = 0; // just in case
-        int offsetMinY = 0; // owen is a poop
         
-        //void camX = bernie - VIEWPORT_SIZE_X / 2;
-        //void camY = bernita - VIEWPORT_SIZE_Y / 2;
-                
-                /*JScrollPane scrollpane = new JScrollPane(snakeGame);
-                 scrollpane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-                 scrollpane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-                 mainWindow.add(scrollpane);*/
-        
+        //Random Names
         String[] names = {"Bernie", "Bernita", "Snaaakeee", "Solid", "???", "Avin", "Erik", "Richard", "Owen", "AHHHHHHH", "Liquid", "Gaseous", "Plasma", "Blank"};
         String snakeOneName = names[(int) ((Math.random() * 1000) % names.length)];
         String snakeTwoName = names[(int) ((Math.random() * 1000) % names.length)];
@@ -58,7 +46,7 @@ public class SnakeGame {
             snakeTwoName = names[(int) ((Math.random() * 1000) % names.length)];
         }
         //Spawns Food
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 10000; i++) {
             snakeGame.drawMouse();
         }
         mainWindow.add(snakeGame);

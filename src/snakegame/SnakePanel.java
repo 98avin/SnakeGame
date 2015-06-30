@@ -89,8 +89,10 @@ public class SnakePanel extends JPanel {
     void update(Direction dir, Snake c) {
         c.update(dir, this);
     }
-
-    Color insane = new Color(0, 0, 0);
+    int q = (int) (Math.random() * 1000 % 20);
+    int w = (int) (Math.random() * 1000 % 15);
+    int e = (int) (Math.random() * 1000 % 15);
+    Color insane = new Color(q, w, e);
 
     @Override
     public void paintComponent(Graphics g) {
@@ -98,7 +100,7 @@ public class SnakePanel extends JPanel {
         super.paintComponent(g);
 
         Graphics2D g2d = (Graphics2D) g;
-        Color colors[] = {Color.black, Color.green, Color.white, Color.white, Color.blue};
+        Color colors[] = {insane, Color.green, Color.white, Color.white, Color.blue};
         for (int i = 0; i < NumRows * NumCols; i++) {
             if (board[i] != 3) {
                 board[i] = 0;
@@ -110,9 +112,9 @@ public class SnakePanel extends JPanel {
         // if (bernita.alive) {
         //    bernita.draw(this);
         //}
-        int q = (int) (Math.random() * 1000 % 20);
-        int w = (int) (Math.random() * 1000 % 15);
-        int e = (int) (Math.random() * 1000 % 15);
+        int q = (int) (Math.random() * 1000 % 30);
+        int w = (int) (Math.random() * 1000 % 10);
+        int e = (int) (Math.random() * 1000 % 20);
         insane = new Color(q, w, e);
         for (int col = 0; col < NumCols; col++) {
             for (int row = 0; row < NumRows; row++) {
@@ -135,8 +137,19 @@ public class SnakePanel extends JPanel {
     }
 
     void drawMouse() {
-        int randX = random_number(NumCols);
-        int randY = random_number(NumRows);
+        int randX = random_number(100000000);
+        int randY = random_number(100000000);
+        int negornaw = random_number(4);
+        if(negornaw == 1){
+        randY = -randY;
+        }
+        if(negornaw == 2){
+        randX = -randX;
+        }
+        if(negornaw == 3){
+        randX = -randX;
+        randY = -randY;
+        }
         this.writeSquare(randX, randY, 3);
         food.add(new SquareCoords(randX, randY));
     }
@@ -154,7 +167,7 @@ public class SnakePanel extends JPanel {
         }
     }
 
-        boolean checkAtUp(){
+    boolean checkAtUp() {
         System.out.println("------------CHECKING IF AT TOP--------------");
         int a = ((int) (bernie.getY()));
         int b = ((int) (cambounds.getTop() / squareSize));
@@ -169,9 +182,9 @@ public class SnakePanel extends JPanel {
             System.out.println("-------------CHECK DONE--------------\n");
             return false;
         }
-         }
-        
-        boolean checkAtDown(){
+    }
+
+    boolean checkAtDown() {
         System.out.println("------------CHECKING IF AT BOTTOM--------------");
         int a = ((int) (bernie.getY()));
         int b = ((int) (cambounds.getBottom() / squareSize));
@@ -187,8 +200,8 @@ public class SnakePanel extends JPanel {
             return false;
         }
     }
-        
-        boolean checkAtLeft(){
+
+    boolean checkAtLeft() {
         System.out.println("------------CHECKING IF AT LEFT--------------");
         int a = ((int) (bernie.getX()));
         int b = ((int) (cambounds.getLeft() / squareSize));
@@ -205,7 +218,7 @@ public class SnakePanel extends JPanel {
         }
     }
 
-        boolean checkAtRight(){
+    boolean checkAtRight() {
         System.out.println("------------CHECKING IF AT RIGHT--------------");
         int a = ((int) (bernie.getX()));
         int b = ((int) (cambounds.getRight() / squareSize));
@@ -221,5 +234,5 @@ public class SnakePanel extends JPanel {
             return false;
         }
     }
-    
+
 }
