@@ -51,7 +51,7 @@ public class Snake {
             switch (dir) {
                 case Up:
                 System.out.println(sp.checkAtBounds());
-                    if (sp.checkCamBounds() || sp.checkAtBounds()) { //Snake should be able to move only when inbounds of cam-rect, should stop at line but still be able to be moved
+                    if (sp.checkCamBounds() || (sp.checkAtBounds()==false)) { //Snake should be able to move only when inbounds of cam-rect, should stop at line but still be able to be moved
                         y--;
                     }
                     for (int i = 0; i < sp.food.size(); i++) {
