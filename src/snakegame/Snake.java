@@ -108,7 +108,7 @@ public class Snake {
             /////COLLISION MANAGEMENT
             SquareCoords pos = new SquareCoords(0, 0);
 
-            if (sp.readSquare(x, y) != 0 && sp.readSquare(x, y) != 3 && sp.readSquare(x, y) != 1 && sp.readSquare(x, y) != 4) {
+            if (sp.readSquare(x, y) != 0 && sp.readSquare(x, y) != 3 && sp.readSquare(x, y) != 4 && sp.readSquare(x, y) != 1) {
                 alive = false;
                 for (int i = 0; i < body.size() - 1; i++) {
                     pos = body.get(i);
@@ -160,13 +160,14 @@ public class Snake {
 
                 }
             }
-
+            //EVERYTHING WE NEED TO FIX INVOLVING THE COLLAPSING SNAKE IS RIGHT HERE
             body.addFirst(new SquareCoords(x, y));
             if (growAmount > 0) {
                 growAmount--;
                 return;
             }
-            body.removeLast();               
+            body.removeLast();      
+
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
