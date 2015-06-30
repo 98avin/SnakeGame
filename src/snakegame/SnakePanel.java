@@ -6,8 +6,10 @@
 package snakegame;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 
@@ -45,7 +47,8 @@ public class SnakePanel extends JPanel {
         this.addKeyListener(keysPressed);
         this.addKeyListener(keysPressed2);
         food = new ArrayList<SquareCoords>();
-        cambounds = new Rect2d(NumCols + 400, NumRows + 100, 500, 500);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        cambounds = new Rect2d(100,100,screenSize.width-200,screenSize.height-250);
         System.out.println(cambounds.getTop());
         System.out.println(cambounds.getBottom());
         System.out.println(cambounds.getLeft());
@@ -112,9 +115,9 @@ public class SnakePanel extends JPanel {
         // if (bernita.alive) {
         //    bernita.draw(this);
         //}
-        int q = (int) (Math.random() * 1000 % 50);
+        int q = (int) (Math.random() * 1000 % 40);
         int w = (int) (Math.random() * 1000 % 15);
-        int e = (int) (Math.random() * 1000 % 50);
+        int e = (int) (Math.random() * 1000 % 40);
         insane = new Color(q, w, e);
         for (int col = 0; col < NumCols; col++) {
             for (int row = 0; row < NumRows; row++) {
