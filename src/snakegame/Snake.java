@@ -43,15 +43,14 @@ public class Snake {
         if (alive != true) {
             return;
         } else {
-
             SquareCoords head = body.getFirst();
             int x = head.x;
             int y = head.y;
             int transval = 1;
             switch (dir) {
                 case Up:
-                //System.out.println(sp.checkAtBounds());
-                    if (sp.checkCamBounds() || (sp.checkAtUp()==false)) { //Snake should be able to move only when inbounds of cam-rect, should stop at line but still be able to be moved
+                    //System.out.println(sp.checkAtBounds());
+                    if (sp.checkCamBounds() || (sp.checkAtUp() == false)) { //Snake should be able to move only when inbounds of cam-rect, should stop at line but still be able to be moved
                         y--;
                     }
                     for (int i = 0; i < sp.food.size(); i++) {
@@ -153,7 +152,15 @@ public class Snake {
                 sp.drawMouse();
                 growAmount = growAmount + 5;
                 score++;
+
+                for (int i = 0; i < sp.food.size(); i++) {
+                    if (sp.food.get(i).x == x && sp.food.get(i).y == y) {
+                        sp.food.remove(i);
+                    }
+
+                }
             }
+
             body.addFirst(new SquareCoords(x, y));
             if (growAmount > 0) {
                 growAmount--;
