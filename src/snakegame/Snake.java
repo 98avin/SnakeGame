@@ -39,6 +39,8 @@ public class Snake {
         return body.get(0).y;
     }
 
+    int count=0;
+    
     void update(Direction dir, SnakePanel sp) {
         if (alive != true) {
             return;
@@ -166,8 +168,29 @@ public class Snake {
                 growAmount--;
                 return;
             }
+            
             body.removeLast();      
-
+            if(sp.checkAtLeft()&& count < body.size()){
+            body.get(count).x=head.x+count;
+            count++;
+            }
+            else if(sp.checkAtRight()&& count < body.size()){
+            body.get(count).x=head.x-count;
+            count++;
+            }
+            else if(sp.checkAtUp()&& count < body.size()){
+            body.get(count).y=head.y+count;
+            count++;
+            }
+            else if(sp.checkAtDown()&& count < body.size()){
+            body.get(count).y=head.y-count;
+            count++;
+            }
+            else {
+                count = 0;
+            }
+            
+            
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
