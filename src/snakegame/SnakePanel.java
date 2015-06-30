@@ -154,8 +154,7 @@ public class SnakePanel extends JPanel {
         }
     }
 
-    boolean checkAtBounds() {
-
+        boolean CheckAtUp(){
         System.out.println("------------CHECKING IF AT TOP--------------");
         int a = ((int) (bernie.getY()));
         int b = ((int) (cambounds.getTop() / squareSize));
@@ -168,11 +167,14 @@ public class SnakePanel extends JPanel {
         } else {
             System.out.println("FALSE");
             System.out.println("-------------CHECK DONE--------------\n");
+            return false;
         }
-
+         }
+        
+        boolean checkAtDown(){
         System.out.println("------------CHECKING IF AT BOTTOM--------------");
-        a = ((int) (bernie.getY()));
-        b = ((int) (cambounds.getBottom() / squareSize));
+        int a = ((int) (bernie.getY()));
+        int b = ((int) (cambounds.getBottom() / squareSize));
         System.out.println(a);
         System.out.println(b);
         if (b - 1 <= a && a <= b + 1) {
@@ -182,35 +184,42 @@ public class SnakePanel extends JPanel {
         } else {
             System.out.println("FALSE");
             System.out.println("-------------CHECK DONE--------------\n");
+            return false;
         }
-
-        System.out.println("------------CHECKING IF AT LEFT--------------");
-        a = ((int) (bernie.getX()));
-        b = ((int) (cambounds.getLeft() / squareSize));
-        System.out.println(a);
-        System.out.println(b);
-        if (b - 1 <= a && a <= b + 1) {
-            System.out.println("TRUE");
-            System.out.println("-------------CHECK DONE--------------\n");
-            return true;
-        } else {
-            System.out.println("FALSE");
-            System.out.println("-------------CHECK DONE--------------\n");
-        }
-
-        System.out.println("------------CHECKING IF AT RIGHT--------------");
-        a = ((int) (bernie.getX()));
-        b = ((int) (cambounds.getRight() / squareSize));
-        System.out.println(a);
-        System.out.println(b);
-        if (b - 1 <= a && a <= b + 1) {
-            System.out.println("TRUE");
-            System.out.println("-------------CHECK DONE--------------\n");
-            return true;
-        } else {
-            System.out.println("FALSE");
-            System.out.println("-------------CHECK DONE--------------\n");
-        }
-        return false;
     }
+        
+        boolean checkAtLeft(){
+        System.out.println("------------CHECKING IF AT LEFT--------------");
+        int a = ((int) (bernie.getX()));
+        int b = ((int) (cambounds.getLeft() / squareSize));
+        System.out.println(a);
+        System.out.println(b);
+        if (b - 1 <= a && a <= b + 1) {
+            System.out.println("TRUE");
+            System.out.println("-------------CHECK DONE--------------\n");
+            return true;
+        } else {
+            System.out.println("FALSE");
+            System.out.println("-------------CHECK DONE--------------\n");
+            return false;
+        }
+    }
+
+        boolean checkAtRight(){
+        System.out.println("------------CHECKING IF AT RIGHT--------------");
+        int a = ((int) (bernie.getX()));
+        int b = ((int) (cambounds.getRight() / squareSize));
+        System.out.println(a);
+        System.out.println(b);
+        if (b - 1 <= a && a <= b + 1) {
+            System.out.println("TRUE");
+            System.out.println("-------------CHECK DONE--------------\n");
+            return true;
+        } else {
+            System.out.println("FALSE");
+            System.out.println("-------------CHECK DONE--------------\n");
+            return false;
+        }
+    }
+    
 }
