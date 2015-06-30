@@ -100,7 +100,7 @@ public class SnakePanel extends JPanel {
         super.paintComponent(g);
 
         Graphics2D g2d = (Graphics2D) g;
-        Color colors[] = {insane, Color.green, Color.white, Color.white, Color.blue};
+        Color colors[] = {insane, Color.yellow, Color.white, Color.white, Color.blue};
         for (int i = 0; i < NumRows * NumCols; i++) {
             if (board[i] != 3) {
                 board[i] = 0;
@@ -112,9 +112,9 @@ public class SnakePanel extends JPanel {
         // if (bernita.alive) {
         //    bernita.draw(this);
         //}
-        int q = (int) (Math.random() * 1000 % 30);
-        int w = (int) (Math.random() * 1000 % 10);
-        int e = (int) (Math.random() * 1000 % 20);
+        int q = (int) (Math.random() * 1000 % 50);
+        int w = (int) (Math.random() * 1000 % 15);
+        int e = (int) (Math.random() * 1000 % 50);
         insane = new Color(q, w, e);
         for (int col = 0; col < NumCols; col++) {
             for (int row = 0; row < NumRows; row++) {
