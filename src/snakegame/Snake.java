@@ -39,8 +39,8 @@ public class Snake {
         return body.get(0).y;
     }
 
-    int count=0;
-    
+    int count = 0;
+
     void update(Direction dir, SnakePanel sp) {
         if (alive != true) {
             return;
@@ -55,12 +55,13 @@ public class Snake {
                     if (sp.checkCamBounds() || (sp.checkAtUp() == false)) { //Snake should be able to move only when inbounds of cam-rect, should stop at line but still be able to be moved
                         y--;
                     }
-                    for (int i = 0; i < sp.food.size(); i++) {
-                        sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 0);
-                        if (sp.checkCamBounds() == false) {
+                    if (sp.checkCamBounds() == false && sp.checkAtRight() == false && sp.checkAtLeft() == false) {
+                        for (int i = 0; i < sp.food.size(); i++) {
+                            sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 0);
                             sp.food.get(i).translate(0, transval);
+                            sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 3);
                         }
-                        sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 3);
+
                     }
                     break;
 
@@ -69,12 +70,13 @@ public class Snake {
                     if (sp.checkCamBounds() || (sp.checkAtDown() == false)) {
                         y++;
                     }
-                    for (int i = 0; i < sp.food.size(); i++) {
-                        sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 0);
-                        if (sp.checkCamBounds() == false) {
+                    if (sp.checkCamBounds() == false && sp.checkAtRight() == false && sp.checkAtLeft() == false) {
+                        for (int i = 0; i < sp.food.size(); i++) {
+                            sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 0);
                             sp.food.get(i).translate(0, -transval);
+                            sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 3);
                         }
-                        sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 3);
+
                     }
                     break;
 
@@ -83,12 +85,13 @@ public class Snake {
                     if (sp.checkCamBounds() || (sp.checkAtLeft() == false)) {
                         x--;
                     }
-                    for (int i = 0; i < sp.food.size(); i++) {
-                        sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 0);
-                        if (sp.checkCamBounds() == false) {
+                    if (sp.checkCamBounds() == false && sp.checkAtUp() == false && sp.checkAtDown() == false) {
+                        for (int i = 0; i < sp.food.size(); i++) {
+                            sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 0);
                             sp.food.get(i).translate(transval, 0);
+                            sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 3);
                         }
-                        sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 3);
+
                     }
                     break;
 
@@ -97,12 +100,13 @@ public class Snake {
                     if (sp.checkCamBounds() || (sp.checkAtRight() == false)) {
                         x++;
                     }
-                    for (int i = 0; i < sp.food.size(); i++) {
-                        sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 0);
-                        if (sp.checkCamBounds() == false) {
+                    if (sp.checkCamBounds() == false && sp.checkAtUp() == false && sp.checkAtDown() == false) {
+                        for (int i = 0; i < sp.food.size(); i++) {
+                            sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 0);
                             sp.food.get(i).translate(-transval, 0);
+                            sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 3);
                         }
-                        sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 3);
+
                     }
                     break;
 
@@ -168,29 +172,26 @@ public class Snake {
                 growAmount--;
                 return;
             }
-            
-            body.removeLast();      
-            if(sp.checkAtLeft()&& count < body.size()){
-            body.get(count).x=head.x+count;
-            count++;
-            }
-            else if(sp.checkAtRight()&& count < body.size()){
-            body.get(count).x=head.x-count;
-            count++;
-            }
-            else if(sp.checkAtUp()&& count < body.size()){
-            body.get(count).y=head.y+count;
-            count++;
-            }
-            else if(sp.checkAtDown()&& count < body.size()){
-            body.get(count).y=head.y-count;
-            count++;
-            }
-            else {
+
+            body.removeLast();
+            /*
+            if (sp.checkAtLeft() && count < body.size()) {
+                body.get(count).x = head.x + count;
+                count++;
+            } else if (sp.checkAtRight() && count < body.size()) {
+                body.get(count).x = head.x - count;
+                count++;
+            } else if (sp.checkAtUp() && count < body.size()) {
+                body.get(count).y = head.y + count;
+                count++;
+            } else if (sp.checkAtDown() && count < body.size()) {
+                body.get(count).y = head.y - count;
+                count++;
+            } else {
                 count = 0;
             }
-            
-            
+                    */
+
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
