@@ -69,10 +69,10 @@ public class SnakeGame {
             //snakeGame.update(snakeGame.keysPressed2.dir, snakeGame.bernita);
 
             try {
-                //if (i > 35) {///Accelerates into fast pace so time to adapt
-                //    i--;
-               // }
-                Thread.sleep(35);
+                if (i > 25) {///Accelerates into fast pace so time to adapt
+                   i--;
+               }
+                Thread.sleep(i);
             } catch (Exception e) {
                 e.printStackTrace();
             }
