@@ -8,12 +8,14 @@ package snakegame;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
+import java.io.File;
+import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 /**
@@ -51,9 +53,10 @@ public class SnakeGame {
         }
         mainWindow.add(snakeGame);
 
+        FontLoader();
         JLabel statusLabel = new JLabel("SCORE: " + Integer.toString(snakeGame.bernie.score));
-        statusLabel.setFont(new Font("Chiller", Font.PLAIN, 75));
-        statusLabel.setForeground(Color.white);
+        statusLabel.setFont(customFont);
+        statusLabel.setForeground(Color.yellow);
         statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
         snakeGame.add(statusLabel);
         int i = 100;
@@ -75,9 +78,28 @@ public class SnakeGame {
             }
             mainWindow.repaint();
 
-            statusLabel.setText(snakeOneName + ": " + Integer.toString(snakeGame.bernie.score));
+            statusLabel.setText(snakeOneName + ":" + Integer.toString(snakeGame.bernie.score));
 
         }
+
+    }
+    static Font customFont;
+    public static void FontLoader(){
+    //create the font
+
+                    try {
+                        //create the font to use. Specify the size!
+                        customFont = Font.createFont(Font.TRUETYPE_FONT, new File("customFont.ttf")).deriveFont(75f);
+                        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                        //register the font
+                        ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("customFont.ttf")));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    catch(FontFormatException e)
+                    {
+                        e.printStackTrace();
+                    }
 
     }
 

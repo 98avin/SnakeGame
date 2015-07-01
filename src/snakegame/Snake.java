@@ -142,8 +142,8 @@ public class Snake {
                 return;
             }
 
-            body.removeLast();
-
+            body.removeLast();   
+            
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -155,4 +155,5 @@ public class Snake {
             sp.writeSquare(pos.x, pos.y, color);
         }
     }
+    
 }
