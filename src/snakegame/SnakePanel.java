@@ -28,7 +28,6 @@ public class SnakePanel extends JPanel {
     Rect2d cambounds;
 
     static Snake bernie;
-    static Snake bernita;
 
     public SnakePanel(int rows, int cols, int squareSize) {
 
@@ -54,7 +53,6 @@ public class SnakePanel extends JPanel {
         System.out.println(cambounds.getLeft());
         System.out.println(cambounds.getRight());
         bernie = new Snake(((NumCols + 500) / squareSize), ((NumRows + 200) / squareSize), Direction.Right, 1);
-        bernita = new Snake(7, 7, Direction.Left, 4);
     }
 
     public int readSquare(int col, int row) {

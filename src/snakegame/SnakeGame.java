@@ -75,7 +75,7 @@ public class SnakeGame {
             }
             mainWindow.repaint();
 
-            statusLabel.setText(snakeOneName + ": " + Integer.toString(snakeGame.bernie.score) + "   " + snakeTwoName + ": " + Integer.toString(snakeGame.bernita.score));
+            statusLabel.setText(snakeOneName + ": " + Integer.toString(snakeGame.bernie.score));
 
         }
 

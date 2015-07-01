@@ -55,7 +55,7 @@ public class Snake {
                     if (sp.checkCamBounds() || (sp.checkAtUp() == false)) { //Snake should be able to move only when inbounds of cam-rect, should stop at line but still be able to be moved
                         y--;
                     }
-                    if (sp.checkCamBounds() == false && sp.checkAtRight() == false && sp.checkAtLeft() == false) {
+                    if (sp.checkCamBounds() == false && sp.checkAtRight() == false && sp.checkAtLeft() == false || sp.checkAtUp()) {
                         for (int i = 0; i < sp.food.size(); i++) {
                             sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 0);
                             sp.food.get(i).translate(0, transval);
@@ -70,7 +70,7 @@ public class Snake {
                     if (sp.checkCamBounds() || (sp.checkAtDown() == false)) {
                         y++;
                     }
-                    if (sp.checkCamBounds() == false && sp.checkAtRight() == false && sp.checkAtLeft() == false) {
+                    if (sp.checkCamBounds() == false && sp.checkAtRight() == false && sp.checkAtLeft() == false || sp.checkAtDown()) {
                         for (int i = 0; i < sp.food.size(); i++) {
                             sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 0);
                             sp.food.get(i).translate(0, -transval);
@@ -85,7 +85,7 @@ public class Snake {
                     if (sp.checkCamBounds() || (sp.checkAtLeft() == false)) {
                         x--;
                     }
-                    if (sp.checkCamBounds() == false && sp.checkAtUp() == false && sp.checkAtDown() == false) {
+                    if (sp.checkCamBounds() == false && sp.checkAtUp() == false && sp.checkAtDown() == false || sp.checkAtLeft()) {
                         for (int i = 0; i < sp.food.size(); i++) {
                             sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 0);
                             sp.food.get(i).translate(transval, 0);
@@ -100,7 +100,7 @@ public class Snake {
                     if (sp.checkCamBounds() || (sp.checkAtRight() == false)) {
                         x++;
                     }
-                    if (sp.checkCamBounds() == false && sp.checkAtUp() == false && sp.checkAtDown() == false) {
+                    if (sp.checkCamBounds() == false && sp.checkAtUp() == false && sp.checkAtDown() == false || sp.checkAtRight()) {
                         for (int i = 0; i < sp.food.size(); i++) {
                             sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 0);
                             sp.food.get(i).translate(-transval, 0);
@@ -121,38 +121,7 @@ public class Snake {
                     sp.writeSquare(pos.x, pos.y, 3);
                 }
             }
-            //If Bernie(Player 1) collides into Bernita(Player 2) and Bernie is smaller
-            if (this.color == 1 && this.body.size() + 20 < sp.bernita.body.size() && sp.readSquare(x, y) == 4) {
-                sp.bernie.alive = false;
-                for (int i = 0; i < body.size() - 1; i++) {
-                    pos = body.get(i);
-                    sp.writeSquare(pos.x, pos.y, 3);
-                }
-            }
-            //If Bernie collides into Bernita and Bernie is bigger
-            if (this.color == 1 && this.body.size() > sp.bernita.body.size() + 20 && sp.readSquare(x, y) == 4) {
-                for (int i = 0; i < sp.bernita.body.size() - 1; i++) {
-                    pos = sp.bernita.body.get(i);
-                    sp.writeSquare(pos.x, pos.y, 3);
-                    sp.bernita.alive = false;
-                }
-            }
-            //If Bernita collides with Bernie and Bernita is smaller
-            if (this.color == 4 && this.body.size() + 20 < sp.bernie.body.size() && sp.readSquare(x, y) == 1) {
-                sp.bernita.alive = false;
-                for (int i = 1; i < body.size() - 1; i++) {
-                    pos = body.get(i);
-                    sp.writeSquare(pos.x, pos.y, 3);
-                }
-            }
-            //If Bernita collides with Bernie and Bernita is bigger
-            if (this.color == 4 && this.body.size() > sp.bernie.body.size() + 20 && sp.readSquare(x, y) == 1) {
-                for (int i = 0; i < sp.bernie.body.size() - 1; i++) {
-                    pos = sp.bernita.body.get(i);
-                    sp.writeSquare(pos.x, pos.y, 3);
-                    sp.bernie.alive = false;
-                }
-            }
+           
             //WHERE I GROW STUFF
             if (sp.readSquare(x, y) == 3) {
                 sp.drawMouse();
@@ -174,23 +143,6 @@ public class Snake {
             }
 
             body.removeLast();
-            /*
-            if (sp.checkAtLeft() && count < body.size()) {
-                body.get(count).x = head.x + count;
-                count++;
-            } else if (sp.checkAtRight() && count < body.size()) {
-                body.get(count).x = head.x - count;
-                count++;
-            } else if (sp.checkAtUp() && count < body.size()) {
-                body.get(count).y = head.y + count;
-                count++;
-            } else if (sp.checkAtDown() && count < body.size()) {
-                body.get(count).y = head.y - count;
-                count++;
-            } else {
-                count = 0;
-            }
-                    */
 
         }
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
