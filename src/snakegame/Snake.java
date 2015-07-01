@@ -124,6 +124,9 @@ public class Snake {
 
             //WHERE I GROW STUFF
             if (sp.readSquare(x, y) == 3) {
+                try{
+                SoundUtils.tone(750,15);}
+                catch(Exception e){}
                 sp.drawMouse();
                 growAmount = growAmount + 5;
                 score++;
