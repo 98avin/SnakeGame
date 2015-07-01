@@ -121,7 +121,7 @@ public class Snake {
                     sp.writeSquare(pos.x, pos.y, 3);
                 }
             }
-           
+
             //WHERE I GROW STUFF
             if (sp.readSquare(x, y) == 3) {
                 sp.drawMouse();
@@ -135,18 +135,43 @@ public class Snake {
 
                 }
             }
-            //EVERYTHING WE NEED TO FIX INVOLVING THE COLLAPSING SNAKE IS RIGHT HERE!
+            //EVERYTHING WE NEED TO FIX INVOLVING THE COLLAPSING SNAKE IS RIGHT HERE             
+            if (sp.checkAtLeft() && dir == Direction.Left) {
+                for (int i = 0; i < body.size(); i++) {
+                    body.get(i).translate(1, 0);
+                }
+
+            }
+            if (sp.checkAtRight() && dir == Direction.Right) {
+                for (int i = 0; i < body.size(); i++) {
+                    body.get(i).translate(-1, 0);
+                }
+
+            }
+            if (sp.checkAtUp() && dir == Direction.Up) {
+                for (int i = 0; i < body.size(); i++) {
+                    body.get(i).translate(0, 1);
+                }
+
+            }
+            if (sp.checkAtDown() && dir == Direction.Down) {
+                for (int i = 0; i < body.size(); i++) {
+                    body.get(i).translate(0, -1);
+                }
+
+            }
+
             body.addFirst(new SquareCoords(x, y));
             if (growAmount > 0) {
                 growAmount--;
                 return;
             }
 
-            body.removeLast();   
-            
-        }
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            body.removeLast();
 
+        }
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
     void draw(SnakePanel sp) {
@@ -155,5 +180,5 @@ public class Snake {
             sp.writeSquare(pos.x, pos.y, color);
         }
     }
-    
+
 }
