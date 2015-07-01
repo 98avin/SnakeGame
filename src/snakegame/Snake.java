@@ -135,7 +135,8 @@ public class Snake {
 
                 }
             }
-            //EVERYTHING WE NEED TO FIX INVOLVING THE COLLAPSING SNAKE IS RIGHT HERE             
+            //EVERYTHING WE NEED TO FIX INVOLVING THE COLLAPSING SNAKE IS RIGHT HERE
+            //Snake still dies if collision into self is enabled
             if (sp.checkAtLeft() && dir == Direction.Left) {
                 for (int i = 0; i < body.size(); i++) {
                     body.get(i).translate(1, 0);
