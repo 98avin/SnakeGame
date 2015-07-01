@@ -56,7 +56,7 @@ public class SnakeGame {
         FontLoader();
         JLabel statusLabel = new JLabel("SCORE: " + Integer.toString(snakeGame.bernie.score));
         statusLabel.setFont(customFont);
-        statusLabel.setForeground(Color.yellow);
+        statusLabel.setForeground(Color.black);
         statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
         snakeGame.add(statusLabel);
         int i = 100;

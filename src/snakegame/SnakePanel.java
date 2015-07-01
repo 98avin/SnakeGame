@@ -27,9 +27,24 @@ public class SnakePanel extends JPanel {
     ArrayList<SquareCoords> food;
     Rect2d cambounds;
 
+    static int colorOrder;
+    boolean colorDecreaseFlag;
+    public static final int NUM_BACK_COLORS = 3;
+    public static final int MAX_COLOR_VALUE = 150;
+    public static final int MIN_COLOR_VALUE = 100;
+    private int backgroundColors[];
+    static Color insane = new Color(0,0,0);
+
     static Snake bernie;
 
     public SnakePanel(int rows, int cols, int squareSize) {
+
+        colorDecreaseFlag = false;
+        backgroundColors = new int[NUM_BACK_COLORS];
+        for (int i = 0; i < NUM_BACK_COLORS; i++) {
+            backgroundColors[i] = 0;
+        }
+        colorOrder = 0;
 
         keysPressed = new KeysPressed();
         keysPressed2 = new KeysPressed2();
@@ -47,13 +62,14 @@ public class SnakePanel extends JPanel {
         this.addKeyListener(keysPressed2);
         food = new ArrayList<SquareCoords>();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        cambounds = new Rect2d(100,100,screenSize.width-200,screenSize.height-250);
+        cambounds = new Rect2d(100, 100, screenSize.width - 200, screenSize.height - 250);
         System.out.println(cambounds.getTop());
         System.out.println(cambounds.getBottom());
         System.out.println(cambounds.getLeft());
         System.out.println(cambounds.getRight());
         bernie = new Snake(((NumCols + 500) / squareSize), ((NumRows + 200) / squareSize), Direction.Right, 1);
     }
+    
 
     public int readSquare(int col, int row) {
         if (col < 0) {
@@ -90,10 +106,7 @@ public class SnakePanel extends JPanel {
     void update(Direction dir, Snake c) {
         c.update(dir, this);
     }
-    int q = (int) (Math.random() * 1000 % 20);
-    int w = (int) (Math.random() * 1000 % 15);
-    int e = (int) (Math.random() * 1000 % 15);
-    Color insane = new Color(q, w, e);
+
 
     @Override
     public void paintComponent(Graphics g) {
@@ -101,7 +114,7 @@ public class SnakePanel extends JPanel {
         super.paintComponent(g);
 
         Graphics2D g2d = (Graphics2D) g;
-        Color colors[] = {Color.black, Color.yellow, Color.white, Color.white, Color.blue};
+        Color colors[] = {insane, Color.black, Color.white, Color.white, Color.blue};
         for (int i = 0; i < NumRows * NumCols; i++) {
             if (board[i] != 3) {
                 board[i] = 0;
@@ -111,10 +124,39 @@ public class SnakePanel extends JPanel {
             bernie.draw(this);
         }
 
-        int q = (int) (Math.random() * 1000 % 20);
-        int w = (int) (Math.random() * 1000 % 10);
-        int e = (int) (Math.random() * 1000 % 20);
-        insane = new Color(q, w, e);
+        if (colorOrder < 2) {
+            //max red
+            if (this.backgroundColors[colorOrder] < MAX_COLOR_VALUE && colorDecreaseFlag == false) {
+                this.backgroundColors[colorOrder]++;
+            } //max green/blue
+            else if (this.backgroundColors[colorOrder + 1] < MAX_COLOR_VALUE) {
+                this.backgroundColors[colorOrder + 1]++;
+            } //mins red/green
+            else if (this.backgroundColors[colorOrder] > MIN_COLOR_VALUE) {
+                colorDecreaseFlag = true;
+                this.backgroundColors[colorOrder]--;
+            } else {
+                colorDecreaseFlag = false;
+                colorOrder++;
+            }
+        } else if (colorOrder == 2) {
+            //re-maxes red 
+            if (this.backgroundColors[0] < MAX_COLOR_VALUE) {
+                this.backgroundColors[0]++;
+            }//mins blue 
+            else if (this.backgroundColors[colorOrder] > MIN_COLOR_VALUE) {
+                colorDecreaseFlag = true;
+                this.backgroundColors[colorOrder]--;
+            } else {
+                colorDecreaseFlag = false;
+                colorOrder = 0;
+            }
+        }
+
+        insane = new Color(this.backgroundColors[0],
+                this.backgroundColors[1],
+                this.backgroundColors[2]);
+
         for (int col = 0; col < NumCols; col++) {
             for (int row = 0; row < NumRows; row++) {
 
@@ -130,8 +172,6 @@ public class SnakePanel extends JPanel {
             }
 
         }
-        // g.setColor(Color.yellow);
-        //g.fillRect(NumCols+400, NumRows+100, 500, 500);
 
     }
 
@@ -139,15 +179,15 @@ public class SnakePanel extends JPanel {
         int randX = random_number(100000000);
         int randY = random_number(100000000);
         int negornaw = random_number(4);
-        if(negornaw == 1){
-        randY = -randY;
+        if (negornaw == 1) {
+            randY = -randY;
         }
-        if(negornaw == 2){
-        randX = -randX;
+        if (negornaw == 2) {
+            randX = -randX;
         }
-        if(negornaw == 3){
-        randX = -randX;
-        randY = -randY;
+        if (negornaw == 3) {
+            randX = -randX;
+            randY = -randY;
         }
         this.writeSquare(randX, randY, 3);
         food.add(new SquareCoords(randX, randY));
