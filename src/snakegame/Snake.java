@@ -212,14 +212,14 @@ public class Snake {
 
             case Up:
                 if (RectPanel.checkCamBounds() || (RectPanel.checkAtUp() == false)) { //Snake should be able to move only when inbounds of cam-rect, should stop at line but still be able to be moved
-                        this.getHead().translate(0.0, -this.getWidth() - 1);
+                    this.getHead().translate(0.0, -this.getWidth() - 1);
+                }
+                if (RectPanel.checkCamBounds() == false && RectPanel.checkAtRight() == false && RectPanel.checkAtLeft() == false || RectPanel.checkAtUp()) {
+                    for (int i = 0; i < RectPanel.food.size(); i++) {
+                        RectPanel.food.get(i).translate(0, transval);
                     }
-                    if (RectPanel.checkCamBounds() == false && RectPanel.checkAtRight() == false && RectPanel.checkAtLeft() == false || RectPanel.checkAtUp()) {
-                        for (int i = 0; i < RectPanel.food.size(); i++) {
-                            RectPanel.food.get(i).translate(0, transval);
-                        }
 
-                    }        
+                }
                 break;
         }
 

@@ -21,7 +21,7 @@ public class AISnake extends Snake {
     static ArrayList<Double> fooddist = new ArrayList<Double>();
     static ArrayList<Integer> whichfood = new ArrayList<Integer>();
     Rect2d targettemp;
-    
+
     private static ArrayList<Rect2d> snake;
     private static ArrayList<SquareCoords> history;
 
@@ -35,7 +35,7 @@ public class AISnake extends Snake {
         moving = false;
         alive = true;
         isPlayer = true;
-        
+
         isPathing = false;
         isPlayer = false;
         vision = new Rect2d(this.getHead().getCenter().x - 500, this.getHead().getCenter().y - 500, 1000, 1000);
@@ -160,7 +160,6 @@ public class AISnake extends Snake {
             return;
         }
 
-        //System.out.println("s" + this.getSSize());
         double widthfactor = 1;
         for (int j = 0; j < RectPanel.food.size(); j++) {
             if (Rect2d.intersect(RectPanel.food.get(j), this.getHead()) != Rect2d.EmptyRect) {//when snake touches food
@@ -175,10 +174,11 @@ public class AISnake extends Snake {
             }
         }
 
+        //SNAKE COLLISION INTO ITSELF
         for (int j = 1; j < this.getSSize(); j++) {
-            if (Rect2d.intersect(this.getRect(j), this.getHead()) != Rect2d.EmptyRect) {//when snake touches food
-                this.die();
-                return;
+            if (Rect2d.intersect(this.getRect(j), this.getHead()) != Rect2d.EmptyRect) {//when snake touches itself
+                //this.die();
+                //return;
             }
         }
 
@@ -220,7 +220,6 @@ public class AISnake extends Snake {
         pathY = new Rect2d(this.getHead().getLeft() - 500, this.getHead().getTop(), 1000, this.getWidth());
         pathX = new Rect2d(this.getHead().getLeft(), this.getHead().getCenter().y - 500, this.getWidth(), 1000);
         this.updateSize();
-
     }
 
 }

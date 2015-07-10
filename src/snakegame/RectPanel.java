@@ -39,7 +39,6 @@ public class RectPanel extends JPanel {
 
     private int backgroundColors[];
     private Rect2d head;
-
     private Rect2d back;
 
     double snakeWidth;
@@ -111,7 +110,7 @@ public class RectPanel extends JPanel {
             bernie1.addH(new SquareCoords((int) bernie1.getRect(i).getLeft(), (int) bernie1.getRect(i).getTop()));
         }
 
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 10; i++) {
             food.add(new Rect2d(random_number(0, 1000), random_number(0, 1000), 10, 10));
         }
 
