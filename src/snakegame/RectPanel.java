@@ -111,7 +111,7 @@ public class RectPanel extends JPanel {
         }
 
         for (int i = 0; i < 10; i++) {
-            food.add(new Rect2d(random_number(0, 1000), random_number(0, 1000), 10, 10));
+            food.add(new Rect2d(random_number(0, 1000), random_number(0, 500), 10, 10));
         }
 
         this.setFocusable(true);
