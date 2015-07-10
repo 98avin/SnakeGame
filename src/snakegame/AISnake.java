@@ -5,7 +5,8 @@
  */
 package snakegame;
 
-import static snakegame.RectPanel.random_number;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -17,83 +18,130 @@ public class AISnake extends Snake {
     SquareCoords scanLocation;
     Rect2d vision, pathX, pathY;
     int randomCooldown;
+    static ArrayList<Double> fooddist = new ArrayList<Double>();
+    static ArrayList<Integer> whichfood = new ArrayList<Integer>();
+    Rect2d targettemp;
+    
+    private static ArrayList<Rect2d> snake;
+    private static ArrayList<SquareCoords> history;
 
     public AISnake() {
-        super();
+        this.dir = Direction.Right;
+        snake = new ArrayList<Rect2d>();
+        history = new ArrayList<SquareCoords>();
+        snakeWidth = 20;
+        head = new Rect2d(500.0, 1000.0, snakeWidth, snakeWidth);
+        this.addS(head);
+        moving = false;
+        alive = true;
+        isPlayer = true;
+        
         isPathing = false;
         isPlayer = false;
         vision = new Rect2d(this.getHead().getCenter().x - 500, this.getHead().getCenter().y - 500, 1000, 1000);
-        pathX = new Rect2d(this.getHead().getLeft(), this.getHead().getCenter().x - 500, 1000, this.getWidth());
-        pathY = new Rect2d(this.getHead().getLeft(), this.getHead().getCenter().y - 500, this.getWidth(), 1000);
+        pathY = new Rect2d(this.getHead().getLeft(), this.getHead().getCenter().x - 500, 1000, this.getWidth());
+        pathX = new Rect2d(this.getHead().getLeft(), this.getHead().getCenter().y - 500, this.getWidth(), 1000);
         randomCooldown = 0;
     }
 
     void scan() {
 
+        System.out.println("--------------------Scanning--------------------");
         if (!isPathing) {
             for (int i = 0; i < RectPanel.food.size(); i++) {
                 if (Rect2d.intersect(this.vision, RectPanel.food.get(i)) != Rect2d.EmptyRect) {
-                    isPathing = true;
-                    pathTo(RectPanel.food.get(i));
+                    fooddist.add(findDistance(RectPanel.food.get(i)));
+                    whichfood.add(i);
                 }
             }
 
-        }
+            if (isFood()) {
+                System.out.println("food found");
+                isPathing = true;
+                pathTo(giveClosest());
+                targettemp = giveClosest();
+            }
 
-        //System.out.println(isPathing);
+            if (isFood() == false) {
+            }
+
+        }
+        System.out.println("--------------------End Scan--------------------");
+        pathTo(targettemp);
+
     }
 
     void pathTo(Rect2d target) {
-        if (Rect2d.intersect(this.pathY, target) != Rect2d.EmptyRect) {
-            if (this.getHead().getTop() > target.getBottom()) {
-                this.dir = Direction.Up;
-                return;
-            }
-            if (this.getHead().getTop() < target.getBottom()) {
-                this.dir = Direction.Down;
-                return;
-            }
-        }
-
-        if (Rect2d.intersect(this.pathX, target) != Rect2d.EmptyRect) {
-            if (this.getHead().getLeft() > target.getRight()) {
-                this.dir = Direction.Left;
-                return;
-            }
-            if (this.getHead().getRight() > target.getLeft()) {
+        System.out.println("----------------------Pathing----------------------");
+        System.out.println("TargetX: " + target.getLeft());
+        System.out.println("TargetY: " + target.getTop());
+        System.out.println("PATHX: " + pathX.getLeft());
+        System.out.println("PATHY: " + pathY.getTop());
+        if (!pathX.checkCollisions(target)) {
+            System.out.println("horizontal change needed");
+            if (pathX.getLeft() < target.getLeft()) {
                 this.dir = Direction.Right;
                 return;
             }
+            if (pathX.getLeft() > target.getLeft()) {
+                this.dir = Direction.Left;
+                return;
+            }
+        } else if (pathX.checkCollisions(target)) {
+            System.out.println("vertical change needed");
+            if (!pathY.checkCollisions(target)) {
+                if (pathY.getTop() > target.getTop()) {
+                    this.dir = Direction.Up;
+                    return;
+                }
+                if (pathY.getTop() < target.getTop()) {
+                    this.dir = Direction.Down;
+                    return;
+                }
+
+            } else if (pathY.checkCollisions(target)) {
+                isPathing = false;
+                System.out.println("----------------------Pathing Success----------------------");
+                return;
+            }
+
         }
-        if (randomCooldown == 0) {
-            randomDirection();
-            randomCooldown = 5;
-        }
-        randomCooldown--;
+        System.out.println("whoops");
     }
 
-    void randomDirection() {
-        int random = random_number(0, 4);
-        switch (random) {
-            case 0:
-                this.dir = Direction.Up;
-                break;
+    Rect2d giveClosest() {
 
-            case 1:
-                this.dir = Direction.Down;
-                break;
+        int index = whichfood.get(returnLowest());
 
-            case 2:
-                this.dir = Direction.Left;
-                break;
+        return RectPanel.food.get(index);
+    }
 
-            case 3:
-                this.dir = Direction.Right;
-                break;
-
-            default:
-                random = random_number(0, 4);
+    boolean isFood() {
+        if (fooddist.isEmpty()) {
+            return false;
         }
+        return true;
+    }
+
+    double findDistance(Rect2d target) {
+        double distance = 0;
+        double x1 = this.getHead().getCenter().x;
+        double x2 = target.getCenter().x;
+        double y1 = this.getHead().getCenter().y;
+        double y2 = target.getCenter().y;
+
+        distance = Math.sqrt((Math.pow((x2 - x1), 2)) + (Math.pow((y2 - y1), 2)));
+        return distance;
+    }
+
+    int returnLowest() {
+        double x = Collections.min(fooddist);
+        for (int i = 0; i < fooddist.size(); i++) {
+            if (fooddist.get(i) == x) {
+                return i;
+            }
+        }
+        return 26812334;
     }
 
     public static int random_number(int low, int high) {
@@ -168,7 +216,9 @@ public class AISnake extends Snake {
                 this.getHead().translate(0.0, -this.getWidth() - 1);
                 break;
         }
-
+        vision = new Rect2d(this.getHead().getCenter().x - 500, this.getHead().getCenter().y - 500, 1000, 1000);
+        pathY = new Rect2d(this.getHead().getLeft() - 500, this.getHead().getTop(), 1000, this.getWidth());
+        pathX = new Rect2d(this.getHead().getLeft(), this.getHead().getCenter().y - 500, this.getWidth(), 1000);
         this.updateSize();
 
     }

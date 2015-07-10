@@ -29,7 +29,7 @@ public class Snake {
         snake = new ArrayList<Rect2d>();
         history = new ArrayList<SquareCoords>();
         snakeWidth = 20;
-        head = new Rect2d(500, 500.0, snakeWidth, snakeWidth);
+        head = new Rect2d(500.0, 500.0, snakeWidth, snakeWidth);
         this.addS(head);
         moving = false;
         alive = true;
@@ -127,7 +127,7 @@ public class Snake {
 
         //EVERYTHING TO FIX COLLAPSING SNAKE IS HERE
         for (int j = 1; j < this.getSSize(); j++) {
-            if (Rect2d.intersect(this.getRect(j), this.getHead()) != Rect2d.EmptyRect) {//when snake touches food
+            if (Rect2d.intersect(this.getRect(j), this.getHead()) != Rect2d.EmptyRect) {//when snake touches itself
                 //this.die();
                 //return;
             }

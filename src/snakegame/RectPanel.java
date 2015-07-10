@@ -45,6 +45,7 @@ public class RectPanel extends JPanel {
     double snakeWidth;
 
     public static Snake bernie;
+    public static AISnake bernie1;
 
     public boolean music;
 
@@ -55,7 +56,7 @@ public class RectPanel extends JPanel {
     static ImageIcon EXPLODE;
 
     private static Sequencer sequencer;
-    
+
     static Rect2d cambounds;
 
     // <<CONSTRUCTOR>>
@@ -86,14 +87,12 @@ public class RectPanel extends JPanel {
         keysPressed = new KeysPressed();
 
         bernie = new Snake();
-
-       
+        bernie1 = new AISnake();
 
         back = new Rect2d(-500, -500, 10000, 10000);
 
-       
         food = new ArrayList<Rect2d>();
-        
+
         cambounds = new Rect2d(100, 100, screenSize.width - 200, screenSize.height - 250);
 
         for (int i = 1; i < 0; i++) {
@@ -103,9 +102,17 @@ public class RectPanel extends JPanel {
         for (int i = 0; i < bernie.getSSize(); i++) {
             bernie.addH(new SquareCoords((int) bernie.getRect(i).getLeft(), (int) bernie.getRect(i).getTop()));
         }
+        
+        for (int i = 1; i < 0; i++) {
+            bernie1.addS(new Rect2d(30.0 + (i * 30), 170.0, bernie1.getWidth(), bernie1.getWidth()));
+        }
 
-        for (int i = 1; i < 10; i++) {
-            food.add(new Rect2d(random_number(0, (int) WINDOW_WIDTH), random_number(0, (int) WINDOW_HEIGHT), 10, 10));
+        for (int i = 0; i < bernie1.getSSize(); i++) {
+            bernie1.addH(new SquareCoords((int) bernie1.getRect(i).getLeft(), (int) bernie1.getRect(i).getTop()));
+        }
+
+        for (int i = 0; i < 1; i++) {
+            food.add(new Rect2d(random_number(0, 1000), random_number(0, 1000), 10, 10));
         }
 
         this.setFocusable(true);
@@ -170,6 +177,7 @@ public class RectPanel extends JPanel {
     }
 
     public void paintComponent(Graphics g) {
+
         if (!bernie.isLiving()) {
             try {
                 stopMusic();
@@ -177,8 +185,27 @@ public class RectPanel extends JPanel {
                 Logger.getLogger(RectPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
             fillRect(g, back, Color.GRAY);
+
             for (int i = 1; i < bernie.getSSize(); i++) {
                 fillRect(g, bernie.getRect(i), Color.BLUE);
+            }
+
+            for (int i = 0; i < food.size(); i++) {
+                fillRect(g, food.get(i), Color.white);
+            }
+            return;
+        }
+        
+        if (!bernie1.isLiving()) {
+            try {
+                stopMusic();
+            } catch (Exception ex) {
+                Logger.getLogger(RectPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            fillRect(g, back, Color.GRAY);
+
+            for (int i = 1; i < bernie1.getSSize(); i++) {
+                fillRect(g, bernie1.getRect(i), Color.red);
             }
 
             for (int i = 0; i < food.size(); i++) {
@@ -242,9 +269,13 @@ public class RectPanel extends JPanel {
             fillRect(g, back, Color.GRAY);
 
         }
-
+            //fillRect(g, bernie1.vision, Color.yellow);
+            //fillRect(g, bernie1.pathX, Color.blue);
+            //fillRect(g, bernie1.pathY, Color.red);
+            
         // Set snake's head to black
         fillRect(g, bernie.getHead(), Color.black);
+        fillRect(g, bernie1.getHead(), Color.black);
 
         // Fill the rest of the snake's body with colors
         for (int i = 1; i < bernie.getSSize(); i++) {
@@ -258,6 +289,18 @@ public class RectPanel extends JPanel {
                 fillRect(g, bernie.getRect(i), Color.blue);
             }
         }
+        
+        for (int i = 1; i < bernie1.getSSize(); i++) {
+
+            if (bernie1.getSSize() > RAVE_THRESHOLD) {
+                insane = new Color(getRandomColorValue(),
+                        getRandomColorValue(),
+                        getRandomColorValue());
+                fillRect(g, bernie1.getRect(i), insane);
+            } else {
+                fillRect(g, bernie1.getRect(i), Color.red);
+            }
+        }
 
         for (int i = 0; i < food.size(); i++) {
             fillRect(g, food.get(i), Color.white);
@@ -267,6 +310,7 @@ public class RectPanel extends JPanel {
 
     public void update() {
         bernie.update();
+        bernie1.update();
     }
 
     public static int random_number(int low, int high) {
@@ -307,7 +351,7 @@ public class RectPanel extends JPanel {
         sequencer.stop();
     }
 
-     static boolean checkCamBounds() {
+    static boolean checkCamBounds() {
         if (bernie.getHead().getTop() > (cambounds.getTop()) && bernie.getHead().getTop() < (cambounds.getBottom()) && bernie.getHead().getLeft() < (cambounds.getRight()) && bernie.getHead().getLeft() > (cambounds.getLeft())) {
             return true;
         } else {
