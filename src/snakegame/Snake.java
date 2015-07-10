@@ -3,186 +3,232 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package snakegame;///YO
+package snakegame;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import static snakegame.RectPanel.random_number;
 
 /**
  *
- * @author cs1
+ * @author skinnnero5
  */
 public class Snake {
 
-    Direction dir;
-    LinkedList<SquareCoords> body;
+    public Direction dir;
+    private ArrayList<Rect2d> snake;
+    private ArrayList<SquareCoords> history;
+    double snakeWidth;
+    boolean moving;
     boolean alive;
-    int growAmount;
-    int score = 0;
-    int color;
+    boolean isPlayer;
+    Rect2d head;
+    int transval = 15;
 
-    Snake(int x, int y, Direction dir, int color) {
+    public Snake() {
+        this.dir = Direction.Right;
+        snake = new ArrayList<Rect2d>();
+        history = new ArrayList<SquareCoords>();
+        snakeWidth = 20;
+        head = new Rect2d(500, 500.0, snakeWidth, snakeWidth);
+        this.addS(head);
+        moving = false;
+        alive = true;
+        isPlayer = true;
+    }
 
-        this.dir = dir;
-        this.alive = true;
-        this.growAmount = 0;
-        this.color = color;
-        body = new LinkedList<SquareCoords>();
-        body.addLast(new SquareCoords(x + 5, y + 27));
+    Rect2d getRect(int i) {
+        return snake.get(i);
+    }
+
+    SquareCoords getH(int i) {
+        return history.get(i);
+    }
+
+    double getSSize() {
+        return snake.size();
+    }
+
+    double getHSize() {
+        return history.size();
+    }
+
+    double getWidth() {
+        return snakeWidth;
+    }
+
+    void setWidth(double newWidth) {
+        snakeWidth = newWidth;
+    }
+
+    void addH(SquareCoords a) {
+        history.add(a);
+    }
+
+    void addS(Rect2d s) {
+        snake.add(s);
+    }
+
+    void setS(int i, Rect2d s) {
+        snake.set(i, s);
+    }
+
+    void setH(int i, SquareCoords a) {
+        history.set(i, a);
+    }
+
+    void updateSize() {
+        for (int i = 0; i < this.getSSize(); i++) {
+            this.setS(i, new Rect2d(this.getRect(i).getLeft(), this.getRect(i).getTop(), snakeWidth, snakeWidth));
+        }
 
     }
 
-    int getX() {
-        return body.get(0).x;
+    boolean isMoving() {
+        return moving;
     }
 
-    int getY() {
-        return body.get(0).y;
+    void setMoving(boolean tf) {
+        moving = tf;
     }
 
-    int count = 0;
+    void die() {
+        alive = false;
+        moving = false;
+        for (int i = 0; i < history.size(); i++) {
+            RectPanel.food.add(new Rect2d(this.getH(i).x, this.getH(i).y, 10, 10));
+        }
+        snake.clear();
 
-    void update(Direction dir, SnakePanel sp) {
-        if (alive != true) {
+    }
+
+    boolean isLiving() {
+        return alive;
+    }
+
+    void update() {
+        if (alive == false) {
             return;
-        } else {
-            SquareCoords head = body.getFirst();
-            int x = head.x;
-            int y = head.y;
-            int transval = 1;
-            switch (dir) {
-                case Up:
-                    //System.out.println(sp.checkAtBounds());
-                    if (sp.checkCamBounds() || (sp.checkAtUp() == false)) { //Snake should be able to move only when inbounds of cam-rect, should stop at line but still be able to be moved
-                        y--;
-                    }
-                    if (sp.checkCamBounds() == false && sp.checkAtRight() == false && sp.checkAtLeft() == false || sp.checkAtUp()) {
-                        for (int i = 0; i < sp.food.size(); i++) {
-                            sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 0);
-                            sp.food.get(i).translate(0, transval);
-                            sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 3);
-                        }
+        }
 
-                    }
-                    break;
-
-                case Down:
-                    //System.out.println(sp.checkAtBounds());
-                    if (sp.checkCamBounds() || (sp.checkAtDown() == false)) {
-                        y++;
-                    }
-                    if (sp.checkCamBounds() == false && sp.checkAtRight() == false && sp.checkAtLeft() == false || sp.checkAtDown()) {
-                        for (int i = 0; i < sp.food.size(); i++) {
-                            sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 0);
-                            sp.food.get(i).translate(0, -transval);
-                            sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 3);
-                        }
-
-                    }
-                    break;
-
-                case Left:
-                    //System.out.println(sp.checkAtBounds());
-                    if (sp.checkCamBounds() || (sp.checkAtLeft() == false)) {
-                        x--;
-                    }
-                    if (sp.checkCamBounds() == false && sp.checkAtUp() == false && sp.checkAtDown() == false || sp.checkAtLeft()) {
-                        for (int i = 0; i < sp.food.size(); i++) {
-                            sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 0);
-                            sp.food.get(i).translate(transval, 0);
-                            sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 3);
-                        }
-
-                    }
-                    break;
-
-                case Right:
-                    //System.out.println(sp.checkAtBounds());
-                    if (sp.checkCamBounds() || (sp.checkAtRight() == false)) {
-                        x++;
-                    }
-                    if (sp.checkCamBounds() == false && sp.checkAtUp() == false && sp.checkAtDown() == false || sp.checkAtRight()) {
-                        for (int i = 0; i < sp.food.size(); i++) {
-                            sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 0);
-                            sp.food.get(i).translate(-transval, 0);
-                            sp.writeSquare(sp.food.get(i).x, sp.food.get(i).y, 3);
-                        }
-
-                    }
-                    break;
-
+        //System.out.println("s" + this.getSSize());
+        double widthfactor = 1;
+        for (int j = 0; j < RectPanel.food.size(); j++) {
+            if (Rect2d.intersect(RectPanel.food.get(j), this.getHead()) != Rect2d.EmptyRect) {//when snake touches food
+                //Rect2d.resolveOverlap(food.get(j), snake.get(0));
+                this.addS(new Rect2d(1000, 1000.0, this.getWidth(), this.getWidth()));
+                this.addH(new SquareCoords(0, 0));
+                RectPanel.food.remove(j);
+                RectPanel.food.add(new Rect2d(random_number(0, (int) RectPanel.WINDOW_WIDTH), random_number(0, (int) RectPanel.WINDOW_HEIGHT), 10, 10));
+                widthfactor = this.getSSize() / 10;
+                widthfactor += 1;
+                this.setWidth(10 + (widthfactor * 5));
             }
-            /////COLLISION MANAGEMENT
-            SquareCoords pos = new SquareCoords(0, 0);
+        }
 
-            if (sp.readSquare(x, y) != 0 && sp.readSquare(x, y) != 3 && sp.readSquare(x, y) != 4 && sp.readSquare(x, y) != 1) {
-                alive = false;
-                for (int i = 0; i < body.size() - 1; i++) {
-                    pos = body.get(i);
-                    sp.writeSquare(pos.x, pos.y, 3);
+        //EVERYTHING TO FIX COLLAPSING SNAKE IS HERE
+        for (int j = 1; j < this.getSSize(); j++) {
+            if (Rect2d.intersect(this.getRect(j), this.getHead()) != Rect2d.EmptyRect) {//when snake touches food
+                //this.die();
+                //return;
+            }
+        }
+
+        for (int i = 0; i < this.getSSize(); i++) {
+            this.setH(i, new SquareCoords((int) this.getRect(i).getLeft(), (int) this.getRect(i).getTop()));
+        }
+
+        this.setMoving(true);
+
+        for (int i = 0; i < this.getHSize(); i++) {
+            if (i == 0) {
+                if (RectPanel.keysPressed.Left && dir != Direction.Right) {
+                    // bernie.getHead().translate(-bernie.getWidth(), 0.0);
+                    this.setMoving(true);
+                    this.dir = Direction.Left;
                 }
-            }
-
-            //WHERE I GROW STUFF
-            if (sp.readSquare(x, y) == 3) {
-                try{
-                SoundUtils.tone(750,15);}
-                catch(Exception e){}
-                sp.drawMouse();
-                growAmount = growAmount + 5;
-                score++;
-
-                for (int i = 0; i < sp.food.size(); i++) {
-                    if (sp.food.get(i).x == x && sp.food.get(i).y == y) {
-                        sp.food.remove(i);
-                    }
-
+                if (RectPanel.keysPressed.Right && dir != Direction.Left) {
+                    //  bernie.getHead().translate(bernie.getWidth(), 0.0);
+                    this.setMoving(true);
+                    this.dir = Direction.Right;
                 }
-            }
-            //EVERYTHING WE NEED TO FIX INVOLVING THE COLLAPSING SNAKE IS RIGHT HERE
-            //Snake still dies if collision into self is enabled
-            if (sp.checkAtLeft() && dir == Direction.Left) {
-                for (int i = 0; i < body.size(); i++) {
-                    body.get(i).translate(1, 0);
+
+                if (RectPanel.keysPressed.Down && dir != Direction.Up) {
+                    //    bernie.getHead().translate(0.0, bernie.getWidth());
+                    this.setMoving(true);
+                    this.dir = Direction.Down;
+                }
+
+                if (RectPanel.keysPressed.Up && dir != Direction.Down) {
+                    // bernie.getHead().translate(0.0, -bernie.getWidth());
+                    this.setMoving(true);
+                    this.dir = Direction.Up;
+                }
+            } else {
+                if (this.isMoving()) {
+                    this.getRect(i).moveTo(this.getH(i - 1));
                 }
 
             }
-            if (sp.checkAtRight() && dir == Direction.Right) {
-                for (int i = 0; i < body.size(); i++) {
-                    body.get(i).translate(-1, 0);
-                }
-
-            }
-            if (sp.checkAtUp() && dir == Direction.Up) {
-                for (int i = 0; i < body.size(); i++) {
-                    body.get(i).translate(0, 1);
-                }
-
-            }
-            if (sp.checkAtDown() && dir == Direction.Down) {
-                for (int i = 0; i < body.size(); i++) {
-                    body.get(i).translate(0, -1);
-                }
-
-            }
-
-            body.addFirst(new SquareCoords(x, y));
-            if (growAmount > 0) {
-                growAmount--;
-                return;
-            }
-
-            body.removeLast();
 
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        switch (this.dir) {
+            case Left:
+                if (RectPanel.checkCamBounds() || (RectPanel.checkAtLeft() == false)) {
+                    this.getHead().translate(-this.getWidth() - 1, 0.0);
+                }
+                if (RectPanel.checkCamBounds() == false && RectPanel.checkAtUp() == false && RectPanel.checkAtDown() == false || RectPanel.checkAtLeft()) {
+                    for (int i = 0; i < RectPanel.food.size(); i++) {
+                        RectPanel.food.get(i).translate(transval, 0);
+                    }
+
+                }
+
+                break;
+
+            case Right:
+                if (RectPanel.checkCamBounds() || (RectPanel.checkAtRight() == false)) {
+                    this.getHead().translate(this.getWidth() + 1, 0.0);
+                }
+                if (RectPanel.checkCamBounds() == false && RectPanel.checkAtUp() == false && RectPanel.checkAtDown() == false || RectPanel.checkAtRight()) {
+                    for (int i = 0; i < RectPanel.food.size(); i++) {
+                        RectPanel.food.get(i).translate(-transval, 0);
+                    }
+
+                }
+                break;
+
+            case Down:
+                if (RectPanel.checkCamBounds() || (RectPanel.checkAtDown() == false)) {
+                    this.getHead().translate(0.0, this.getWidth() + 1);
+                }
+                if (RectPanel.checkCamBounds() == false && RectPanel.checkAtRight() == false && RectPanel.checkAtLeft() == false || RectPanel.checkAtDown()) {
+                    for (int i = 0; i < RectPanel.food.size(); i++) {
+                        RectPanel.food.get(i).translate(0, -transval);
+                    }
+
+                }
+                break;
+
+            case Up:
+                if (RectPanel.checkCamBounds() || (RectPanel.checkAtUp() == false)) { //Snake should be able to move only when inbounds of cam-rect, should stop at line but still be able to be moved
+                        this.getHead().translate(0.0, -this.getWidth() - 1);
+                    }
+                    if (RectPanel.checkCamBounds() == false && RectPanel.checkAtRight() == false && RectPanel.checkAtLeft() == false || RectPanel.checkAtUp()) {
+                        for (int i = 0; i < RectPanel.food.size(); i++) {
+                            RectPanel.food.get(i).translate(0, transval);
+                        }
+
+                    }        
+                break;
+        }
+
+        this.updateSize();
+
     }
 
-    void draw(SnakePanel sp) {
-        for (int i = 0; i < body.size(); i++) {
-            SquareCoords pos = body.get(i);
-            sp.writeSquare(pos.x, pos.y, color);
-        }
+    Rect2d getHead() {
+        return snake.get(0);
     }
 
 }

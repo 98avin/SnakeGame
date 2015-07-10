@@ -14,7 +14,7 @@ import java.util.ArrayList;
  *
  * @author 11768
  */
-public class Rect2d extends Shape2d {
+public class Rect2d {
 
     private double x;
     private double y;
@@ -22,17 +22,22 @@ public class Rect2d extends Shape2d {
     private double h;
     static Rect2d EmptyRect = new Rect2d(0.0, 0.0, 0.0, 0.0);
 
-    Rect2d(double x, double y, double w, double h) {
-    this.x = x;
-        this.y = y;
-        this.w = w;
-        this.h = h;    
-    }
-
     enum Direction {
 
         Left, Right, Up, Down
     };
+
+    Rect2d(double x, double y, double w, double h) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+    }
+
+    void moveTo(SquareCoords a) {
+        this.setX(a.x);
+        this.setY(a.y);
+    }
 
     double getLeft() {
         return x;
@@ -58,6 +63,18 @@ public class Rect2d extends Shape2d {
         return h;
     }
 
+    void setX(double x) {
+        this.x = x;
+    }
+
+    void setY(double y) {
+        this.y = y;
+    }
+
+    SquareCoords getCenter() {
+        return new SquareCoords((int)(this.getLeft()+this.getRight())/2,(int)(this.getTop()+this.getBottom())/2);
+    }
+
     void notifyPushed(Rect2d.Direction d, Rect2d B) {
     }
 
@@ -75,38 +92,6 @@ public class Rect2d extends Shape2d {
         return out;
     }
 
-    static void resolveOverlap(Rect2d A, Rect2d B) {
-// we'll move A, not B, to resolve the collision.
-        Rect2d overlap = intersect(A, B);
-        if (overlap.getHeight() < overlap.getWidth()) {
-// Resolve VERTICALLY...either up or down, whichever is less.
-            double moveUpAmount = A.getBottom() - B.getTop();
-            double moveDownAmount = B.getBottom() - A.getTop();
-            if (moveUpAmount < moveDownAmount) {
-                A.translate(0, -moveUpAmount);
-                A.notifyPushed(Direction.Up, B);
-                B.notifyPushed(Direction.Down, A);
-            } else {
-                A.translate(0, moveDownAmount);
-                A.notifyPushed(Direction.Down, B);
-                B.notifyPushed(Direction.Up, A);
-            }
-        } else {
-// Resolve HORIZONTALLY...left or right, whichever is less.
-            double moveLeftAmount = A.getRight() - B.getLeft();
-            double moveRightAmount = B.getRight() - A.getLeft();
-            if (moveLeftAmount < moveRightAmount) {
-                A.translate(-moveLeftAmount, 0);
-                A.notifyPushed(Direction.Left, B);
-                B.notifyPushed(Direction.Right, A);
-            } else {
-                A.translate(moveRightAmount, 0);
-                A.notifyPushed(Direction.Right, B);
-                B.notifyPushed(Direction.Left, A);
-            }
-        }
-    }
-
     boolean checkCollisions(Rect2d B) {
         if (intersect(this, B) != EmptyRect) {
             return true;
@@ -115,28 +100,6 @@ public class Rect2d extends Shape2d {
         }
     }
 
-    // is 'this' supported by B?
-
-
-    void update(double dt) {
-
-    }
-
-    void applyAccel(double xAmt, double yAmt) {
-
-    }
-
-    @Override
-    double getArea() {
-        return (w * h);
-    }
-    @Override
-    void print() {
-        System.out.println("Rect2d");
-        System.out.println("X: " + x + " Y: " + y + " W: " + w + " H: " + h);
-    }
-    
-     @Override
     void translate(double xMove, double yMove) {
         x += xMove;
         y += yMove;

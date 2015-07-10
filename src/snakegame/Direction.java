@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-///
+
 package snakegame;
 
 /**
  *
- * @author cs1
+ * @author skinnnero5
  */
 public enum Direction {
     Up,Down,Left,Right
