@@ -279,7 +279,7 @@ public class RectPanel extends JPanel {
         // Fill the rest of the snake's body with colors
         for (int i = 1; i < bernie.getSSize(); i++) {
 
-            if (bernie.getSSize() > RAVE_THRESHOLD) {
+            if (bernie.getSSize() > RAVE_THRESHOLD && bernie.getSSize() > bernie1.getSSize()) {
                 insane = new Color(getRandomColorValue(),
                         getRandomColorValue(),
                         getRandomColorValue());
