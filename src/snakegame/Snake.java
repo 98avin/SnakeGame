@@ -119,9 +119,9 @@ public class Snake {
                 this.addH(new SquareCoords(0, 0));
                 RectPanel.food.remove(j);
                 RectPanel.food.add(new Rect2d(random_number(0, 1000), random_number(0, 500), 10, 10));
-                widthfactor = this.getSSize() / 10;
-                widthfactor += 1;
-                this.setWidth(10 + (widthfactor * 5));
+                //widthfactor = this.getSSize() / 10;
+                //widthfactor += 1;
+                //this.setWidth(10 + (widthfactor * 5));
             }
         }
 

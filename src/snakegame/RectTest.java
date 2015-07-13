@@ -1,3 +1,5 @@
+//WE NEED TO CLEAN THE CODE UP AND MAKE IT MORE READABLE!!!!!
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,12 +12,26 @@ import java.awt.*;
 import java.awt.event.KeyListener;
 import java.awt.event.*;
 import static java.awt.event.KeyEvent.*;
+import java.io.File;
+import java.io.IOException;
 
 /**
  *
  * @author 11768
  */
 public class RectTest {
+    
+    static Font customFont;
+    
+        public static void fontLoader(){
+            try {
+            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("customFont.ttf")).deriveFont(50f);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("customFont.ttf")));
+        } catch (IOException | FontFormatException e) {
+            //Handle exception
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -28,8 +44,9 @@ public class RectTest {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(rectPanel);
 
-        JLabel statusLabel = new JLabel("BERNIE: " + Integer.toString((int)RectPanel.bernie.getSSize()) + "BERNIE 1: " + Integer.toString((int)RectPanel.bernie1.getSSize()));
-        statusLabel.setFont(new Font("Courier New", Font.PLAIN, 75));
+        JLabel statusLabel = new JLabel("BERNIE: " + Integer.toString((int) RectPanel.bernie.getSSize()));
+        fontLoader();
+        statusLabel.setFont(customFont);
         statusLabel.setForeground(Color.white);
         statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
         rectPanel.add(statusLabel);
@@ -45,19 +62,19 @@ public class RectTest {
         while (true) {
             rectPanel.update();
             if(!RectPanel.bernie.isLiving()){
-                statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNIE 1: " + Integer.toString(score1));
+                statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNINATOR: " + Integer.toString(score1));
             }
             else{
                 score = (int)RectPanel.bernie.getSSize()-1;
-                statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNIE 1: " + Integer.toString(score1));
+                statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNINATOR: " + Integer.toString(score1));
             }
             
-            if(!RectPanel.bernie1.isLiving()){
-                statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNIE 1: " + Integer.toString(score1));
+            if(!RectPanel.berninator.isLiving()){
+                statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNINATOR: " + Integer.toString(score1));
             }
             else{
-                score1 = (int)RectPanel.bernie1.getSSize()-1;
-                statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNIE 1: " + Integer.toString(score1));
+                score1 = (int)RectPanel.berninator.getSSize()-1;
+                statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNINATOR: " + Integer.toString(score1));
             }
             
             try {
