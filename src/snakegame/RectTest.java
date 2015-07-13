@@ -28,8 +28,8 @@ public class RectTest {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(rectPanel);
 
-        JLabel statusLabel = new JLabel("BERNIE: " + Integer.toString((int)RectPanel.bernie.getSSize()) + "BERNIE 1: " + Integer.toString((int)RectPanel.bernie1.getSSize()));
-        statusLabel.setFont(new Font("Courier New", Font.PLAIN, 75));
+        JLabel statusLabel = new JLabel("BERNIE: " + Integer.toString((int)RectPanel.bernie.getSSize()));
+        statusLabel.setFont(new Font("customfont.ttf", Font.PLAIN, 75));
         statusLabel.setForeground(Color.white);
         statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
         rectPanel.add(statusLabel);
@@ -45,23 +45,15 @@ public class RectTest {
         while (true) {
             rectPanel.update();
             if(!RectPanel.bernie.isLiving()){
-                statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNIE 1: " + Integer.toString(score1));
+                statusLabel.setText("BERNIE: " + Integer.toString(score));
             }
             else{
                 score = (int)RectPanel.bernie.getSSize()-1;
-                statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNIE 1: " + Integer.toString(score1));
-            }
-            
-            if(!RectPanel.bernie1.isLiving()){
-                statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNIE 1: " + Integer.toString(score1));
-            }
-            else{
-                score1 = (int)RectPanel.bernie1.getSSize()-1;
-                statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNIE 1: " + Integer.toString(score1));
+                statusLabel.setText("BERNIE: " + Integer.toString(score));
             }
             
             try {
-                Thread.sleep(35);
+                Thread.sleep(50);
             } catch (Exception e) {
                 e.printStackTrace();
             }

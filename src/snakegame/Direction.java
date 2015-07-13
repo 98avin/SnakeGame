@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package snakegame;
 
 /**
@@ -11,5 +10,12 @@ package snakegame;
  * @author skinnnero5
  */
 public enum Direction {
-    Up,Down,Left,Right
+
+    Up, Down, Left, Right;
+
+    public Direction getNext() {
+        return this.ordinal() < Direction.values().length - 1
+                ? Direction.values()[this.ordinal() + 1]
+                : null;
+    }
 }

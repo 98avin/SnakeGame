@@ -21,7 +21,7 @@ public class Snake {
     boolean moving;
     boolean alive;
     boolean isPlayer;
-    Rect2d head;
+    private static Rect2d head;
     int transval = 15;
 
     public Snake() {
@@ -118,7 +118,7 @@ public class Snake {
                 this.addS(new Rect2d(1000, 1000.0, this.getWidth(), this.getWidth()));
                 this.addH(new SquareCoords(0, 0));
                 RectPanel.food.remove(j);
-                RectPanel.food.add(new Rect2d(random_number(0, 1000), random_number(0, 500), 10, 10));
+                RectPanel.food.add(new Rect2d(random_number(200, 500), random_number(200, 800), 10, 10));
                 widthfactor = this.getSSize() / 10;
                 widthfactor += 1;
                 this.setWidth(10 + (widthfactor * 5));
