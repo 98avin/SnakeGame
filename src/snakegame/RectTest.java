@@ -7,15 +7,25 @@ package snakegame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyListener;
-import java.awt.event.*;
-import static java.awt.event.KeyEvent.*;
+import java.io.File;
+import java.io.IOException;
 
 /**
  *
  * @author 11768
  */
 public class RectTest {
+    static Font customFont;
+    
+    public static void fontLoader(){
+            try {
+            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("customFont.ttf")).deriveFont(50f);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("customFont.ttf")));
+        } catch (IOException | FontFormatException e) {
+            //Handle exception
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -28,32 +38,32 @@ public class RectTest {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(rectPanel);
 
-        JLabel statusLabel = new JLabel("BERNIE: " + Integer.toString((int)RectPanel.bernie.getSSize()));
-        statusLabel.setFont(new Font("customfont.ttf", Font.PLAIN, 75));
+        JLabel statusLabel = new JLabel("BERNIE: " + Integer.toString((int) RectPanel.bernie.getSSize()));
+        fontLoader();
+        statusLabel.setFont(customFont);
         statusLabel.setForeground(Color.white);
         statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
         rectPanel.add(statusLabel);
-
+        
         frame.pack();
 
         frame.setVisible(true);
-        
+
         int score = 0;
         int score1 = 0;
 
         // NEW IN ANIMATION VERSION:
         while (true) {
             rectPanel.update();
-            if(!RectPanel.bernie.isLiving()){
+            if (!RectPanel.bernie.isLiving()) {
+                statusLabel.setText("BERNIE: " + Integer.toString(score));
+            } else {
+                score = (int) RectPanel.bernie.getSSize() - 1;
                 statusLabel.setText("BERNIE: " + Integer.toString(score));
             }
-            else{
-                score = (int)RectPanel.bernie.getSSize()-1;
-                statusLabel.setText("BERNIE: " + Integer.toString(score));
-            }
-            
+
             try {
-                Thread.sleep(50);
+                Thread.sleep(0);
             } catch (Exception e) {
                 e.printStackTrace();
             }
