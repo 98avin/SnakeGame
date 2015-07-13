@@ -63,7 +63,7 @@ public class RectTest {
             }
 
             try {
-                Thread.sleep(0);
+                Thread.sleep(25);
             } catch (Exception e) {
                 e.printStackTrace();
             }

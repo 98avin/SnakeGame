@@ -101,7 +101,7 @@ public class RectPanel extends JPanel {
         }
         
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 10; i++) {
             food.add(new Rect2d(random_number(200, 800), random_number(200, 500), 10, 10));
         }
 
