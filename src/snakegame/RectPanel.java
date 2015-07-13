@@ -268,6 +268,12 @@ public class RectPanel extends JPanel {
             fillRect(g, back, Color.BLACK);
 
         }
+        g.setColor(Color.DARK_GRAY);
+            for(int i = 0;  i < food.size(); i++){
+            g.drawLine((int)berninator.getHead().getCenter().x, (int)berninator.getHead().getCenter().y, food.get(i).getCenter().x, food.get(i).getCenter().y);
+            }
+        g.setColor(Color.white);
+            g.drawLine((int)berninator.getHead().getCenter().x, (int)berninator.getHead().getCenter().y, (int)berninator.targettemp.getCenter().x, (int)berninator.targettemp.getCenter().y);
             //fillRect(g, bernie1.vision, Color.yellow);
             //fillRect(g, bernie1.pathX, Color.blue);
             //fillRect(g, bernie1.pathY, Color.red);
