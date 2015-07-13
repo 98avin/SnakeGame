@@ -26,15 +26,10 @@ public class AISnake extends Snake {
     private static ArrayList<SquareCoords> history;
 
     public AISnake() {
-        this.dir = Direction.Right;
-        snake = new ArrayList<Rect2d>();
-        history = new ArrayList<SquareCoords>();
-        snakeWidth = 20;
+        super();
+        
         head = new Rect2d(500.0, 1000.0, snakeWidth, snakeWidth);
-        this.addS(head);
-        moving = false;
-        alive = true;
-        isPlayer = true;
+
 
         isPathing = false;
         isPlayer = false;
@@ -201,19 +196,19 @@ public class AISnake extends Snake {
 
         switch (this.dir) {
             case Left:
-                this.getHead().translate(-this.getWidth() - 1, 0.0);
+                this.getHead().translate(-this.getWidth(), 0.0);
                 break;
 
             case Right:
-                this.getHead().translate(this.getWidth() + 1, 0.0);
+                this.getHead().translate(this.getWidth(), 0.0);
                 break;
 
             case Down:
-                this.getHead().translate(0.0, this.getWidth() + 1);
+                this.getHead().translate(0.0, this.getWidth());
                 break;
 
             case Up:
-                this.getHead().translate(0.0, -this.getWidth() - 1);
+                this.getHead().translate(0.0, -this.getWidth());
                 break;
         }
         vision = new Rect2d(this.getHead().getCenter().x - 500, this.getHead().getCenter().y - 500, 1000, 1000);

@@ -28,7 +28,7 @@ public class Snake {
         this.dir = Direction.Right;
         snake = new ArrayList<Rect2d>();
         history = new ArrayList<SquareCoords>();
-        snakeWidth = 20;
+        snakeWidth = 10;
         head = new Rect2d(500.0, 500.0, snakeWidth, snakeWidth);
         this.addS(head);
         moving = false;
@@ -175,7 +175,7 @@ public class Snake {
         switch (this.dir) {
             case Left:
                 if (RectPanel.checkCamBounds() || (RectPanel.checkAtLeft() == false)) {
-                    this.getHead().translate(-this.getWidth() - 1, 0.0);
+                    this.getHead().translate(-this.getWidth(), 0.0);
                 }
                 if (RectPanel.checkCamBounds() == false && RectPanel.checkAtUp() == false && RectPanel.checkAtDown() == false || RectPanel.checkAtLeft()) {
                     for (int i = 0; i < RectPanel.food.size(); i++) {
@@ -188,7 +188,7 @@ public class Snake {
 
             case Right:
                 if (RectPanel.checkCamBounds() || (RectPanel.checkAtRight() == false)) {
-                    this.getHead().translate(this.getWidth() + 1, 0.0);
+                    this.getHead().translate(this.getWidth(), 0.0);
                 }
                 if (RectPanel.checkCamBounds() == false && RectPanel.checkAtUp() == false && RectPanel.checkAtDown() == false || RectPanel.checkAtRight()) {
                     for (int i = 0; i < RectPanel.food.size(); i++) {
@@ -200,7 +200,7 @@ public class Snake {
 
             case Down:
                 if (RectPanel.checkCamBounds() || (RectPanel.checkAtDown() == false)) {
-                    this.getHead().translate(0.0, this.getWidth() + 1);
+                    this.getHead().translate(0.0, this.getWidth());
                 }
                 if (RectPanel.checkCamBounds() == false && RectPanel.checkAtRight() == false && RectPanel.checkAtLeft() == false || RectPanel.checkAtDown()) {
                     for (int i = 0; i < RectPanel.food.size(); i++) {
@@ -212,7 +212,7 @@ public class Snake {
 
             case Up:
                 if (RectPanel.checkCamBounds() || (RectPanel.checkAtUp() == false)) { //Snake should be able to move only when inbounds of cam-rect, should stop at line but still be able to be moved
-                    this.getHead().translate(0.0, -this.getWidth() - 1);
+                    this.getHead().translate(0.0, -this.getWidth());
                 }
                 if (RectPanel.checkCamBounds() == false && RectPanel.checkAtRight() == false && RectPanel.checkAtLeft() == false || RectPanel.checkAtUp()) {
                     for (int i = 0; i < RectPanel.food.size(); i++) {

@@ -32,7 +32,7 @@ public class RectPanel extends JPanel {
     public static final int NUM_BACK_COLORS = 3;
     public static final int MAX_COLOR_VALUE = 255;
     public static final int MIN_COLOR_VALUE = 0;
-    public static final int RAVE_THRESHOLD = 25;
+    public static final int RAVE_THRESHOLD = 10;
 
     public static double WINDOW_WIDTH = 800.0;
     public static double WINDOW_HEIGHT = 800.0;
@@ -268,10 +268,6 @@ public class RectPanel extends JPanel {
             fillRect(g, back, Color.BLACK);
 
         }
-        g.setColor(Color.DARK_GRAY);
-            for(int i = 0;  i < food.size(); i++){
-            g.drawLine((int)berninator.getHead().getCenter().x, (int)berninator.getHead().getCenter().y, food.get(i).getCenter().x, food.get(i).getCenter().y);
-            }
         g.setColor(Color.white);
             g.drawLine((int)berninator.getHead().getCenter().x, (int)berninator.getHead().getCenter().y, (int)berninator.targettemp.getCenter().x, (int)berninator.targettemp.getCenter().y);
             //fillRect(g, bernie1.vision, Color.yellow);
