@@ -9,14 +9,15 @@ package snakegame;
  *
  * @author skinnnero5
  */
-public class AISnake1 extends Snake {
+public class AISnake extends Snake {
 
     boolean isPathing;
     SquareCoords scanLocation;
-    public Rect2d vision, pathX, pathY;
+    public Rect2d vision, pathX, pathY, target;
     int randomCooldown;
+    private static final int avoidEdgeDist = 10;
 
-    public AISnake1() {
+    public AISnake() {
         super();
         isPathing = false;
         isPlayer = false;
@@ -25,37 +26,73 @@ public class AISnake1 extends Snake {
         pathY = new Rect2d(this.getHead().getLeft(), this.getHead().getCenter().y - 500, this.getWidth(), 1000);
         randomCooldown = 0;
         dir = Direction.Right;
+        target = Rect2d.EmptyRect;
     }
 
-    Rect2d scan() {
+    Rect2d scan() {// find the closest food
         double tempDist;
         int tempIndex;
         tempDist = this.findDistance(RectPanel.food.get(0));
         tempIndex = -1;
-        for (int i = 0; i < RectPanel.food.size(); i++) {
-            if (tempDist > this.findDistance(RectPanel.food.get(i)) && vision.checkCollisions(RectPanel.food.get(i))) {
+        for (int i = 0; i < RectPanel.food.size(); i++) {//that intesect vision
+            if (tempDist >= this.findDistance(RectPanel.food.get(i)) && vision.checkCollisions(RectPanel.food.get(i))) {
                 tempDist = this.findDistance(RectPanel.food.get(i));
                 tempIndex = i;
             }
         }
-        if (tempIndex != -1) {
-            System.out.println(tempIndex);
+        if (tempIndex != -1) {//return the food
             return RectPanel.food.get(tempIndex);
-        }
+        }// if none in vision return "dummy" value
         return Rect2d.EmptyRect;
     }
 
-    void pathTo(Rect2d target) {
-        //if there is nothing in vision
+    void pathTo() {     
+        //if there is nothing in vision 
         if (target == Rect2d.EmptyRect) {
             isPathing = false;
-            //take a random path
-            if (randomCooldown <= 0) {
-                randomDirection();
-                randomCooldown = (int) this.getSSize();
+                    // avoid Right side       
+        if(this.getHead().getCenter().x-avoidEdgeDist >= RectPanel.WINDOW_WIDTH){
+            if (this.dir!= Direction.Right){
+                dir=Direction.Left;
             }
+            else {
+            dir= Direction.Down;
+            }
+        }
+        // avoid the Bottom(Its actually the bottom)
+        if(this.getHead().getCenter().y-avoidEdgeDist>=RectPanel.WINDOW_HEIGHT){
+            if (this.dir!= Direction.Down){
+                dir=Direction.Up;
+            }
+            else {
+            dir= Direction.Right;
+            }
+        }
+        // avoid the Top
+        if(this.getHead().getCenter().y -avoidEdgeDist<0){
+            if (this.dir!= Direction.Up){
+                dir=Direction.Down;
+            }
+            else {
+                dir=Direction.Left;
+            }
+        }
+        // avoid the Left
+        if(this.getHead().getCenter().x-avoidEdgeDist<0){
+            if (this.dir!= Direction.Left){
+                dir=Direction.Right;
+            }
+            else {
+            dir= Direction.Up;
+            }
+        }
+        else if (randomCooldown<=0){
+            randomDirection();
+            randomCooldown=(int)this.getSSize();
+        }
             return;
         }
+        
         //if in Straight path Up or Down
         if (Rect2d.intersect(this.pathY, target) != Rect2d.EmptyRect) {
             //if above...
@@ -69,6 +106,7 @@ public class AISnake1 extends Snake {
                     this.dir = Direction.Down;
                 } 
             }
+            return;
         } //if in Straight path Left or Right
         else if (Rect2d.intersect(this.pathX, target) != Rect2d.EmptyRect) {
             //if left
@@ -82,6 +120,7 @@ public class AISnake1 extends Snake {
                     this.dir = Direction.Right;
                 }
             }
+            return;
         } //if there is something in sight, but not straight(make it better)
         else {
             if (this.dir != Direction.Down) {
@@ -104,13 +143,13 @@ public class AISnake1 extends Snake {
     }
 
     double findDistance(Rect2d target) {
-        double distance = 0;
+        double distance;
         double x1 = this.getHead().getCenter().x;
-        double x2 = target.getCenter().x;
         double y1 = this.getHead().getCenter().y;
+        double x2 = target.getCenter().x;        
         double y2 = target.getCenter().y;
-
-        distance = Math.sqrt((Math.pow((x2 - x1), 2)) + (Math.pow((y2 - y1), 2)));
+        double temp = (Math.pow((x2 - x1), 2)) + (Math.pow((y2 - y1), 2));
+        distance = Math.sqrt(temp);
         return distance;
     }
 
@@ -187,9 +226,8 @@ public class AISnake1 extends Snake {
 
         for (int j = 1; j < this.getSSize(); j++) {
             if (Rect2d.intersect(this.getRect(j), this.getHead()) != Rect2d.EmptyRect) {//when snake touches food
-                System.out.println(dir);
-                this.die();
-                return;
+                //this.die();
+                //return;
             }
         }
 
@@ -200,7 +238,8 @@ public class AISnake1 extends Snake {
 
         for (int i = 0; i < this.getHSize(); i++) {
             if (i == 0) {
-                pathTo(scan());
+                target=scan();
+                pathTo();
                 randomCooldown--;
             } else {
                 if (this.isMoving()) {
