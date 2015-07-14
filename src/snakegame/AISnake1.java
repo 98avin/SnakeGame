@@ -9,7 +9,7 @@ package snakegame;
  *
  * @author skinnnero5
  */
-public class AISnake extends Snake {
+public class AISnake1 extends Snake {
 
     boolean isPathing;
     SquareCoords scanLocation;
@@ -17,7 +17,7 @@ public class AISnake extends Snake {
     int randomCooldown;
     private static final int avoidEdgeDist = 10;
 
-    public AISnake() {
+    public AISnake1() {
         super();
         isPathing = false;
         isPlayer = false;
