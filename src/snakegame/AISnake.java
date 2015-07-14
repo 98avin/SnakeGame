@@ -27,9 +27,8 @@ public class AISnake extends Snake {
 
     public AISnake() {
         super();
-        
-        head = new Rect2d(500.0, 1000.0, snakeWidth, snakeWidth);
 
+        head = new Rect2d(500.0, 1000.0, snakeWidth, snakeWidth);
 
         isPathing = false;
         isPlayer = false;
@@ -172,8 +171,8 @@ public class AISnake extends Snake {
         //SNAKE COLLISION INTO ITSELF
         for (int j = 1; j < this.getSSize(); j++) {
             if (Rect2d.intersect(this.getRect(j), this.getHead()) != Rect2d.EmptyRect) {//when snake touches itself
-                //this.die();
-                //return;
+               // this.die();
+               // return;
             }
         }
 

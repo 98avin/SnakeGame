@@ -33,6 +33,7 @@ public class RectPanel extends JPanel {
     public static final int MAX_COLOR_VALUE = 255;
     public static final int MIN_COLOR_VALUE = 0;
     public static final int RAVE_THRESHOLD = 10;
+    public static final int NUMBER_OF_FOOD = 2;
 
     public static double WINDOW_WIDTH = 800.0;
     public static double WINDOW_HEIGHT = 800.0;
@@ -56,7 +57,7 @@ public class RectPanel extends JPanel {
 
     private static Sequencer sequencer;
 
-    static Rect2d cambounds;
+    //static Rect2d cambounds; //CAMERA WINDOW(Snake touches the edge of this to begin "scrolling")
 
     // <<CONSTRUCTOR>>
     public RectPanel() {
@@ -92,7 +93,7 @@ public class RectPanel extends JPanel {
 
         food = new ArrayList<Rect2d>();
 
-        cambounds = new Rect2d(100, 100, screenSize.width - 200, screenSize.height - 250);
+        //cambounds = new Rect2d(100, 100, screenSize.width - 200, screenSize.height - 250);
 
         for (int i = 1; i < 0; i++) {
             bernie.addS(new Rect2d(30.0 + (i * 30), 170.0, bernie.getWidth(), bernie.getWidth()));
@@ -110,7 +111,7 @@ public class RectPanel extends JPanel {
             berninator.addH(new SquareCoords((int) berninator.getRect(i).getLeft(), (int) berninator.getRect(i).getTop()));
         }
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < NUMBER_OF_FOOD; i++) {
             food.add(new Rect2d(random_number(0, 1000), random_number(0, 500), 10, 10));
         }
 
@@ -253,7 +254,7 @@ public class RectPanel extends JPanel {
         //    System.out.println(insane.toString());
 
         if (bernie.getSSize() > RAVE_THRESHOLD && bernie.getSSize() > berninator.getSSize()) {//if score > rave threshold && player bigger than ai
-            //fillRect(g, back, insane);
+            fillRect(g, back, Color.black);
 
             if (music == false) {
                 try {
@@ -266,6 +267,7 @@ public class RectPanel extends JPanel {
 
         } else {
             fillRect(g, back, Color.BLACK);
+            music = false;
 
         }
         g.setColor(Color.white);
@@ -273,10 +275,6 @@ public class RectPanel extends JPanel {
             //fillRect(g, bernie1.vision, Color.yellow);
             //fillRect(g, bernie1.pathX, Color.blue);
             //fillRect(g, bernie1.pathY, Color.red);
-            
-        // Set snake's head to black
-        //fillRect(g, bernie.getHead(), Color.black);
-        //fillRect(g, berninator.getHead(), Color.black);
 
         // Fill the rest of the snake's body with colors
         for (int i = 0; i < bernie.getSSize(); i++) {
@@ -347,7 +345,8 @@ public class RectPanel extends JPanel {
         sequencer.stop();
     }
 
-    static boolean checkCamBounds() {
+    //FUNCTIONS NEEDED FOR CAMERA SCROLLING
+    /*static boolean checkCamBounds() {
         if (bernie.getHead().getTop() > (cambounds.getTop()) && bernie.getHead().getTop() < (cambounds.getBottom()) && bernie.getHead().getLeft() < (cambounds.getRight()) && bernie.getHead().getLeft() > (cambounds.getLeft())) {
             return true;
         } else {
@@ -421,6 +420,6 @@ public class RectPanel extends JPanel {
             System.out.println("-------------CHECK DONE--------------\n");
             return false;
         }
-    }
+    }*/
 
 }

@@ -11,5 +11,13 @@ package snakegame;
  * @author skinnnero5
  */
 public enum Direction {
-    Up,Down,Left,Right
+    Up,Down,Left,Right;
+    
+    static Direction[] vals = values();
+    
+    public Direction getNext() {
+     return this.ordinal() < Direction.values().length - 1
+         ? Direction.values()[this.ordinal() + 1]
+         : null;
+   }
 }

@@ -172,54 +172,72 @@ public class Snake {
 
         }
 
+        //CAMERA SCROLLING SWITCH CASE (Just moves food to create illusion of scrolling)
+        /*switch (this.dir) {
+         case Left:
+         if (RectPanel.checkCamBounds() || (RectPanel.checkAtLeft() == false)) {
+         this.getHead().translate(-this.getWidth(), 0.0);
+         }
+         if (RectPanel.checkCamBounds() == false && RectPanel.checkAtUp() == false && RectPanel.checkAtDown() == false || RectPanel.checkAtLeft()) {
+         for (int i = 0; i < RectPanel.food.size(); i++) {
+         RectPanel.food.get(i).translate(transval, 0);
+         }
+
+         }
+
+         break;
+
+         case Right:
+         if (RectPanel.checkCamBounds() || (RectPanel.checkAtRight() == false)) {
+         this.getHead().translate(this.getWidth(), 0.0);
+         }
+         if (RectPanel.checkCamBounds() == false && RectPanel.checkAtUp() == false && RectPanel.checkAtDown() == false || RectPanel.checkAtRight()) {
+         for (int i = 0; i < RectPanel.food.size(); i++) {
+         RectPanel.food.get(i).translate(-transval, 0);
+         }
+
+         }
+         break;
+
+         case Down:
+         if (RectPanel.checkCamBounds() || (RectPanel.checkAtDown() == false)) {
+         this.getHead().translate(0.0, this.getWidth());
+         }
+         if (RectPanel.checkCamBounds() == false && RectPanel.checkAtRight() == false && RectPanel.checkAtLeft() == false || RectPanel.checkAtDown()) {
+         for (int i = 0; i < RectPanel.food.size(); i++) {
+         RectPanel.food.get(i).translate(0, -transval);
+         }
+
+         }
+         break;
+
+         case Up:
+         if (RectPanel.checkCamBounds() || (RectPanel.checkAtUp() == false)) { //Snake should be able to move only when inbounds of cam-rect, should stop at line but still be able to be moved
+         this.getHead().translate(0.0, -this.getWidth());
+         }
+         if (RectPanel.checkCamBounds() == false && RectPanel.checkAtRight() == false && RectPanel.checkAtLeft() == false || RectPanel.checkAtUp()) {
+         for (int i = 0; i < RectPanel.food.size(); i++) {
+         RectPanel.food.get(i).translate(0, transval);
+         }
+
+         }
+         break;
+         }*/
         switch (this.dir) {
             case Left:
-                if (RectPanel.checkCamBounds() || (RectPanel.checkAtLeft() == false)) {
-                    this.getHead().translate(-this.getWidth(), 0.0);
-                }
-                if (RectPanel.checkCamBounds() == false && RectPanel.checkAtUp() == false && RectPanel.checkAtDown() == false || RectPanel.checkAtLeft()) {
-                    for (int i = 0; i < RectPanel.food.size(); i++) {
-                        RectPanel.food.get(i).translate(transval, 0);
-                    }
-
-                }
-
+                this.getHead().translate(-this.getWidth(), 0.0);
                 break;
 
             case Right:
-                if (RectPanel.checkCamBounds() || (RectPanel.checkAtRight() == false)) {
-                    this.getHead().translate(this.getWidth(), 0.0);
-                }
-                if (RectPanel.checkCamBounds() == false && RectPanel.checkAtUp() == false && RectPanel.checkAtDown() == false || RectPanel.checkAtRight()) {
-                    for (int i = 0; i < RectPanel.food.size(); i++) {
-                        RectPanel.food.get(i).translate(-transval, 0);
-                    }
-
-                }
+                this.getHead().translate(this.getWidth(), 0.0);
                 break;
 
             case Down:
-                if (RectPanel.checkCamBounds() || (RectPanel.checkAtDown() == false)) {
-                    this.getHead().translate(0.0, this.getWidth());
-                }
-                if (RectPanel.checkCamBounds() == false && RectPanel.checkAtRight() == false && RectPanel.checkAtLeft() == false || RectPanel.checkAtDown()) {
-                    for (int i = 0; i < RectPanel.food.size(); i++) {
-                        RectPanel.food.get(i).translate(0, -transval);
-                    }
-
-                }
+                this.getHead().translate(0.0, this.getWidth());
                 break;
 
             case Up:
-                if (RectPanel.checkCamBounds() || (RectPanel.checkAtUp() == false)) { //Snake should be able to move only when inbounds of cam-rect, should stop at line but still be able to be moved
-                    this.getHead().translate(0.0, -this.getWidth());
-                }
-                if (RectPanel.checkCamBounds() == false && RectPanel.checkAtRight() == false && RectPanel.checkAtLeft() == false || RectPanel.checkAtUp()) {
-                    for (int i = 0; i < RectPanel.food.size(); i++) {
-                        RectPanel.food.get(i).translate(0, transval);
-                    }
-
-                }
+                this.getHead().translate(0.0, -this.getWidth());
                 break;
         }
 
