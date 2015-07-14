@@ -32,7 +32,6 @@ public class RectPanel extends JPanel {
     public static final int NUM_BACK_COLORS = 3;
     public static final int MAX_COLOR_VALUE = 255;
     public static final int MIN_COLOR_VALUE = 0;
-    public static final int RAVE_THRESHOLD = 10;
     public static final int NUMBER_OF_FOOD = 2;
 
     public static double WINDOW_WIDTH = 800.0;
@@ -254,7 +253,7 @@ public class RectPanel extends JPanel {
                 this.backgroundColors[2]);
         //    System.out.println(insane.toString());
 
-        if (bernie.getSSize() > RAVE_THRESHOLD && bernie.getSSize() > berninator.getSSize()) {//if score > rave threshold && player bigger than ai
+        if (bernie.getSSize() > berninator.getSSize()) {//if score > rave threshold && player bigger than ai
             fillRect(g, back, Color.black);
 
             if (music == false) {
@@ -269,6 +268,11 @@ public class RectPanel extends JPanel {
         } else {
             fillRect(g, back, Color.BLACK);
             music = false;
+            try {
+                stopMusic();
+            } catch (Exception ex) {
+                Logger.getLogger(RectPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         }
         g.setColor(Color.white);
@@ -280,7 +284,7 @@ public class RectPanel extends JPanel {
         // Fill the rest of the snake's body with colors
         for (int i = 0; i < bernie.getSSize(); i++) {
 
-            if (bernie.getSSize() > RAVE_THRESHOLD && bernie.getSSize() > berninator.getSSize()) { //if player bigger than rave threshold AND ai --- make it rainbow
+            if (bernie.getSSize() > berninator.getSSize()) { //if player bigger than rave threshold AND ai --- make it rainbow
                 fillRect(g, bernie.getRect(i), insane);
             } else {
                 fillRect(g, bernie.getRect(i), Color.blue);
@@ -289,7 +293,7 @@ public class RectPanel extends JPanel {
         
         for (int i = 0; i < berninator.getSSize(); i++) {
 
-            if (berninator.getSSize() > RAVE_THRESHOLD && berninator.getSSize() > bernie.getSSize()) {
+            if (berninator.getSSize() > bernie.getSSize()) {
 
                 fillRect(g, berninator.getRect(i), insane);
             } else {
