@@ -8,16 +8,16 @@ package snakegame;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.sound.midi.MidiSystem;
-import javax.sound.midi.Sequencer;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
 import javax.swing.*;
 
 /**
@@ -55,7 +55,8 @@ public class RectPanel extends JPanel {
     public static KeysPressed keysPressed;
     static ImageIcon EXPLODE;
 
-    private static Sequencer sequencer;
+    static AudioInputStream audioIn;
+    static Clip clip;
 
     //static Rect2d cambounds; //CAMERA WINDOW(Snake touches the edge of this to begin "scrolling")
 
@@ -318,31 +319,20 @@ public class RectPanel extends JPanel {
     }
 
     public static void playMusic() throws Exception {
-        sequencer.start();
-
-        sequencer.setLoopCount(Sequencer.LOOP_CONTINUOUSLY);
-
+        clip.start();
     }
 
     public static void loadMusic() throws Exception {
-
-        // Obtains the default Sequencer connected to a default device.
-        sequencer = MidiSystem.getSequencer();
-
-        // Opens the device, indicating that it should now acquire any
-        // system resources it requires and become operational.
-        sequencer.open();
-
-        // create a stream from a file
-        InputStream is = new BufferedInputStream(new FileInputStream(new File("nyancat.mid")));
-
-        // Sets the current sequence on which the sequencer operates.
-        // The stream must point to MIDI file data.
-        sequencer.setSequence(is);
+        File file = new File("Sandstorm1.wav");
+        audioIn =  AudioSystem.getAudioInputStream(file);
+        AudioFormat format = audioIn.getFormat(); 
+        DataLine.Info info = new DataLine.Info(Clip.class, format);
+        clip = (Clip) AudioSystem.getLine(info);
+        clip.open(audioIn);
     }
 
     public static void stopMusic() throws Exception {
-        sequencer.stop();
+        clip.stop();
     }
 
     //FUNCTIONS NEEDED FOR CAMERA SCROLLING
