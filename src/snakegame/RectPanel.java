@@ -327,7 +327,7 @@ public class RectPanel extends JPanel {
     }
 
     public static void loadMusic() throws Exception {
-        File file = new File("Sandstorm1.wav");
+        File file = new File("sandstorm1.wav");
         audioIn =  AudioSystem.getAudioInputStream(file);
         AudioFormat format = audioIn.getFormat(); 
         DataLine.Info info = new DataLine.Info(Clip.class, format);
