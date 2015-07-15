@@ -44,9 +44,8 @@ public class RectPanel extends JPanel {
     public static double WINDOW_WIDTH = 800.0;
     public static double WINDOW_HEIGHT = 800.0;
 
-    private int backgroundColors[];
-    private Rect2d head;
-    private Rect2d back;
+    private static int backgroundColors[];
+    private static Rect2d back;
 
     double snakeWidth;
     
@@ -118,9 +117,11 @@ public class RectPanel extends JPanel {
         this.setFocusable(true);
 
         this.addKeyListener(new KeyListener() {
+            @Override
             public void keyTyped(KeyEvent e) {
             }
-
+            
+            @Override
             public void keyPressed(KeyEvent e) {
                 int keycode = e.getKeyCode();
                 switch (keycode) {
@@ -139,6 +140,7 @@ public class RectPanel extends JPanel {
                 }
             }
 
+            @Override
             public void keyReleased(KeyEvent e) {
                 int keycode = e.getKeyCode();
                 switch (keycode) {
@@ -180,11 +182,6 @@ public class RectPanel extends JPanel {
         g.fillRect(x, y, w, h);
     }
 
-    private int getRandomColorValue() {
-        Random rnd = new Random();
-        return Math.abs(rnd.nextInt()) % (MAX_COLOR_VALUE);
-    }
-
     public boolean checkLiving(PlayerSnake snake, Color color, Graphics g) {
         if (!snake.isLiving()) {
             try {
@@ -206,6 +203,7 @@ public class RectPanel extends JPanel {
         return false;
     }
 
+    @Override
     public void paintComponent(Graphics g) {
 
         if (checkLiving(bernie, PLAYER_SNAKE_COLOR, g)) {
