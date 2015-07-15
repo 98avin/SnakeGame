@@ -24,7 +24,7 @@ import javax.swing.*;
  *
  * @author 11768
  */
-public class RectPanel extends JPanel {
+public class SnakePanel extends JPanel {
 
     // <<DATA>>
     int colorOrder;
@@ -34,12 +34,12 @@ public class RectPanel extends JPanel {
     public static final int NUM_BACK_COLORS = 3;
     public static final int MAX_COLOR_VALUE = 255;
     public static final int MIN_COLOR_VALUE = 0;
-    public static final int COLOR_INCREMENT = 50;
+    public static final int COLOR_INCREMENT = 10;
 
     public static final Color FOOD_COLOR = Color.white;
     public static final Color PLAYER_SNAKE_COLOR = Color.blue;
     public static final Color AI_SNAKE_COLOR = Color.red;
-    public static final int NUMBER_OF_FOOD = 500;
+    public static final int NUMBER_OF_FOOD = 2;
 
     public static double WINDOW_WIDTH = 800.0;
     public static double WINDOW_HEIGHT = 800.0;
@@ -51,9 +51,9 @@ public class RectPanel extends JPanel {
 
     public static final int NUM_PLAYERS = 1;
     public static final int NUM_AI_M1000 = 1;
-    public static final int NUM_AI_M2000 = 100;
+    public static final int NUM_AI_M2000 = 1;
     private final int[] NUMBER_SNAKES = {NUM_PLAYERS, NUM_AI_M1000, NUM_AI_M2000};
-    private PlayerSnake snakes[] = new PlayerSnake[(NUM_PLAYERS + NUM_AI_M1000 + NUM_AI_M2000)];
+    public Snake snakes[] = new Snake[(NUM_PLAYERS + NUM_AI_M1000 + NUM_AI_M2000)];
 
     public boolean music;
 
@@ -68,24 +68,24 @@ public class RectPanel extends JPanel {
 
     //static Rect2d cambounds; //CAMERA WINDOW(Snake touches the edge of this to begin "scrolling")
     // <<CONSTRUCTOR>>
-    public RectPanel() {
+    public SnakePanel() {
 
         try {
-            loadMusic();//loads the MIDI file to play later, prevents lag
+            loadMusic();//loads the WAV file to play later, prevents lag
         } catch (Exception ex) {
-            Logger.getLogger(RectPanel.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
         }
         for (int j = 0; j < NUMBER_SNAKES.length; j++) {
             for (int i = 0; i < NUMBER_SNAKES[j]; i++) {
                 switch (j) {
                     case 0:
-                        snakes[i] = new PlayerSnake(PLAYER_SNAKE_COLOR);
+                        snakes[i] = new Snake(PLAYER_SNAKE_COLOR, "Bernie");
                         break;
                     case 1:
-                        snakes[NUM_PLAYERS + i] = new AISnake(AI_SNAKE_COLOR);
+                        snakes[NUM_PLAYERS + i] = new AISnake(AI_SNAKE_COLOR, "Berninator");
                         break;
                     case 2:
-                        snakes[NUM_PLAYERS + NUM_AI_M1000 + i] = new AISnake2(AI_SNAKE_COLOR);
+                        snakes[NUM_PLAYERS + NUM_AI_M1000 + i] = new AISnake2(AI_SNAKE_COLOR, "Robobernie");
                         break;
                 }
             }
@@ -168,7 +168,7 @@ public class RectPanel extends JPanel {
         });
     }
 
-    void buildSnake(PlayerSnake snake) {
+    void buildSnake(Snake snake) {
         for (int i = 1; i < 0; i++) {
             snake.addS(new Rect2d(30.0 + (i * 30), 170.0, snake.getWidth(), snake.getWidth()));
         }
@@ -189,12 +189,12 @@ public class RectPanel extends JPanel {
         g.fillRect(x, y, w, h);
     }
 
-    public boolean checkLiving(PlayerSnake snake, Color color, Graphics g) {
+    public boolean checkLiving(Snake snake, Color color, Graphics g) {
         if (!snake.isLiving()) {
             try {
                 stopMusic();
             } catch (Exception ex) {
-                Logger.getLogger(RectPanel.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
             }
             fillRect(g, back, DEFAULT_BACKGROUND_COLOR);
 
@@ -232,7 +232,7 @@ public class RectPanel extends JPanel {
                     try {
                         playMusic();
                     } catch (Exception ex) {
-                        Logger.getLogger(RectPanel.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     music = true;
                 }
@@ -243,7 +243,7 @@ public class RectPanel extends JPanel {
                 try {
                     stopMusic();
                 } catch (Exception ex) {
-                    Logger.getLogger(RectPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
 
@@ -264,7 +264,7 @@ public class RectPanel extends JPanel {
 
     }
 
-    public boolean isPlayerBigger(PlayerSnake snake, int index) {
+    public boolean isPlayerBigger(Snake snake, int index) {
         int tempCount = 0;
         for (int i = 0; i < snakes.length; i++) {
             if (snake.getScore() > snakes[i].getScore()) {

@@ -19,7 +19,7 @@ import java.io.IOException;
  *
  * @author 11768
  */
-public class RectTest {
+public class SnakeGame {
 
     static Font customFont;
     static Color TEXT_COLOR = Color.lightGray;
@@ -27,7 +27,6 @@ public class RectTest {
     static int playerscore = 0;
     static int aiscore = 0;
     static int aiscore2 = 0;
-
 
     public static void fontLoader() {
         try {
@@ -45,7 +44,7 @@ public class RectTest {
     public static void main(String[] args) {
 
         JFrame frame = new JFrame("Snake Game");
-        RectPanel rectPanel = new RectPanel();
+        SnakePanel rectPanel = new SnakePanel();
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(rectPanel);
@@ -61,11 +60,9 @@ public class RectTest {
 
         frame.setVisible(true);
 
-        
         while (true) {
             rectPanel.update();
             updateScoreboard(rectPanel, statusLabel);
-             
 
             try {
                 Thread.sleep(FRAME_RATE);
@@ -77,32 +74,13 @@ public class RectTest {
 
     }
 
-    public static void updateScoreboard(RectPanel rectPanel, JLabel statusLabel) {
-       
-       /*if (!RectPanel.bernie.isLiving()) {
-            statusLabel.setText("BERNIE: " + Integer.toString(playerscore) + " BERNINATOR: " + Integer.toString(aiscore) + " ROBOBERNIE: " + Integer.toString(aiscore2));
-        } else {
-            playerscore = (int) RectPanel.bernie.getScore();
-            statusLabel.setText("BERNIE: " + Integer.toString(playerscore) + " BERNINATOR: " + Integer.toString(aiscore) + " ROBOBERNIE: " + Integer.toString(aiscore2));
+    public static void updateScoreboard(SnakePanel rectPanel, JLabel statusLabel) {
+        //FLICKERS
+        statusLabel.setText("");
+        for (int i = 0; i < rectPanel.snakes.length; i++) {
+            statusLabel.setText(statusLabel.getText() + " " + rectPanel.snakes[i].getName() + ":" + rectPanel.snakes[i].getScore());
         }
-
-        if (!RectPanel.berninator.isLiving()) {
-            statusLabel.setText("BERNIE: " + Integer.toString(playerscore) + " BERNINATOR: " + Integer.toString(aiscore) + " ROBOBERNIE: " + Integer.toString(aiscore2));
-        } else {
-            aiscore = (int) RectPanel.berninator.getScore();
-            statusLabel.setText("BERNIE: " + Integer.toString(playerscore) + " BERNINATOR: " + Integer.toString(aiscore) + " ROBOBERNIE: " + Integer.toString(aiscore2));
-        }
-
-        if (!RectPanel.robobernie.isLiving()) {
-            statusLabel.setText("BERNIE: " + Integer.toString(playerscore) + " BERNINATOR: " + Integer.toString(aiscore) + " ROBOBERNIE: " + Integer.toString(aiscore2));
-        } else {
-            aiscore2 = (int) RectPanel.robobernie.getScore();
-            statusLabel.setText("BERNIE: " + Integer.toString(playerscore) + " BERNINATOR: " + Integer.toString(aiscore) + " ROBOBERNIE: " + Integer.toString(aiscore2));
-        }*/
-        
-        
     }
-    
 
     public static int random_number(int low, int high) {
         double rand = Math.random(); //generates a random number

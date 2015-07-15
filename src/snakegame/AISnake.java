@@ -14,7 +14,7 @@ import java.util.Collections;
  *
  * @author skinnnero5
  */
-public class AISnake extends PlayerSnake {
+public class AISnake extends Snake {
     
     double x1;
     double x2;
@@ -28,13 +28,12 @@ public class AISnake extends PlayerSnake {
     static ArrayList<Double> fooddist = new ArrayList<Double>();
     static ArrayList<Integer> whichfood = new ArrayList<Integer>();
     Rect2d targettemp;
-    static Rect2d head;
 
     private static ArrayList<Rect2d> snake;
     private static ArrayList<SquareCoords> history;
 
-    public AISnake(Color color) {
-        super(color);
+    public AISnake(Color color, String name) {
+        super(color,name);
         isPathing = false;
         isPlayer = false;
         vision = new Rect2d(this.getHead().getCenter().x - 500, this.getHead().getCenter().y - 500, 1000, 1000);
@@ -49,9 +48,9 @@ public class AISnake extends PlayerSnake {
         if (!isPathing) {
             //fooddist.clear();
             //whichfood.clear();
-            for (int i = 0; i < RectPanel.food.size(); i++) {
-                if (Rect2d.intersect(this.vision, RectPanel.food.get(i)) != Rect2d.EmptyRect) {
-                    fooddist.add(findDistance(RectPanel.food.get(i)));//ADD THE DISTANCE FROM HEAD TO FOUND FOOD TO ARRAY
+            for (int i = 0; i < SnakePanel.food.size(); i++) {
+                if (Rect2d.intersect(this.vision, SnakePanel.food.get(i)) != Rect2d.EmptyRect) {
+                    fooddist.add(findDistance(SnakePanel.food.get(i)));//ADD THE DISTANCE FROM HEAD TO FOUND FOOD TO ARRAY
                     whichfood.add(i);//ADD THE INDEX OF THE FOOD TO A SEPARATE ARRAY
                 }
             }
@@ -113,9 +112,9 @@ public class AISnake extends PlayerSnake {
     Rect2d giveClosest() {
 
        int index = whichfood.get(returnLowest());
-       System.out.println("1: " + findDistance(RectPanel.food.get(index)) + "2: " + fooddist.get(returnLowest()));
+       System.out.println("1: " + findDistance(SnakePanel.food.get(index)) + "2: " + fooddist.get(returnLowest()));
 
-        return RectPanel.food.get(index);
+        return SnakePanel.food.get(index);
     }
 
     boolean isFood() {
@@ -169,13 +168,13 @@ public class AISnake extends PlayerSnake {
         }
 
         double widthfactor = 1;
-        for (int j = 0; j < RectPanel.food.size(); j++) {
-            if (Rect2d.intersect(RectPanel.food.get(j), this.getHead()) != Rect2d.EmptyRect) {//when snake touches food
+        for (int j = 0; j < SnakePanel.food.size(); j++) {
+            if (Rect2d.intersect(SnakePanel.food.get(j), this.getHead()) != Rect2d.EmptyRect) {//when snake touches food
                 //Rect2d.resolveOverlap(food.get(j), snake.get(0));
                 this.addS(new Rect2d(1000, 1000.0, this.getWidth(), this.getWidth()));
                 this.addH(new SquareCoords(0, 0));
-                RectPanel.food.remove(j);
-                RectPanel.food.add(new Rect2d(random_number(100, 1200), random_number(100, 600), 10, 10));
+                SnakePanel.food.remove(j);
+                SnakePanel.food.add(new Rect2d(random_number(100, 1200), random_number(100, 600), 10, 10));
                 widthfactor = this.getSSize() / 10;
                 widthfactor += 1;
                 //this.setWidth(10 + (widthfactor * 5));

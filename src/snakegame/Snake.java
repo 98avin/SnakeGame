@@ -7,13 +7,13 @@ package snakegame;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import static snakegame.RectPanel.random_number;
+import static snakegame.SnakePanel.random_number;
 
 /**
  *
  * @author skinnnero5
  */
-public class PlayerSnake {
+public class Snake {
 
     public Direction dir;
     private ArrayList<Rect2d> snake;
@@ -25,10 +25,12 @@ public class PlayerSnake {
     Rect2d head;
     int transval = 15;
     Color color;
+    String name;
 
-    public PlayerSnake(Color color) {
+    public Snake(Color color, String name) {
         this.dir = Direction.Right;
         this.color= color;
+        this.name = name;
         snake = new ArrayList<Rect2d>();
         history = new ArrayList<SquareCoords>();
         snakeWidth = 10;
@@ -39,6 +41,10 @@ public class PlayerSnake {
         isPlayer = true;
     }
 
+    String getName(){
+    return name;
+    }
+    
     Rect2d getRect(int i) {
         return snake.get(i);
     }
@@ -104,7 +110,7 @@ public class PlayerSnake {
         alive = false;
         moving = false;
         for (int i = 0; i < history.size(); i++) {
-            RectPanel.food.add(new Rect2d(this.getH(i).x, this.getH(i).y, 10, 10));
+            SnakePanel.food.add(new Rect2d(this.getH(i).x, this.getH(i).y, 10, 10));
         }
         snake.clear();
 
@@ -121,13 +127,13 @@ public class PlayerSnake {
 
         //System.out.println("s" + this.getSSize());
         double widthfactor = 1;
-        for (int j = 0; j < RectPanel.food.size(); j++) {
-            if (Rect2d.intersect(RectPanel.food.get(j), this.getHead()) != Rect2d.EmptyRect) {//when snake touches food
+        for (int j = 0; j < SnakePanel.food.size(); j++) {
+            if (Rect2d.intersect(SnakePanel.food.get(j), this.getHead()) != Rect2d.EmptyRect) {//when snake touches food
                 //Rect2d.resolveOverlap(food.get(j), snake.get(0));
                 this.addS(new Rect2d(1000, 1000.0, this.getWidth(), this.getWidth()));
                 this.addH(new SquareCoords(0, 0));
-                RectPanel.food.remove(j);
-                RectPanel.food.add(new Rect2d(random_number(0, 1000), random_number(0, 500), 10, 10));
+                SnakePanel.food.remove(j);
+                SnakePanel.food.add(new Rect2d(random_number(0, 1000), random_number(0, 500), 10, 10));
                 //widthfactor = this.getSSize() / 10;
                 //widthfactor += 1;
                 //this.setWidth(10 + (widthfactor * 5));
@@ -150,24 +156,24 @@ public class PlayerSnake {
 
         for (int i = 0; i < this.getHSize(); i++) {
             if (i == 0) {
-                if (RectPanel.keysPressed.Left && dir != Direction.Right) {
+                if (SnakePanel.keysPressed.Left && dir != Direction.Right) {
                     // bernie.getHead().translate(-bernie.getWidth(), 0.0);
                     this.setMoving(true);
                     this.dir = Direction.Left;
                 }
-                if (RectPanel.keysPressed.Right && dir != Direction.Left) {
+                if (SnakePanel.keysPressed.Right && dir != Direction.Left) {
                     //  bernie.getHead().translate(bernie.getWidth(), 0.0);
                     this.setMoving(true);
                     this.dir = Direction.Right;
                 }
 
-                if (RectPanel.keysPressed.Down && dir != Direction.Up) {
+                if (SnakePanel.keysPressed.Down && dir != Direction.Up) {
                     //    bernie.getHead().translate(0.0, bernie.getWidth());
                     this.setMoving(true);
                     this.dir = Direction.Down;
                 }
 
-                if (RectPanel.keysPressed.Up && dir != Direction.Down) {
+                if (SnakePanel.keysPressed.Up && dir != Direction.Down) {
                     // bernie.getHead().translate(0.0, -bernie.getWidth());
                     this.setMoving(true);
                     this.dir = Direction.Up;

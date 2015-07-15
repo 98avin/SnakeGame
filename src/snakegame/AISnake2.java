@@ -11,7 +11,7 @@ import java.awt.Color;
  *
  * @author skinnnero5
  */
-public class AISnake2 extends PlayerSnake {
+public class AISnake2 extends Snake {
 
     boolean isPathing;
     SquareCoords scanLocation;
@@ -19,8 +19,8 @@ public class AISnake2 extends PlayerSnake {
     int randomCooldown;
     private static final int avoidEdgeDist = 10;
 
-    public AISnake2(Color color) {
-        super(color);       
+    public AISnake2(Color color, String name) {
+        super(color,name);       
         isPathing = false;
         isPlayer = false;
         vision = new Rect2d(this.getHead().getCenter().x - 500, this.getHead().getCenter().y - 500, 1000, 1000);
@@ -34,16 +34,16 @@ public class AISnake2 extends PlayerSnake {
     Rect2d scan() {// find the closest food
         double tempDist;
         int tempIndex;
-        tempDist = this.findDistance(RectPanel.food.get(0));
+        tempDist = this.findDistance(SnakePanel.food.get(0));
         tempIndex = -1;
-        for (int i = 0; i < RectPanel.food.size(); i++) {//that intesect vision
-            if (tempDist >= this.findDistance(RectPanel.food.get(i)) && vision.checkCollisions(RectPanel.food.get(i))) {
-                tempDist = this.findDistance(RectPanel.food.get(i));
+        for (int i = 0; i < SnakePanel.food.size(); i++) {//that intesect vision
+            if (tempDist >= this.findDistance(SnakePanel.food.get(i)) && vision.checkCollisions(SnakePanel.food.get(i))) {
+                tempDist = this.findDistance(SnakePanel.food.get(i));
                 tempIndex = i;
             }
         }
         if (tempIndex != -1) {//return the food
-            return RectPanel.food.get(tempIndex);
+            return SnakePanel.food.get(tempIndex);
         }// if none in vision return "dummy" value
         return Rect2d.EmptyRect;
     }
@@ -53,7 +53,7 @@ public class AISnake2 extends PlayerSnake {
         if (target == Rect2d.EmptyRect) {
             isPathing = false;
                     // avoid Right side       
-        if(this.getHead().getCenter().x-avoidEdgeDist >= RectPanel.WINDOW_WIDTH){
+        if(this.getHead().getCenter().x-avoidEdgeDist >= SnakePanel.WINDOW_WIDTH){
             if (this.dir!= Direction.Right){
                 dir=Direction.Left;
             }
@@ -62,7 +62,7 @@ public class AISnake2 extends PlayerSnake {
             }
         }
         // avoid the Bottom(Its actually the bottom)
-        if(this.getHead().getCenter().y-avoidEdgeDist>=RectPanel.WINDOW_HEIGHT){
+        if(this.getHead().getCenter().y-avoidEdgeDist>=SnakePanel.WINDOW_HEIGHT){
             if (this.dir!= Direction.Down){
                 dir=Direction.Up;
             }
@@ -213,13 +213,13 @@ public class AISnake2 extends PlayerSnake {
 
         //System.out.println("s" + this.getSSize());
         double widthfactor = 1;
-        for (int j = 0; j < RectPanel.food.size(); j++) {
-            if (Rect2d.intersect(RectPanel.food.get(j), this.getHead()) != Rect2d.EmptyRect) {//when snake touches food
+        for (int j = 0; j < SnakePanel.food.size(); j++) {
+            if (Rect2d.intersect(SnakePanel.food.get(j), this.getHead()) != Rect2d.EmptyRect) {//when snake touches food
                 //Rect2d.resolveOverlap(food.get(j), snake.get(0));
                 this.addS(new Rect2d(1000, 1000.0, this.getWidth(), this.getWidth()));
                 this.addH(new SquareCoords(0, 0));
-                RectPanel.food.remove(j);
-                RectPanel.food.add(new Rect2d(random_number(0, (int) RectPanel.WINDOW_WIDTH), random_number(0, (int) RectPanel.WINDOW_HEIGHT), 10, 10));
+                SnakePanel.food.remove(j);
+                SnakePanel.food.add(new Rect2d(random_number(0, (int) SnakePanel.WINDOW_WIDTH), random_number(0, (int) SnakePanel.WINDOW_HEIGHT), 10, 10));
                 //widthfactor = this.getSSize() / 10;
                 //widthfactor += 1;
                 //this.setWidth(10 + (widthfactor * 5));
