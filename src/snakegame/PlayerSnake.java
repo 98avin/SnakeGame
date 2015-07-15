@@ -12,7 +12,7 @@ import static snakegame.RectPanel.random_number;
  *
  * @author skinnnero5
  */
-public class Snake {
+public class PlayerSnake {
 
     public Direction dir;
     private ArrayList<Rect2d> snake;
@@ -24,7 +24,7 @@ public class Snake {
     Rect2d head;
     int transval = 15;
 
-    public Snake() {
+    public PlayerSnake() {
         this.dir = Direction.Right;
         snake = new ArrayList<Rect2d>();
         history = new ArrayList<SquareCoords>();

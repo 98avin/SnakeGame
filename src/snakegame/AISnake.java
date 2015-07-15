@@ -13,7 +13,7 @@ import java.util.Collections;
  *
  * @author skinnnero5
  */
-public class AISnake extends Snake {
+public class AISnake extends PlayerSnake {
     
     double x1;
     double x2;

@@ -48,7 +48,7 @@ public class RectPanel extends JPanel {
 
     double snakeWidth;
 
-    public static Snake bernie;
+    public static PlayerSnake bernie;
     public static AISnake berninator;
     public static AISnake2 robobernie;
 
@@ -91,7 +91,7 @@ public class RectPanel extends JPanel {
         setPreferredSize(new Dimension((int) WINDOW_WIDTH, (int) WINDOW_HEIGHT));
         keysPressed = new KeysPressed();
 
-        bernie = new Snake();
+        bernie = new PlayerSnake();
         berninator = new AISnake();
         robobernie = new AISnake2();
 
@@ -152,7 +152,7 @@ public class RectPanel extends JPanel {
         });
     }
 
-    void buildSnake(Snake snake) {
+    void buildSnake(PlayerSnake snake) {
         for (int i = 1; i < 0; i++) {
             snake.addS(new Rect2d(30.0 + (i * 30), 170.0, snake.getWidth(), snake.getWidth()));
         }
@@ -178,7 +178,7 @@ public class RectPanel extends JPanel {
         return Math.abs(rnd.nextInt()) % (MAX_COLOR_VALUE);
     }
 
-    public boolean checkLiving(Snake snake, Color color, Graphics g) {
+    public boolean checkLiving(PlayerSnake snake, Color color, Graphics g) {
         if (!snake.isLiving()) {
             try {
                 stopMusic();
@@ -287,7 +287,7 @@ public class RectPanel extends JPanel {
 
     }
     
-    public void fillSnake(Snake snake, Graphics g, Color color, double size, double size2){
+    public void fillSnake(PlayerSnake snake, Graphics g, Color color, double size, double size2){
     for (int i = 0; i < snake.getSSize(); i++) {
 
             if (snake.getSSize() > size && snake.getSSize() > size2) { //if player bigger than rave threshold AND ai --- make it rainbow

@@ -9,7 +9,7 @@ package snakegame;
  *
  * @author skinnnero5
  */
-public class AISnake2 extends Snake {
+public class AISnake2 extends PlayerSnake {
 
     boolean isPathing;
     SquareCoords scanLocation;
