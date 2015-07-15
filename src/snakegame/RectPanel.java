@@ -113,9 +113,9 @@ public class RectPanel extends JPanel {
         setPreferredSize(new Dimension((int) WINDOW_WIDTH, (int) WINDOW_HEIGHT));
         keysPressed = new KeysPressed();
 
-        bernie = new PlayerSnake();
-        berninator = new AISnake();
-        robobernie = new AISnake2();
+        bernie = new PlayerSnake(PLAYER_SNAKE_COLOR);
+        berninator = new AISnake(AI_SNAKE_COLOR);
+        robobernie = new AISnake2(AI_SNAKE_COLOR);
 
         back = new Rect2d(-500, -500, 10000, 10000);
 
