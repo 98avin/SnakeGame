@@ -100,6 +100,7 @@ public class RectTest {
             statusLabel.setText("BERNIE: " + Integer.toString(playerscore) + " BERNINATOR: " + Integer.toString(aiscore) + " ROBOBERNIE: " + Integer.toString(aiscore2));
         }
     }
+    
 
     public static int random_number(int low, int high) {
         double rand = Math.random(); //generates a random number
