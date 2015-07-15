@@ -50,7 +50,7 @@ public class RectPanel extends JPanel {
 
     public static Snake bernie;
     public static AISnake berninator;
-    public static AISnake1 robobernie;
+    public static AISnake2 robobernie;
 
     public boolean music;
 
@@ -73,7 +73,7 @@ public class RectPanel extends JPanel {
             Logger.getLogger(RectPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        // Initialize default background colors
+        // Initialize colors for rainbow cycle
         colorDecreaseFlag = false;
         backgroundColors = new int[NUM_BACK_COLORS];
         for (int i = 0; i < NUM_BACK_COLORS; i++) {
@@ -93,7 +93,7 @@ public class RectPanel extends JPanel {
 
         bernie = new Snake();
         berninator = new AISnake();
-        robobernie = new AISnake1();
+        robobernie = new AISnake2();
 
         back = new Rect2d(-500, -500, 10000, 10000);
 
@@ -117,7 +117,7 @@ public class RectPanel extends JPanel {
             public void keyPressed(KeyEvent e) {
                 int keycode = e.getKeyCode();
                 switch (keycode) {
-                    case java.awt.event.KeyEvent.VK_W:  // the keycode for W (Virtual Key)
+                    case java.awt.event.KeyEvent.VK_W:  
                         keysPressed.Up = true;
                         break;
                     case java.awt.event.KeyEvent.VK_S:
@@ -268,17 +268,19 @@ public class RectPanel extends JPanel {
             }
 
         }
+        
         //g.setColor(Color.white);
         //g.drawLine((int) berninator.getHead().getCenter().x, (int) berninator.getHead().getCenter().y, (int) berninator.targettemp.getCenter().x, (int) berninator.targettemp.getCenter().y);
-            //fillRect(g, bernie1.vision, Color.yellow);
+        //fillRect(g, bernie1.vision, Color.yellow);
         //fillRect(g, bernie1.pathX, Color.blue);
         //fillRect(g, bernie1.pathY, Color.red);
 
-        // Fill the rest of the snake's body with colors
+        // Fill snake's body with colors
         fillSnake(bernie, g, PLAYER_SNAKE_COLOR, berninator.getSSize(), robobernie.getSSize());
         fillSnake(berninator, g, AI_SNAKE_COLOR, bernie.getSSize(), robobernie.getSSize());
         fillSnake(robobernie, g, AI_SNAKE_COLOR, bernie.getSSize(), berninator.getSSize());
         
+        //Draw food
         for (int i = 0; i < food.size(); i++) {
             fillRect(g, food.get(i), FOOD_COLOR);
         }
