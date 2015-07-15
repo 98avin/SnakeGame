@@ -23,6 +23,7 @@ public class RectTest {
     
     static Font customFont;
     static Color TEXT_COLOR = Color.lightGray;
+    static int FRAME_RATE = 35;
     
         public static void fontLoader(){
             try {
@@ -66,7 +67,7 @@ public class RectTest {
             
             
             try {
-                Thread.sleep(35);
+                Thread.sleep(FRAME_RATE);
             } catch (Exception e) {
                 e.printStackTrace();
             }
