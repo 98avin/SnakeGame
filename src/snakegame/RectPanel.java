@@ -34,7 +34,7 @@ public class RectPanel extends JPanel {
     public static final int NUM_BACK_COLORS = 3;
     public static final int MAX_COLOR_VALUE = 255;
     public static final int MIN_COLOR_VALUE = 0;
-    public static final int COLOR_INCREMENT = 10;
+    public static final int COLOR_INCREMENT = 10;//
     
     public static final Color FOOD_COLOR = Color.white;
     public static final Color PLAYER_SNAKE_COLOR = Color.blue;
