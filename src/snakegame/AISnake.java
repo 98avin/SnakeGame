@@ -5,6 +5,7 @@
  */
 package snakegame;
 
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -13,6 +14,11 @@ import java.util.Collections;
  * @author skinnnero5
  */
 public class AISnake extends Snake {
+    
+    double x1;
+    double x2;
+    double y1;
+    double y2;
 
     boolean isPathing;
     SquareCoords scanLocation;
@@ -21,6 +27,7 @@ public class AISnake extends Snake {
     static ArrayList<Double> fooddist = new ArrayList<Double>();
     static ArrayList<Integer> whichfood = new ArrayList<Integer>();
     Rect2d targettemp;
+    static Rect2d head;
 
     private static ArrayList<Rect2d> snake;
     private static ArrayList<SquareCoords> history;
@@ -28,13 +35,11 @@ public class AISnake extends Snake {
     public AISnake() {
         super();
 
-        head = new Rect2d(500.0, 1000.0, snakeWidth, snakeWidth);
-
         isPathing = false;
         isPlayer = false;
         vision = new Rect2d(this.getHead().getCenter().x - 500, this.getHead().getCenter().y - 500, 1000, 1000);
-        pathY = new Rect2d(this.getHead().getLeft(), this.getHead().getCenter().x - 500, 1000, this.getWidth());
-        pathX = new Rect2d(this.getHead().getLeft(), this.getHead().getCenter().y - 500, this.getWidth(), 1000);
+        pathY = new Rect2d(this.getHead().getLeft(), this.getHead().getCenter().x - 5000, 100000, this.getWidth());
+        pathX = new Rect2d(this.getHead().getLeft(), this.getHead().getCenter().y - 5000, this.getWidth(), 100000);
         randomCooldown = 0;
     }
 
@@ -42,30 +47,28 @@ public class AISnake extends Snake {
 
         System.out.println("--------------------Scanning--------------------");
         if (!isPathing) {
-            fooddist.clear();
-            whichfood.clear();
+            //fooddist.clear();
+            //whichfood.clear();
             for (int i = 0; i < RectPanel.food.size(); i++) {
                 if (Rect2d.intersect(this.vision, RectPanel.food.get(i)) != Rect2d.EmptyRect) {
-                    fooddist.add(findDistance(RectPanel.food.get(i)));
-                    whichfood.add(i);
+                    fooddist.add(findDistance(RectPanel.food.get(i)));//ADD THE DISTANCE FROM HEAD TO FOUND FOOD TO ARRAY
+                    whichfood.add(i);//ADD THE INDEX OF THE FOOD TO A SEPARATE ARRAY
                 }
             }
 
-            if (isFood()) {
+            if (isFood()) {//ENTER HERE IF THERE IS FOOD IN VISION
                 System.out.println("food found");
-                isPathing = true;
-                pathTo(giveClosest());
-                targettemp = giveClosest();
+                isPathing = true;//BEGIN QUEST FOR TARGET
+                pathTo(giveClosest());//FIND CLOSEST TARGET AND GOOOOO
+                targettemp = giveClosest();//SINCE WE CAN'T ENTER THIS LOOP AGAIN UNTIL FOOD IS EATEN, GIVE THE SNAKE SOMETHING TO REMEMBER TO FOLLOW
             }
 
-            if (isFood() == false) {
-                
+            if (isFood() == false) {//TODO IF NO FOOD FOUND (AS FOR NOW SNAKE JUST KEEPS GOING STRAIGHT UNTIL FOOD FOUND)
             }
 
         }
         System.out.println("--------------------End Scan--------------------");
-        isPathing = false;
- 
+        pathTo(targettemp);
 
     }
 
@@ -109,7 +112,8 @@ public class AISnake extends Snake {
 
     Rect2d giveClosest() {
 
-        int index = whichfood.get(returnLowest());
+       int index = whichfood.get(returnLowest());
+       System.out.println("1: " + findDistance(RectPanel.food.get(index)) + "2: " + fooddist.get(returnLowest()));
 
         return RectPanel.food.get(index);
     }
@@ -123,23 +127,29 @@ public class AISnake extends Snake {
 
     double findDistance(Rect2d target) {
         double distance = 0;
-        double x1 = this.getHead().getCenter().x;
-        double x2 = target.getCenter().x;
-        double y1 = this.getHead().getCenter().y;
-        double y2 = target.getCenter().y;
+        x1 = this.getHead().getCenter().x;
+        x2 = target.getCenter().x;
+        y1 = this.getHead().getCenter().y;
+        y2 = target.getCenter().y;
 
         distance = Math.sqrt((Math.pow((x2 - x1), 2)) + (Math.pow((y2 - y1), 2)));
+        
         return distance;
     }
+    
 
     int returnLowest() {
-        double x = Collections.min(fooddist);
+        double x = Collections.min(fooddist);//FIND SMALLEST DISTANCE VALUE
+        double y = Collections.max(fooddist);//FIND GREATEST DISTANCE VALUE
+        System.out.println("DISTANCE OF CLOSEST FOOD: " + x);
+        System.out.println("DISTANCE OF FARTHEST FOOD: " + y);
         for (int i = 0; i < fooddist.size(); i++) {
-            if (fooddist.get(i) == x) {
-                return i;
+            if (fooddist.get(i) == x) {//FIND LOCATION OF FOOD WITH SMALLEST DISTANCE VALUE(RECREATION OF SCAN LOOP)
+                System.out.println("INDEX VAL:" + i);
+                return i; //RETURN INDEX OF CLOSEST FOOD
             }
         }
-        return 26812334;
+        return 26812334;//SHOULDN'T EVER GET HERE
     }
 
     public static int random_number(int low, int high) {
@@ -165,7 +175,7 @@ public class AISnake extends Snake {
                 this.addS(new Rect2d(1000, 1000.0, this.getWidth(), this.getWidth()));
                 this.addH(new SquareCoords(0, 0));
                 RectPanel.food.remove(j);
-                RectPanel.food.add(new Rect2d(random_number(0, 1000), random_number(0, 500), 10, 10));
+                RectPanel.food.add(new Rect2d(random_number(100, 1200), random_number(100, 600), 10, 10));
                 widthfactor = this.getSSize() / 10;
                 widthfactor += 1;
                 //this.setWidth(10 + (widthfactor * 5));
@@ -175,8 +185,8 @@ public class AISnake extends Snake {
         //SNAKE COLLISION INTO ITSELF
         for (int j = 1; j < this.getSSize(); j++) {
             if (Rect2d.intersect(this.getRect(j), this.getHead()) != Rect2d.EmptyRect) {//when snake touches itself
-               // this.die();
-               // return;
+                //this.die();
+                //return;
             }
         }
 
@@ -214,9 +224,9 @@ public class AISnake extends Snake {
                 this.getHead().translate(0.0, -this.getWidth());
                 break;
         }
-        vision = new Rect2d(this.getHead().getCenter().x - 250, this.getHead().getCenter().y - 250, 500, 500);
-        pathY = new Rect2d(this.getHead().getLeft() - 500, this.getHead().getTop(), 1000, this.getWidth());
-        pathX = new Rect2d(this.getHead().getLeft(), this.getHead().getCenter().y - 500, this.getWidth(), 1000);
+        vision = new Rect2d(this.getHead().getCenter().x - 500, this.getHead().getCenter().y - 500, 1000, 1000);
+        pathY = new Rect2d(this.getHead().getLeft() - 5000, this.getHead().getTop(), 100000, this.getWidth());
+        pathX = new Rect2d(this.getHead().getLeft(), this.getHead().getCenter().y - 5000, this.getWidth(), 100000);
         this.updateSize();
     }
 
