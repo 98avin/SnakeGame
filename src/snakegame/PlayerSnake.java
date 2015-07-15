@@ -43,6 +43,9 @@ public class PlayerSnake {
     SquareCoords getH(int i) {
         return history.get(i);
     }
+    int getScore(){
+        return (int)this.getSSize()-1;
+    }
 
     double getSSize() {
         return snake.size();

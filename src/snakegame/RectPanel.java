@@ -246,7 +246,7 @@ public class RectPanel extends JPanel {
                                         this.backgroundColors[2]);       
         //COLOR RAINBOW CYCLE END
         
-        if (bernie.getSSize() > berninator.getSSize()) {//if score > rave threshold && player bigger than ai
+        if (bernie.getSSize() > berninator.getSSize() && bernie.getSSize() > robobernie.getSSize()) {//if score > rave threshold && player bigger than ai
             fillRect(g, back, DEFAULT_BACKGROUND_COLOR);
 
             if (music == false) {
