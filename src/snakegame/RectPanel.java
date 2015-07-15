@@ -35,7 +35,7 @@ public class RectPanel extends JPanel {
     public static final int MAX_COLOR_VALUE = 255;
     public static final int MIN_COLOR_VALUE = 0;
     public static final int COLOR_INCREMENT = 50;
-    
+
     public static final Color FOOD_COLOR = Color.white;
     public static final Color PLAYER_SNAKE_COLOR = Color.blue;
     public static final Color AI_SNAKE_COLOR = Color.red;
@@ -48,11 +48,12 @@ public class RectPanel extends JPanel {
     private static Rect2d back;
 
     double snakeWidth;
-    
+
     public static final int NUM_PLAYERS = 1;
     public static final int NUM_AI_M1000 = 1;
     public static final int NUM_AI_M2000 = 1;
-    private PlayerSnake snakes[]=new PlayerSnake[(NUM_PLAYERS+NUM_AI_M1000+NUM_AI_M2000)];
+    private final int[] NUMBER_SNAKES = {NUM_PLAYERS, NUM_AI_M1000, NUM_AI_M2000};
+    private PlayerSnake snakes[] = new PlayerSnake[(NUM_PLAYERS + NUM_AI_M1000 + NUM_AI_M2000)];
 
     public static PlayerSnake bernie;
     public static AISnake berninator;
@@ -77,6 +78,21 @@ public class RectPanel extends JPanel {
             loadMusic();//loads the MIDI file to play later, prevents lag
         } catch (Exception ex) {
             Logger.getLogger(RectPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for (int j = 0; j < NUMBER_SNAKES.length; j++) {
+            for (int i = 0; i < NUMBER_SNAKES[j]; i++) {
+                switch (j) {
+                    case 0:
+                        snakes[i]=new PlayerSnake(PLAYER_SNAKE_COLOR);
+                        break;
+                    case 1:
+                        snakes[NUM_PLAYERS+i]=new AISnake(AI_SNAKE_COLOR);
+                        break;
+                    case 2:
+                        snakes[NUM_PLAYERS+NUM_AI_M1000+i] = new AISnake2(AI_SNAKE_COLOR);
+                        break;
+                }
+            }
         }
 
         // Initialize colors for rainbow cycle
@@ -125,7 +141,7 @@ public class RectPanel extends JPanel {
             public void keyPressed(KeyEvent e) {
                 int keycode = e.getKeyCode();
                 switch (keycode) {
-                    case java.awt.event.KeyEvent.VK_W:  
+                    case java.awt.event.KeyEvent.VK_W:
                         keysPressed.Up = true;
                         break;
                     case java.awt.event.KeyEvent.VK_S:
@@ -209,7 +225,7 @@ public class RectPanel extends JPanel {
         if (checkLiving(bernie, PLAYER_SNAKE_COLOR, g)) {
             return;
         }
-        if (checkLiving(berninator, AI_SNAKE_COLOR,g)) {
+        if (checkLiving(berninator, AI_SNAKE_COLOR, g)) {
             return;
         }
         if (checkLiving(robobernie, AI_SNAKE_COLOR, g)) {
@@ -220,10 +236,10 @@ public class RectPanel extends JPanel {
         backColorFlow();
 
         COLOR_RAINBOW_CYCLE = new Color(this.backgroundColors[0],
-                                        this.backgroundColors[1],
-                                        this.backgroundColors[2]);       
+                this.backgroundColors[1],
+                this.backgroundColors[2]);
         //COLOR RAINBOW CYCLE END
-        
+
         if (bernie.getSSize() > berninator.getSSize() && bernie.getSSize() > robobernie.getSSize()) {//if score > rave threshold && player bigger than ai
             fillRect(g, back, DEFAULT_BACKGROUND_COLOR);
 
@@ -246,27 +262,26 @@ public class RectPanel extends JPanel {
             }
 
         }
-        
+
         //g.setColor(Color.white);
         //g.drawLine((int) berninator.getHead().getCenter().x, (int) berninator.getHead().getCenter().y, (int) berninator.targettemp.getCenter().x, (int) berninator.targettemp.getCenter().y);
         //fillRect(g, bernie1.vision, Color.yellow);
         //fillRect(g, bernie1.pathX, Color.blue);
         //fillRect(g, bernie1.pathY, Color.red);
-
         // Fill snake's body with colors
         fillSnake(bernie, g, PLAYER_SNAKE_COLOR, berninator.getSSize(), robobernie.getSSize());
         fillSnake(berninator, g, AI_SNAKE_COLOR, bernie.getSSize(), robobernie.getSSize());
         fillSnake(robobernie, g, AI_SNAKE_COLOR, bernie.getSSize(), berninator.getSSize());
-        
+
         //Draw food
         for (int i = 0; i < food.size(); i++) {
             fillRect(g, food.get(i), FOOD_COLOR);
         }
 
     }
-    
-    public void fillSnake(PlayerSnake snake, Graphics g, Color color, double size, double size2){
-    for (int i = 0; i < snake.getSSize(); i++) {
+
+    public void fillSnake(PlayerSnake snake, Graphics g, Color color, double size, double size2) {
+        for (int i = 0; i < snake.getSSize(); i++) {
 
             if (snake.getSSize() > size && snake.getSSize() > size2) { //if player bigger than rave threshold AND ai --- make it rainbow
                 fillRect(g, snake.getRect(i), COLOR_RAINBOW_CYCLE);
@@ -294,6 +309,7 @@ public class RectPanel extends JPanel {
 
     public static void playMusic() throws Exception {
         clip.start();
+        clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     public static void loadMusic() throws Exception {
@@ -308,8 +324,8 @@ public class RectPanel extends JPanel {
     public static void stopMusic() throws Exception {
         clip.stop();
     }
-    
-    void backColorFlow(){
+
+    void backColorFlow() {
         if (colorOrder < 2) {
             //max red
             if (this.backgroundColors[colorOrder] < MAX_COLOR_VALUE && colorDecreaseFlag == false) {
@@ -320,10 +336,10 @@ public class RectPanel extends JPanel {
                 }
             } //max green/blue
             else if (this.backgroundColors[colorOrder + 1] < MAX_COLOR_VALUE) {
-                if(this.backgroundColors[colorOrder + 1] + COLOR_INCREMENT < MAX_COLOR_VALUE){
-                this.backgroundColors[colorOrder + 1] += COLOR_INCREMENT;}
-                else{
-                    this.backgroundColors[colorOrder+1] = MAX_COLOR_VALUE;
+                if (this.backgroundColors[colorOrder + 1] + COLOR_INCREMENT < MAX_COLOR_VALUE) {
+                    this.backgroundColors[colorOrder + 1] += COLOR_INCREMENT;
+                } else {
+                    this.backgroundColors[colorOrder + 1] = MAX_COLOR_VALUE;
                 }
             } //mins red/green
             else if (this.backgroundColors[colorOrder] > 0) {
@@ -335,25 +351,23 @@ public class RectPanel extends JPanel {
                 }
             } else {
                 colorDecreaseFlag = false;
-                colorOrder ++;
+                colorOrder++;
             }
         } else if (colorOrder == 2) {
             //re-maxes red 
             if (this.backgroundColors[0] < MAX_COLOR_VALUE) {
-                if(this.backgroundColors[0]+COLOR_INCREMENT<MAX_COLOR_VALUE){
-                this.backgroundColors[0] += COLOR_INCREMENT;
-                }
-                else {
+                if (this.backgroundColors[0] + COLOR_INCREMENT < MAX_COLOR_VALUE) {
+                    this.backgroundColors[0] += COLOR_INCREMENT;
+                } else {
                     this.backgroundColors[0] = MAX_COLOR_VALUE;
                 }
             }//mins blue 
             else if (this.backgroundColors[colorOrder] > MIN_COLOR_VALUE) {
                 colorDecreaseFlag = true;
-                if(this.backgroundColors[colorOrder]-COLOR_INCREMENT>0){
-                this.backgroundColors[colorOrder] -= COLOR_INCREMENT;
-            }
-                else{
-                    this.backgroundColors[colorOrder]=MIN_COLOR_VALUE;
+                if (this.backgroundColors[colorOrder] - COLOR_INCREMENT > 0) {
+                    this.backgroundColors[colorOrder] -= COLOR_INCREMENT;
+                } else {
+                    this.backgroundColors[colorOrder] = MIN_COLOR_VALUE;
                 }
             } else {
                 colorDecreaseFlag = false;

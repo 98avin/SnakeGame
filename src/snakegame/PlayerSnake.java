@@ -5,6 +5,7 @@
  */
 package snakegame;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import static snakegame.RectPanel.random_number;
 
@@ -23,9 +24,11 @@ public class PlayerSnake {
     boolean isPlayer;
     Rect2d head;
     int transval = 15;
+    Color color;
 
-    public PlayerSnake() {
+    public PlayerSnake(Color color) {
         this.dir = Direction.Right;
+        this.color= color;
         snake = new ArrayList<Rect2d>();
         history = new ArrayList<SquareCoords>();
         snakeWidth = 10;

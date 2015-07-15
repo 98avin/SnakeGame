@@ -5,6 +5,7 @@
  */
 package snakegame;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,10 +32,11 @@ public class AISnake extends PlayerSnake {
 
     private static ArrayList<Rect2d> snake;
     private static ArrayList<SquareCoords> history;
+    Color color;
 
-    public AISnake() {
-        super();
-
+    public AISnake(Color color) {
+        super(color);
+        this.color=color;
         isPathing = false;
         isPlayer = false;
         vision = new Rect2d(this.getHead().getCenter().x - 500, this.getHead().getCenter().y - 500, 1000, 1000);
