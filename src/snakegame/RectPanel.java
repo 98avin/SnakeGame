@@ -34,6 +34,8 @@ public class RectPanel extends JPanel {
     public static final int NUM_BACK_COLORS = 3;
     public static final int MAX_COLOR_VALUE = 255;
     public static final int MIN_COLOR_VALUE = 0;
+    public static final int COLOR_INCREMENT = 10;
+    
     public static final Color FOOD_COLOR = Color.white;
     public static final Color PLAYER_SNAKE_COLOR = Color.blue;
     public static final Color AI_SNAKE_COLOR = Color.red;
@@ -329,6 +331,59 @@ public class RectPanel extends JPanel {
 
     public static void stopMusic() throws Exception {
         clip.stop();
+    }
+    
+    void backColorFlow(){
+        if (colorOrder < 2) {
+            //max red
+            if (this.backgroundColors[colorOrder] < MAX_COLOR_VALUE && colorDecreaseFlag == false) {
+                if (this.backgroundColors[colorOrder] + COLOR_INCREMENT < MAX_COLOR_VALUE) {
+                    this.backgroundColors[colorOrder] += COLOR_INCREMENT;
+                } else {
+                    this.backgroundColors[colorOrder] = MAX_COLOR_VALUE;
+                }
+            } //max green/blue
+            else if (this.backgroundColors[colorOrder + 1] < MAX_COLOR_VALUE) {
+                if(this.backgroundColors[colorOrder + 1] + COLOR_INCREMENT < MAX_COLOR_VALUE){
+                this.backgroundColors[colorOrder + 1] += COLOR_INCREMENT;}
+                else{
+                    this.backgroundColors[colorOrder+1] = MAX_COLOR_VALUE;
+                }
+            } //mins red/green
+            else if (this.backgroundColors[colorOrder] > 0) {
+                colorDecreaseFlag = true;
+                if (this.backgroundColors[colorOrder] - COLOR_INCREMENT >= 0) {
+                    this.backgroundColors[colorOrder] -= COLOR_INCREMENT;
+                } else {
+                    this.backgroundColors[colorOrder] = MIN_COLOR_VALUE;
+                }
+            } else {
+                colorDecreaseFlag = false;
+                colorOrder ++;
+            }
+        } else if (colorOrder == 2) {
+            //re-maxes red 
+            if (this.backgroundColors[0] < MAX_COLOR_VALUE) {
+                if(this.backgroundColors[0]+COLOR_INCREMENT<MAX_COLOR_VALUE){
+                this.backgroundColors[0] += COLOR_INCREMENT;
+                }
+                else {
+                    this.backgroundColors[0] = MAX_COLOR_VALUE;
+                }
+            }//mins blue 
+            else if (this.backgroundColors[colorOrder] > MIN_COLOR_VALUE) {
+                colorDecreaseFlag = true;
+                if(this.backgroundColors[colorOrder]-COLOR_INCREMENT>0){
+                this.backgroundColors[colorOrder] -= COLOR_INCREMENT;
+            }
+                else{
+                    this.backgroundColors[colorOrder]=MIN_COLOR_VALUE;
+                }
+            } else {
+                colorDecreaseFlag = false;
+                colorOrder = 0;
+            }
+        }
     }
 
     //FUNCTIONS NEEDED FOR CAMERA SCROLLING
