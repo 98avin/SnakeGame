@@ -39,7 +39,7 @@ public class RectPanel extends JPanel {
     public static final Color FOOD_COLOR = Color.white;
     public static final Color PLAYER_SNAKE_COLOR = Color.blue;
     public static final Color AI_SNAKE_COLOR = Color.red;
-    public static final int NUMBER_OF_FOOD = 2;
+    public static final int NUMBER_OF_FOOD = 500;
 
     public static double WINDOW_WIDTH = 800.0;
     public static double WINDOW_HEIGHT = 800.0;
@@ -51,13 +51,9 @@ public class RectPanel extends JPanel {
 
     public static final int NUM_PLAYERS = 1;
     public static final int NUM_AI_M1000 = 1;
-    public static final int NUM_AI_M2000 = 1;
+    public static final int NUM_AI_M2000 = 100;
     private final int[] NUMBER_SNAKES = {NUM_PLAYERS, NUM_AI_M1000, NUM_AI_M2000};
     private PlayerSnake snakes[] = new PlayerSnake[(NUM_PLAYERS + NUM_AI_M1000 + NUM_AI_M2000)];
-
-    public static PlayerSnake bernie;
-    public static AISnake berninator;
-    public static AISnake2 robobernie;
 
     public boolean music;
 
@@ -83,13 +79,13 @@ public class RectPanel extends JPanel {
             for (int i = 0; i < NUMBER_SNAKES[j]; i++) {
                 switch (j) {
                     case 0:
-                        snakes[i]=new PlayerSnake(PLAYER_SNAKE_COLOR);
+                        snakes[i] = new PlayerSnake(PLAYER_SNAKE_COLOR);
                         break;
                     case 1:
-                        snakes[NUM_PLAYERS+i]=new AISnake(AI_SNAKE_COLOR);
+                        snakes[NUM_PLAYERS + i] = new AISnake(AI_SNAKE_COLOR);
                         break;
                     case 2:
-                        snakes[NUM_PLAYERS+NUM_AI_M1000+i] = new AISnake2(AI_SNAKE_COLOR);
+                        snakes[NUM_PLAYERS + NUM_AI_M1000 + i] = new AISnake2(AI_SNAKE_COLOR);
                         break;
                 }
             }
@@ -113,19 +109,14 @@ public class RectPanel extends JPanel {
         setPreferredSize(new Dimension((int) WINDOW_WIDTH, (int) WINDOW_HEIGHT));
         keysPressed = new KeysPressed();
 
-        bernie = new PlayerSnake();
-        berninator = new AISnake();
-        robobernie = new AISnake2();
-
         back = new Rect2d(-500, -500, 10000, 10000);
 
         food = new ArrayList<Rect2d>();
 
         //cambounds = new Rect2d(100, 100, screenSize.width - 200, screenSize.height - 250);
-        buildSnake(bernie);
-        buildSnake(berninator);
-        buildSnake(robobernie);
-
+        for (int i = 0; i < snakes.length; i++) {
+            buildSnake(snakes[i]);
+        }
         for (int i = 0; i < NUMBER_OF_FOOD; i++) {
             food.add(new Rect2d(random_number(0, 1000), random_number(0, 500), 10, 10));
         }
@@ -136,7 +127,7 @@ public class RectPanel extends JPanel {
             @Override
             public void keyTyped(KeyEvent e) {
             }
-            
+
             @Override
             public void keyPressed(KeyEvent e) {
                 int keycode = e.getKeyCode();
@@ -221,17 +212,12 @@ public class RectPanel extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-
-        if (checkLiving(bernie, PLAYER_SNAKE_COLOR, g)) {
-            return;
+        for (int i = 0; i < snakes.length; i++) {
+            if (checkLiving(snakes[i], snakes[i].getColor(), g)) {
+                return;
+            }
         }
-        if (checkLiving(berninator, AI_SNAKE_COLOR, g)) {
-            return;
-        }
-        if (checkLiving(robobernie, AI_SNAKE_COLOR, g)) {
-            return;
-        }
-
+        fillRect(g, back, DEFAULT_BACKGROUND_COLOR);
         //RAINBOW CYCLE COLOR
         backColorFlow();
 
@@ -239,26 +225,26 @@ public class RectPanel extends JPanel {
                 this.backgroundColors[1],
                 this.backgroundColors[2]);
         //COLOR RAINBOW CYCLE END
+        for (int i = 0; i < NUM_PLAYERS; i++) {
+            if (isPlayerBigger(snakes[i], i)) {//if score > rave threshold && player bigger than ai
 
-        if (bernie.getSSize() > berninator.getSSize() && bernie.getSSize() > robobernie.getSSize()) {//if score > rave threshold && player bigger than ai
-            fillRect(g, back, DEFAULT_BACKGROUND_COLOR);
+                if (music == false) {
+                    try {
+                        playMusic();
+                    } catch (Exception ex) {
+                        Logger.getLogger(RectPanel.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    music = true;
+                }
 
-            if (music == false) {
+            } else {
+                fillRect(g, back, DEFAULT_BACKGROUND_COLOR);
+                music = false;
                 try {
-                    playMusic();
+                    stopMusic();
                 } catch (Exception ex) {
                     Logger.getLogger(RectPanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                music = true;
-            }
-
-        } else {
-            fillRect(g, back, DEFAULT_BACKGROUND_COLOR);
-            music = false;
-            try {
-                stopMusic();
-            } catch (Exception ex) {
-                Logger.getLogger(RectPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
 
         }
@@ -269,9 +255,7 @@ public class RectPanel extends JPanel {
         //fillRect(g, bernie1.pathX, Color.blue);
         //fillRect(g, bernie1.pathY, Color.red);
         // Fill snake's body with colors
-        fillSnake(bernie, g, PLAYER_SNAKE_COLOR, berninator.getSSize(), robobernie.getSSize());
-        fillSnake(berninator, g, AI_SNAKE_COLOR, bernie.getSSize(), robobernie.getSSize());
-        fillSnake(robobernie, g, AI_SNAKE_COLOR, bernie.getSSize(), berninator.getSSize());
+        fillSnake(g);
 
         //Draw food
         for (int i = 0; i < food.size(); i++) {
@@ -280,21 +264,34 @@ public class RectPanel extends JPanel {
 
     }
 
-    public void fillSnake(PlayerSnake snake, Graphics g, Color color, double size, double size2) {
-        for (int i = 0; i < snake.getSSize(); i++) {
+    public boolean isPlayerBigger(PlayerSnake snake, int index) {
+        int tempCount = 0;
+        for (int i = 0; i < snakes.length; i++) {
+            if (snake.getScore() > snakes[i].getScore()) {
+                tempCount++;
+            }
+        }
 
-            if (snake.getSSize() > size && snake.getSSize() > size2) { //if player bigger than rave threshold AND ai --- make it rainbow
-                fillRect(g, snake.getRect(i), COLOR_RAINBOW_CYCLE);
-            } else {
-                fillRect(g, snake.getRect(i), color);
+        return (tempCount == snakes.length - 1);
+    }
+
+    public void fillSnake(Graphics g) {
+        for (int i = 0; i < snakes.length; i++) {
+            for(int j = 0; j < snakes[i].getSSize();j++){
+                if(isPlayerBigger(snakes[i],i)){
+                fillRect(g,snakes[i].getRect(j),COLOR_RAINBOW_CYCLE);
+                }
+                else{
+                    fillRect(g, snakes[i].getRect(j), snakes[i].getColor());
+                }
             }
         }
     }
 
     public void update() {
-        bernie.update();
-        berninator.update();
-        robobernie.update();
+        for (int i = 0; i < snakes.length; i++) {
+            snakes[i].update();
+        }
     }
 
     public static int random_number(int low, int high) {

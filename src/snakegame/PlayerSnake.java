@@ -49,6 +49,9 @@ public class PlayerSnake {
     int getScore(){
         return (int)this.getSSize()-1;
     }
+    Color getColor(){
+        return color;
+    }
 
     double getSSize() {
         return snake.size();

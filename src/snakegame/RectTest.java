@@ -79,7 +79,7 @@ public class RectTest {
 
     public static void updateScoreboard(RectPanel rectPanel, JLabel statusLabel) {
        
-       if (!RectPanel.bernie.isLiving()) {
+       /*if (!RectPanel.bernie.isLiving()) {
             statusLabel.setText("BERNIE: " + Integer.toString(playerscore) + " BERNINATOR: " + Integer.toString(aiscore) + " ROBOBERNIE: " + Integer.toString(aiscore2));
         } else {
             playerscore = (int) RectPanel.bernie.getScore();
@@ -98,7 +98,9 @@ public class RectTest {
         } else {
             aiscore2 = (int) RectPanel.robobernie.getScore();
             statusLabel.setText("BERNIE: " + Integer.toString(playerscore) + " BERNINATOR: " + Integer.toString(aiscore) + " ROBOBERNIE: " + Integer.toString(aiscore2));
-        }
+        }*/
+        
+        
     }
     
 

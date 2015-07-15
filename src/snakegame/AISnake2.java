@@ -18,11 +18,9 @@ public class AISnake2 extends PlayerSnake {
     public Rect2d vision, pathX, pathY, target;
     int randomCooldown;
     private static final int avoidEdgeDist = 10;
-    Color color;
 
     public AISnake2(Color color) {
-        super(color);
-        this.color=color;        
+        super(color);       
         isPathing = false;
         isPlayer = false;
         vision = new Rect2d(this.getHead().getCenter().x - 500, this.getHead().getCenter().y - 500, 1000, 1000);
