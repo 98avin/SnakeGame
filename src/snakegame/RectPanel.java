@@ -49,6 +49,11 @@ public class RectPanel extends JPanel {
     private Rect2d back;
 
     double snakeWidth;
+    
+    public static final int NUM_PLAYERS = 1;
+    public static final int NUM_AI_M1000 = 1;
+    public static final int NUM_AI_M2000 = 1;
+    private PlayerSnake snakes[]=new PlayerSnake[(NUM_PLAYERS+NUM_AI_M1000+NUM_AI_M2000)];
 
     public static PlayerSnake bernie;
     public static AISnake berninator;
