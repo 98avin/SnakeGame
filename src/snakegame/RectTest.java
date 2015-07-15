@@ -56,36 +56,14 @@ public class RectTest {
 
         frame.setVisible(true);
         
-        //TODO - BETTER SCOREBOARD FUNCTION
-        int score = 0;
+        int playerscore = 0;
         int aiscore = 0;
         int aiscore2 = 0;
         
         while (true) {
             rectPanel.update();
-            if(!RectPanel.bernie.isLiving()){
-                 statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNINATOR: " + Integer.toString(aiscore) + " ROBOBERNIE: " + Integer.toString(aiscore2));
-            }
-            else{
-                score = (int)RectPanel.bernie.getSSize()-1;
-                 statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNINATOR: " + Integer.toString(aiscore) + " ROBOBERNIE: " + Integer.toString(aiscore2));
-            }
+            updateScoreboard(rectPanel, statusLabel, playerscore, aiscore, aiscore2);
             
-            if(!RectPanel.berninator.isLiving()){
-                 statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNINATOR: " + Integer.toString(aiscore) + " ROBOBERNIE: " + Integer.toString(aiscore2));
-            }
-            else{
-                aiscore = (int)RectPanel.berninator.getSSize()-1;
-                 statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNINATOR: " + Integer.toString(aiscore) + " ROBOBERNIE: " + Integer.toString(aiscore2));
-            }
-            
-            if(!RectPanel.robobernie.isLiving()){
-                statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNINATOR: " + Integer.toString(aiscore) + " ROBOBERNIE: " + Integer.toString(aiscore2));
-            }
-            else{
-                aiscore2 = (int)RectPanel.robobernie.getSSize()-1;
-                 statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNINATOR: " + Integer.toString(aiscore) + " ROBOBERNIE: " + Integer.toString(aiscore2));
-            }
             
             try {
                 Thread.sleep(35);
@@ -95,6 +73,32 @@ public class RectTest {
             frame.repaint();
         }
 
+    }
+    
+    public static void updateScoreboard(RectPanel rectPanel, JLabel statusLabel, int playerscore, int aiscore, int aiscore2){
+    if(!RectPanel.bernie.isLiving()){
+                 statusLabel.setText("BERNIE: " + Integer.toString(playerscore) + " BERNINATOR: " + Integer.toString(aiscore) + " ROBOBERNIE: " + Integer.toString(aiscore2));
+            }
+            else{
+                playerscore = (int)RectPanel.bernie.getSSize()-1;
+                 statusLabel.setText("BERNIE: " + Integer.toString(playerscore) + " BERNINATOR: " + Integer.toString(aiscore) + " ROBOBERNIE: " + Integer.toString(aiscore2));
+            }
+            
+            if(!RectPanel.berninator.isLiving()){
+                 statusLabel.setText("BERNIE: " + Integer.toString(playerscore) + " BERNINATOR: " + Integer.toString(aiscore) + " ROBOBERNIE: " + Integer.toString(aiscore2));
+            }
+            else{
+                aiscore = (int)RectPanel.berninator.getSSize()-1;
+                 statusLabel.setText("BERNIE: " + Integer.toString(playerscore) + " BERNINATOR: " + Integer.toString(aiscore) + " ROBOBERNIE: " + Integer.toString(aiscore2));
+            }
+            
+            if(!RectPanel.robobernie.isLiving()){
+                statusLabel.setText("BERNIE: " + Integer.toString(playerscore) + " BERNINATOR: " + Integer.toString(aiscore) + " ROBOBERNIE: " + Integer.toString(aiscore2));
+            }
+            else{
+                aiscore2 = (int)RectPanel.robobernie.getSSize()-1;
+                 statusLabel.setText("BERNIE: " + Integer.toString(playerscore) + " BERNINATOR: " + Integer.toString(aiscore) + " ROBOBERNIE: " + Integer.toString(aiscore2));
+            }
     }
 
     public static int random_number(int low, int high) {
