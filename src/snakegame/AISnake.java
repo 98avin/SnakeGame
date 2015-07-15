@@ -42,6 +42,8 @@ public class AISnake extends Snake {
 
         System.out.println("--------------------Scanning--------------------");
         if (!isPathing) {
+            fooddist.clear();
+            whichfood.clear();
             for (int i = 0; i < RectPanel.food.size(); i++) {
                 if (Rect2d.intersect(this.vision, RectPanel.food.get(i)) != Rect2d.EmptyRect) {
                     fooddist.add(findDistance(RectPanel.food.get(i)));
@@ -57,11 +59,13 @@ public class AISnake extends Snake {
             }
 
             if (isFood() == false) {
+                
             }
 
         }
         System.out.println("--------------------End Scan--------------------");
-        pathTo(targettemp);
+        isPathing = false;
+ 
 
     }
 
@@ -210,7 +214,7 @@ public class AISnake extends Snake {
                 this.getHead().translate(0.0, -this.getWidth());
                 break;
         }
-        vision = new Rect2d(this.getHead().getCenter().x - 500, this.getHead().getCenter().y - 500, 1000, 1000);
+        vision = new Rect2d(this.getHead().getCenter().x - 250, this.getHead().getCenter().y - 250, 500, 500);
         pathY = new Rect2d(this.getHead().getLeft() - 500, this.getHead().getTop(), 1000, this.getWidth());
         pathX = new Rect2d(this.getHead().getLeft(), this.getHead().getCenter().y - 500, this.getWidth(), 1000);
         this.updateSize();

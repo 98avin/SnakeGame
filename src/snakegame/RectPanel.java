@@ -32,7 +32,7 @@ public class RectPanel extends JPanel {
     public static final int NUM_BACK_COLORS = 3;
     public static final int MAX_COLOR_VALUE = 255;
     public static final int MIN_COLOR_VALUE = 0;
-    public static final int NUMBER_OF_FOOD = 2;
+    public static final int NUMBER_OF_FOOD = 10;
 
     public static double WINDOW_WIDTH = 800.0;
     public static double WINDOW_HEIGHT = 800.0;
@@ -45,6 +45,7 @@ public class RectPanel extends JPanel {
 
     public static Snake bernie;
     public static AISnake berninator;
+    public static AISnake1 robobernie;
 
     public boolean music;
 
@@ -58,7 +59,6 @@ public class RectPanel extends JPanel {
     static Clip clip;
 
     //static Rect2d cambounds; //CAMERA WINDOW(Snake touches the edge of this to begin "scrolling")
-
     // <<CONSTRUCTOR>>
     public RectPanel() {
 
@@ -88,28 +88,16 @@ public class RectPanel extends JPanel {
 
         bernie = new Snake();
         berninator = new AISnake();
+        robobernie = new AISnake1();
 
         back = new Rect2d(-500, -500, 10000, 10000);
 
         food = new ArrayList<Rect2d>();
 
         //cambounds = new Rect2d(100, 100, screenSize.width - 200, screenSize.height - 250);
-
-        for (int i = 1; i < 0; i++) {
-            bernie.addS(new Rect2d(30.0 + (i * 30), 170.0, bernie.getWidth(), bernie.getWidth()));
-        }
-
-        for (int i = 0; i < bernie.getSSize(); i++) {
-            bernie.addH(new SquareCoords((int) bernie.getRect(i).getLeft(), (int) bernie.getRect(i).getTop()));
-        }
-        
-        for (int i = 1; i < 0; i++) {
-            berninator.addS(new Rect2d(30.0 + (i * 30), 170.0, berninator.getWidth(), berninator.getWidth()));
-        }
-
-        for (int i = 0; i < berninator.getSSize(); i++) {
-            berninator.addH(new SquareCoords((int) berninator.getRect(i).getLeft(), (int) berninator.getRect(i).getTop()));
-        }
+        buildSnake(bernie);
+        buildSnake(berninator);
+        buildSnake(robobernie);
 
         for (int i = 0; i < NUMBER_OF_FOOD; i++) {
             food.add(new Rect2d(random_number(0, 1000), random_number(0, 500), 10, 10));
@@ -159,6 +147,17 @@ public class RectPanel extends JPanel {
         });
     }
 
+    void buildSnake(Snake snake) {
+        for (int i = 1; i < 0; i++) {
+            snake.addS(new Rect2d(30.0 + (i * 30), 170.0, snake.getWidth(), snake.getWidth()));
+        }
+
+        for (int i = 0; i < snake.getSSize(); i++) {
+            snake.addH(new SquareCoords((int) snake.getRect(i).getLeft(), (int) snake.getRect(i).getTop()));
+        }
+
+    }
+
     // <<FILLRECT>>   (a static ‘helper’ method to draw a Rect2d)
     static void fillRect(Graphics g, Rect2d rect, Color c) {
         int x = (int) rect.getLeft();
@@ -176,41 +175,36 @@ public class RectPanel extends JPanel {
         return Math.abs(rnd.nextInt()) % (MAX_COLOR_VALUE);
     }
 
+    public boolean checkLiving(Snake snake, Graphics g) {
+        if (!snake.isLiving()) {
+            try {
+                stopMusic();
+            } catch (Exception ex) {
+                Logger.getLogger(RectPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            fillRect(g, back, Color.BLACK);
+
+            for (int i = 1; i < snake.getSSize(); i++) {
+                fillRect(g, snake.getRect(i), Color.BLUE);
+            }
+
+            for (int i = 0; i < food.size(); i++) {
+                fillRect(g, food.get(i), Color.white);
+            }
+            return true;
+        }
+        return false;
+    }
+
     public void paintComponent(Graphics g) {
 
-        if (!bernie.isLiving()) {
-            try {
-                stopMusic();
-            } catch (Exception ex) {
-                Logger.getLogger(RectPanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            fillRect(g, back, Color.BLACK);
-
-            for (int i = 1; i < bernie.getSSize(); i++) {
-                fillRect(g, bernie.getRect(i), Color.BLUE);
-            }
-
-            for (int i = 0; i < food.size(); i++) {
-                fillRect(g, food.get(i), Color.white);
-            }
+        if (checkLiving(bernie, g)) {
             return;
         }
-        
-        if (!berninator.isLiving()) {
-            try {
-                stopMusic();
-            } catch (Exception ex) {
-                Logger.getLogger(RectPanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            fillRect(g, back, Color.BLACK);
-
-            for (int i = 1; i < berninator.getSSize(); i++) {
-                fillRect(g, berninator.getRect(i), Color.red);
-            }
-
-            for (int i = 0; i < food.size(); i++) {
-                fillRect(g, food.get(i), Color.white);
-            }
+        if (checkLiving(berninator, g)) {
+            return;
+        }
+        if (checkLiving(robobernie, g)) {
             return;
         }
 
@@ -219,14 +213,14 @@ public class RectPanel extends JPanel {
         if (colorOrder < 2) {
             //max red
             if (this.backgroundColors[colorOrder] < MAX_COLOR_VALUE && colorDecreaseFlag == false) {
-                this.backgroundColors[colorOrder]+=5;
+                this.backgroundColors[colorOrder] += 5;
             } //max green/blue
             else if (this.backgroundColors[colorOrder + 1] < MAX_COLOR_VALUE) {
-                this.backgroundColors[colorOrder + 1]+= 5;
+                this.backgroundColors[colorOrder + 1] += 5;
             } //mins red/green
             else if (this.backgroundColors[colorOrder] > MIN_COLOR_VALUE) {
                 colorDecreaseFlag = true;
-                this.backgroundColors[colorOrder]-=5;
+                this.backgroundColors[colorOrder] -= 5;
             } else {
                 colorDecreaseFlag = false;
                 colorOrder++;
@@ -234,24 +228,20 @@ public class RectPanel extends JPanel {
         } else if (colorOrder == 2) {
             //re-maxes red 
             if (this.backgroundColors[0] < MAX_COLOR_VALUE) {
-                this.backgroundColors[0]+= 5;
+                this.backgroundColors[0] += 5;
             }//mins blue 
             else if (this.backgroundColors[colorOrder] > MIN_COLOR_VALUE) {
                 colorDecreaseFlag = true;
-                this.backgroundColors[colorOrder]-=5;
+                this.backgroundColors[colorOrder] -= 5;
             } else {
                 colorDecreaseFlag = false;
                 colorOrder = 0;
             }
         }
 
-        //this.backgroundColors[0] = (this.backgroundColors[0] + 1) % (MAX_COLOR_VALUE);
-        //this.backgroundColors[1] = (this.backgroundColors[1] + 1) % (MAX_COLOR_VALUE);
-        //this.backgroundColors[2] = (this.backgroundColors[2] + 1) % (MAX_COLOR_VALUE);
         insane = new Color(this.backgroundColors[0],
                 this.backgroundColors[1],
                 this.backgroundColors[2]);
-        //    System.out.println(insane.toString());
 
         if (bernie.getSSize() > berninator.getSSize()) {//if score > rave threshold && player bigger than ai
             fillRect(g, back, Color.black);
@@ -275,41 +265,38 @@ public class RectPanel extends JPanel {
             }
 
         }
-        g.setColor(Color.white);
-            g.drawLine((int)berninator.getHead().getCenter().x, (int)berninator.getHead().getCenter().y, (int)berninator.targettemp.getCenter().x, (int)berninator.targettemp.getCenter().y);
+        //g.setColor(Color.white);
+        //g.drawLine((int) berninator.getHead().getCenter().x, (int) berninator.getHead().getCenter().y, (int) berninator.targettemp.getCenter().x, (int) berninator.targettemp.getCenter().y);
             //fillRect(g, bernie1.vision, Color.yellow);
-            //fillRect(g, bernie1.pathX, Color.blue);
-            //fillRect(g, bernie1.pathY, Color.red);
+        //fillRect(g, bernie1.pathX, Color.blue);
+        //fillRect(g, bernie1.pathY, Color.red);
 
         // Fill the rest of the snake's body with colors
-        for (int i = 0; i < bernie.getSSize(); i++) {
-
-            if (bernie.getSSize() > berninator.getSSize()) { //if player bigger than rave threshold AND ai --- make it rainbow
-                fillRect(g, bernie.getRect(i), insane);
-            } else {
-                fillRect(g, bernie.getRect(i), Color.blue);
-            }
-        }
+        fillSnake(bernie, g, Color.blue, berninator.getSSize(), robobernie.getSSize());
+        fillSnake(berninator, g, Color.red, bernie.getSSize(), robobernie.getSSize());
+        fillSnake(robobernie, g, Color.green, bernie.getSSize(), berninator.getSSize());
         
-        for (int i = 0; i < berninator.getSSize(); i++) {
-
-            if (berninator.getSSize() > bernie.getSSize()) {
-
-                fillRect(g, berninator.getRect(i), insane);
-            } else {
-                fillRect(g, berninator.getRect(i), Color.red);
-            }
-        }
-
         for (int i = 0; i < food.size(); i++) {
             fillRect(g, food.get(i), Color.white);
         }
 
     }
+    
+    public void fillSnake(Snake snake, Graphics g, Color color, double size, double size2){
+    for (int i = 0; i < snake.getSSize(); i++) {
+
+            if (snake.getSSize() > size && snake.getSSize() > size2) { //if player bigger than rave threshold AND ai --- make it rainbow
+                fillRect(g, snake.getRect(i), insane);
+            } else {
+                fillRect(g, snake.getRect(i), color);
+            }
+        }
+    }
 
     public void update() {
         bernie.update();
         berninator.update();
+        robobernie.update();
     }
 
     public static int random_number(int low, int high) {
@@ -328,8 +315,8 @@ public class RectPanel extends JPanel {
 
     public static void loadMusic() throws Exception {
         File file = new File("sandstorm1.wav");
-        audioIn =  AudioSystem.getAudioInputStream(file);
-        AudioFormat format = audioIn.getFormat(); 
+        audioIn = AudioSystem.getAudioInputStream(file);
+        AudioFormat format = audioIn.getFormat();
         DataLine.Info info = new DataLine.Info(Clip.class, format);
         clip = (Clip) AudioSystem.getLine(info);
         clip.open(audioIn);
@@ -341,79 +328,78 @@ public class RectPanel extends JPanel {
 
     //FUNCTIONS NEEDED FOR CAMERA SCROLLING
     /*static boolean checkCamBounds() {
-        if (bernie.getHead().getTop() > (cambounds.getTop()) && bernie.getHead().getTop() < (cambounds.getBottom()) && bernie.getHead().getLeft() < (cambounds.getRight()) && bernie.getHead().getLeft() > (cambounds.getLeft())) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+     if (bernie.getHead().getTop() > (cambounds.getTop()) && bernie.getHead().getTop() < (cambounds.getBottom()) && bernie.getHead().getLeft() < (cambounds.getRight()) && bernie.getHead().getLeft() > (cambounds.getLeft())) {
+     return true;
+     } else {
+     return false;
+     }
+     }
 
-    static boolean checkAtUp() {
-        System.out.println("------------CHECKING IF AT TOP--------------");
-        int a = ((int) (bernie.getHead().getTop()));
-        int b = ((int) (cambounds.getTop()));
-        System.out.println(a);
-        System.out.println(b);
-        if (b - 50 <= a && a <= b + 50) {
-            System.out.println("TRUE");
-            System.out.println("-------------CHECK DONE--------------\n");
-            return true;
-        } else {
-            System.out.println("FALSE");
-            System.out.println("-------------CHECK DONE--------------\n");
-            return false;
-        }
-    }
+     static boolean checkAtUp() {
+     System.out.println("------------CHECKING IF AT TOP--------------");
+     int a = ((int) (bernie.getHead().getTop()));
+     int b = ((int) (cambounds.getTop()));
+     System.out.println(a);
+     System.out.println(b);
+     if (b - 50 <= a && a <= b + 50) {
+     System.out.println("TRUE");
+     System.out.println("-------------CHECK DONE--------------\n");
+     return true;
+     } else {
+     System.out.println("FALSE");
+     System.out.println("-------------CHECK DONE--------------\n");
+     return false;
+     }
+     }
 
-    static boolean checkAtDown() {
-        System.out.println("------------CHECKING IF AT BOTTOM--------------");
-        int a = ((int) (bernie.getHead().getTop()));
-        int b = ((int) (cambounds.getBottom()));
-        System.out.println(a);
-        System.out.println(b);
-        if (b - 50 <= a && a <= b + 50) {
-            System.out.println("TRUE");
-            System.out.println("-------------CHECK DONE--------------\n");
-            return true;
-        } else {
-            System.out.println("FALSE");
-            System.out.println("-------------CHECK DONE--------------\n");
-            return false;
-        }
-    }
+     static boolean checkAtDown() {
+     System.out.println("------------CHECKING IF AT BOTTOM--------------");
+     int a = ((int) (bernie.getHead().getTop()));
+     int b = ((int) (cambounds.getBottom()));
+     System.out.println(a);
+     System.out.println(b);
+     if (b - 50 <= a && a <= b + 50) {
+     System.out.println("TRUE");
+     System.out.println("-------------CHECK DONE--------------\n");
+     return true;
+     } else {
+     System.out.println("FALSE");
+     System.out.println("-------------CHECK DONE--------------\n");
+     return false;
+     }
+     }
 
-    static boolean checkAtLeft() {
-        System.out.println("------------CHECKING IF AT LEFT--------------");
-        int a = ((int) (bernie.getHead().getLeft()));
-        int b = ((int) (cambounds.getLeft()));
-        System.out.println(a);
-        System.out.println(b);
-        if (b - 50 <= a && a <= b + 50) {
-            System.out.println("TRUE");
-            System.out.println("-------------CHECK DONE--------------\n");
-            return true;
-        } else {
-            System.out.println("FALSE");
-            System.out.println("-------------CHECK DONE--------------\n");
-            return false;
-        }
-    }
+     static boolean checkAtLeft() {
+     System.out.println("------------CHECKING IF AT LEFT--------------");
+     int a = ((int) (bernie.getHead().getLeft()));
+     int b = ((int) (cambounds.getLeft()));
+     System.out.println(a);
+     System.out.println(b);
+     if (b - 50 <= a && a <= b + 50) {
+     System.out.println("TRUE");
+     System.out.println("-------------CHECK DONE--------------\n");
+     return true;
+     } else {
+     System.out.println("FALSE");
+     System.out.println("-------------CHECK DONE--------------\n");
+     return false;
+     }
+     }
 
-    static boolean checkAtRight() {
-        System.out.println("------------CHECKING IF AT RIGHT--------------");
-        int a = ((int) (bernie.getHead().getLeft()));
-        int b = ((int) (cambounds.getRight()));
-        System.out.println(a);
-        System.out.println(b);
-        if (b - 50 <= a && a <= b + 50) {
-            System.out.println("TRUE");
-            System.out.println("-------------CHECK DONE--------------\n");
-            return true;
-        } else {
-            System.out.println("FALSE");
-            System.out.println("-------------CHECK DONE--------------\n");
-            return false;
-        }
-    }*/
-
+     static boolean checkAtRight() {
+     System.out.println("------------CHECKING IF AT RIGHT--------------");
+     int a = ((int) (bernie.getHead().getLeft()));
+     int b = ((int) (cambounds.getRight()));
+     System.out.println(a);
+     System.out.println(b);
+     if (b - 50 <= a && a <= b + 50) {
+     System.out.println("TRUE");
+     System.out.println("-------------CHECK DONE--------------\n");
+     return true;
+     } else {
+     System.out.println("FALSE");
+     System.out.println("-------------CHECK DONE--------------\n");
+     return false;
+     }
+     }*/
 }

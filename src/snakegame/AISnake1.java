@@ -218,9 +218,9 @@ public class AISnake1 extends Snake {
                 this.addH(new SquareCoords(0, 0));
                 RectPanel.food.remove(j);
                 RectPanel.food.add(new Rect2d(random_number(0, (int) RectPanel.WINDOW_WIDTH), random_number(0, (int) RectPanel.WINDOW_HEIGHT), 10, 10));
-                widthfactor = this.getSSize() / 10;
-                widthfactor += 1;
-                this.setWidth(10 + (widthfactor * 5));
+                //widthfactor = this.getSSize() / 10;
+                //widthfactor += 1;
+                //this.setWidth(10 + (widthfactor * 5));
             }
         }
 
@@ -252,19 +252,19 @@ public class AISnake1 extends Snake {
 
         switch (this.dir) {
             case Left:
-                this.getHead().translate(-this.getWidth() - 1, 0.0);
+                this.getHead().translate(-this.getWidth(), 0.0);
                 break;
 
             case Right:
-                this.getHead().translate(this.getWidth() + 1, 0.0);
+                this.getHead().translate(this.getWidth(), 0.0);
                 break;
 
             case Down:
-                this.getHead().translate(0.0, this.getWidth() + 1);
+                this.getHead().translate(0.0, this.getWidth());
                 break;
 
             case Up:
-                this.getHead().translate(0.0, -this.getWidth() - 1);
+                this.getHead().translate(0.0, -this.getWidth());
                 break;
         }
 

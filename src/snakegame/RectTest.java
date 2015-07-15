@@ -25,7 +25,7 @@ public class RectTest {
     
         public static void fontLoader(){
             try {
-            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("customFont.ttf")).deriveFont(50f);
+            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("customFont.ttf")).deriveFont(25f);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("customFont.ttf")));
         } catch (IOException | FontFormatException e) {
@@ -57,24 +57,33 @@ public class RectTest {
         
         int score = 0;
         int score1 = 0;
+        int score2 = 0;
 
         // NEW IN ANIMATION VERSION:
         while (true) {
             rectPanel.update();
             if(!RectPanel.bernie.isLiving()){
-                statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNINATOR: " + Integer.toString(score1));
+                 statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNINATOR: " + Integer.toString(score1) + " ROBOBERNIE: " + Integer.toString(score2));
             }
             else{
                 score = (int)RectPanel.bernie.getSSize()-1;
-                statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNINATOR: " + Integer.toString(score1));
+                 statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNINATOR: " + Integer.toString(score1) + " ROBOBERNIE: " + Integer.toString(score2));
             }
             
             if(!RectPanel.berninator.isLiving()){
-                statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNINATOR: " + Integer.toString(score1));
+                 statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNINATOR: " + Integer.toString(score1) + " ROBOBERNIE: " + Integer.toString(score2));
             }
             else{
                 score1 = (int)RectPanel.berninator.getSSize()-1;
-                statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNINATOR: " + Integer.toString(score1));
+                 statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNINATOR: " + Integer.toString(score1) + " ROBOBERNIE: " + Integer.toString(score2));
+            }
+            
+            if(!RectPanel.robobernie.isLiving()){
+                statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNINATOR: " + Integer.toString(score1) + " ROBOBERNIE: " + Integer.toString(score2));
+            }
+            else{
+                score2 = (int)RectPanel.robobernie.getSSize()-1;
+                 statusLabel.setText("BERNIE: " + Integer.toString(score) + " BERNINATOR: " + Integer.toString(score1) + " ROBOBERNIE: " + Integer.toString(score2));
             }
             
             try {
