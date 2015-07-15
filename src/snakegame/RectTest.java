@@ -22,6 +22,7 @@ import java.io.IOException;
 public class RectTest {
     
     static Font customFont;
+    static Color TEXT_COLOR = Color.lightGray;
     
         public static void fontLoader(){
             try {
@@ -47,7 +48,7 @@ public class RectTest {
         JLabel statusLabel = new JLabel("BERNIE: " + Integer.toString((int) RectPanel.bernie.getSSize()));
         fontLoader();
         statusLabel.setFont(customFont);
-        statusLabel.setForeground(Color.white);
+        statusLabel.setForeground(TEXT_COLOR);
         statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
         rectPanel.add(statusLabel);
 

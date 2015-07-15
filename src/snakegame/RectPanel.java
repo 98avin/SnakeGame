@@ -29,10 +29,15 @@ public class RectPanel extends JPanel {
     // <<DATA>>
     int colorOrder;
     boolean colorDecreaseFlag;
+    public static final Color DEFAULT_BACKGROUND_COLOR = Color.black;
+    public static Color COLOR_RAINBOW_CYCLE = new Color(0, 0, 0);
     public static final int NUM_BACK_COLORS = 3;
     public static final int MAX_COLOR_VALUE = 255;
     public static final int MIN_COLOR_VALUE = 0;
-    public static final int NUMBER_OF_FOOD = 10;
+    public static final Color FOOD_COLOR = Color.white;
+    public static final Color PLAYER_SNAKE_COLOR = Color.blue;
+    public static final Color AI_SNAKE_COLOR = Color.red;
+    public static final int NUMBER_OF_FOOD = 3;
 
     public static double WINDOW_WIDTH = 800.0;
     public static double WINDOW_HEIGHT = 800.0;
@@ -168,28 +173,26 @@ public class RectPanel extends JPanel {
         g.fillRect(x, y, w, h);
     }
 
-    Color insane = new Color(0, 0, 0);
-
     private int getRandomColorValue() {
         Random rnd = new Random();
         return Math.abs(rnd.nextInt()) % (MAX_COLOR_VALUE);
     }
 
-    public boolean checkLiving(Snake snake, Graphics g) {
+    public boolean checkLiving(Snake snake, Color color, Graphics g) {
         if (!snake.isLiving()) {
             try {
                 stopMusic();
             } catch (Exception ex) {
                 Logger.getLogger(RectPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
-            fillRect(g, back, Color.BLACK);
+            fillRect(g, back, DEFAULT_BACKGROUND_COLOR);
 
             for (int i = 1; i < snake.getSSize(); i++) {
-                fillRect(g, snake.getRect(i), Color.BLUE);
+                fillRect(g, snake.getRect(i), color);
             }
 
             for (int i = 0; i < food.size(); i++) {
-                fillRect(g, food.get(i), Color.white);
+                fillRect(g, food.get(i), FOOD_COLOR);
             }
             return true;
         }
@@ -198,18 +201,17 @@ public class RectPanel extends JPanel {
 
     public void paintComponent(Graphics g) {
 
-        if (checkLiving(bernie, g)) {
+        if (checkLiving(bernie, PLAYER_SNAKE_COLOR, g)) {
             return;
         }
-        if (checkLiving(berninator, g)) {
+        if (checkLiving(berninator, AI_SNAKE_COLOR,g)) {
             return;
         }
-        if (checkLiving(robobernie, g)) {
+        if (checkLiving(robobernie, AI_SNAKE_COLOR, g)) {
             return;
         }
 
-        //this.backgroundColors[1] = 10;
-        //this.backgroundColors[2] = 250;
+        //RAINBOW CYCLE COLOR
         if (colorOrder < 2) {
             //max red
             if (this.backgroundColors[colorOrder] < MAX_COLOR_VALUE && colorDecreaseFlag == false) {
@@ -239,12 +241,13 @@ public class RectPanel extends JPanel {
             }
         }
 
-        insane = new Color(this.backgroundColors[0],
-                this.backgroundColors[1],
-                this.backgroundColors[2]);
-
+        COLOR_RAINBOW_CYCLE = new Color(this.backgroundColors[0],
+                                        this.backgroundColors[1],
+                                        this.backgroundColors[2]);       
+        //COLOR RAINBOW CYCLE END
+        
         if (bernie.getSSize() > berninator.getSSize()) {//if score > rave threshold && player bigger than ai
-            fillRect(g, back, Color.black);
+            fillRect(g, back, DEFAULT_BACKGROUND_COLOR);
 
             if (music == false) {
                 try {
@@ -256,7 +259,7 @@ public class RectPanel extends JPanel {
             }
 
         } else {
-            fillRect(g, back, Color.BLACK);
+            fillRect(g, back, DEFAULT_BACKGROUND_COLOR);
             music = false;
             try {
                 stopMusic();
@@ -272,12 +275,12 @@ public class RectPanel extends JPanel {
         //fillRect(g, bernie1.pathY, Color.red);
 
         // Fill the rest of the snake's body with colors
-        fillSnake(bernie, g, Color.blue, berninator.getSSize(), robobernie.getSSize());
-        fillSnake(berninator, g, Color.red, bernie.getSSize(), robobernie.getSSize());
-        fillSnake(robobernie, g, Color.green, bernie.getSSize(), berninator.getSSize());
+        fillSnake(bernie, g, PLAYER_SNAKE_COLOR, berninator.getSSize(), robobernie.getSSize());
+        fillSnake(berninator, g, AI_SNAKE_COLOR, bernie.getSSize(), robobernie.getSSize());
+        fillSnake(robobernie, g, AI_SNAKE_COLOR, bernie.getSSize(), berninator.getSSize());
         
         for (int i = 0; i < food.size(); i++) {
-            fillRect(g, food.get(i), Color.white);
+            fillRect(g, food.get(i), FOOD_COLOR);
         }
 
     }
@@ -286,7 +289,7 @@ public class RectPanel extends JPanel {
     for (int i = 0; i < snake.getSSize(); i++) {
 
             if (snake.getSSize() > size && snake.getSSize() > size2) { //if player bigger than rave threshold AND ai --- make it rainbow
-                fillRect(g, snake.getRect(i), insane);
+                fillRect(g, snake.getRect(i), COLOR_RAINBOW_CYCLE);
             } else {
                 fillRect(g, snake.getRect(i), color);
             }
