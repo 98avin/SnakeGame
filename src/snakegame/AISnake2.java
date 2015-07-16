@@ -220,6 +220,7 @@ public class AISnake2 extends Snake {
                 this.addH(new SquareCoords(0, 0));
                 SnakePanel.food.remove(j);
                 SnakePanel.food.add(new Rect2d(random_number(0, (int) SnakePanel.WINDOW_WIDTH), random_number(0, (int) SnakePanel.WINDOW_HEIGHT), 10, 10));
+                SnakeGame.updateScoreboard();
                 //widthfactor = this.getSSize() / 10;
                 //widthfactor += 1;
                 //this.setWidth(10 + (widthfactor * 5));

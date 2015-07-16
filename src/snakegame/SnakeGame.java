@@ -27,6 +27,8 @@ public class SnakeGame {
     static int playerscore = 0;
     static int aiscore = 0;
     static int aiscore2 = 0;
+    static SnakePanel snakePanel;
+    public static JLabel statusLabel;
 
     public static void fontLoader() {
         try {
@@ -44,12 +46,12 @@ public class SnakeGame {
     public static void main(String[] args) {
 
         JFrame frame = new JFrame("Snake Game");
-        SnakePanel snakePanel = new SnakePanel();
+        snakePanel = new SnakePanel();
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(snakePanel);
 
-        JLabel statusLabel = new JLabel();
+        statusLabel = new JLabel();
         fontLoader();
         statusLabel.setFont(customFont);
         statusLabel.setForeground(TEXT_COLOR);
@@ -59,9 +61,10 @@ public class SnakeGame {
         frame.pack();
 
         frame.setVisible(true);
+        
+        updateScoreboard();
 
         while (true) {
-            updateScoreboard(snakePanel, statusLabel);
             snakePanel.update();
 
             try {
@@ -74,11 +77,11 @@ public class SnakeGame {
 
     }
 
-    public static void updateScoreboard(SnakePanel rectPanel, JLabel statusLabel) {
+    public static void updateScoreboard() {
         //FLICKERS
         statusLabel.setText("");
-        for (int i = 0; i < rectPanel.snakes.length; i++) {
-            statusLabel.setText(statusLabel.getText() + " " + rectPanel.snakes[i].getName() + ":" + rectPanel.snakes[i].getScore());
+        for (int i = 0; i < snakePanel.snakes.length; i++) {
+            statusLabel.setText(statusLabel.getText() + " " + snakePanel.snakes[i].getName() + ":" + snakePanel.snakes[i].getScore());
         }
     }
 

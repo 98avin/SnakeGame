@@ -35,7 +35,7 @@ public class SnakePanel extends JPanel {
     public static final int MAX_COLOR_VALUE = 255;
     public static final int MIN_COLOR_VALUE = 0;
     public static final int COLOR_INCREMENT = 10;
-    
+
     public static final int MUSIC_THRESHOLD = 10;
 
     public static final Color FOOD_COLOR = Color.white;
@@ -228,12 +228,18 @@ public class SnakePanel extends JPanel {
                 this.backgroundColors[2]);
         //COLOR RAINBOW CYCLE END
 
-        if(snakes[0].getScore() >= MUSIC_THRESHOLD){
-        try {
-            playMusic();
-        } catch (Exception ex) {
-            Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        if (snakes[0].getScore() >= MUSIC_THRESHOLD || this.isBigger(snakes[0], 0)) {
+            try {
+                playMusic();
+            } catch (Exception ex) {
+                Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            try {
+                stopMusic();
+            } catch (Exception ex) {
+                Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         //g.setColor(Color.white);
         //g.drawLine((int) berninator.getHead().getCenter().x, (int) berninator.getHead().getCenter().y, (int) berninator.targettemp.getCenter().x, (int) berninator.targettemp.getCenter().y);
@@ -249,8 +255,7 @@ public class SnakePanel extends JPanel {
         }
     }
 
-
-    public boolean isPlayerBigger(Snake snake, int index) {
+    public boolean isBigger(Snake snake, int index) {
         int tempCount = 0;
         for (int i = 0; i < snakes.length; i++) {
             if (snake.getScore() > snakes[i].getScore()) {
@@ -264,7 +269,7 @@ public class SnakePanel extends JPanel {
     public void fillSnake(Graphics g) {
         for (int i = 0; i < snakes.length; i++) {
             for (int j = 0; j < snakes[i].getSSize(); j++) {
-                if (isPlayerBigger(snakes[i], i)) {
+                if (isBigger(snakes[i], i)) {
                     fillRect(g, snakes[i].getRect(j), COLOR_RAINBOW_CYCLE);
                 } else {
                     fillRect(g, snakes[i].getRect(j), snakes[i].getColor());
