@@ -168,6 +168,50 @@ public class SnakePanel extends JPanel {
                 }
             }
         });
+        
+        this.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                int keycode = e.getKeyCode();
+                switch (keycode) {
+                    case java.awt.event.KeyEvent.VK_UP:
+                        keysPressed.Up = true;
+                        break;
+                    case java.awt.event.KeyEvent.VK_DOWN:
+                        keysPressed.Down = true;
+                        break;
+                    case java.awt.event.KeyEvent.VK_LEFT:
+                        keysPressed.Left = true;
+                        break;
+                    case java.awt.event.KeyEvent.VK_RIGHT:
+                        keysPressed.Right = true;
+                        break;
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                int keycode = e.getKeyCode();
+                switch (keycode) {
+                    case java.awt.event.KeyEvent.VK_UP:  // the keycode for W (Virtual Key)
+                        keysPressed.Up = false;
+                        break;
+                    case java.awt.event.KeyEvent.VK_DOWN:
+                        keysPressed.Down = false;
+                        break;
+                    case java.awt.event.KeyEvent.VK_LEFT:
+                        keysPressed.Left = false;
+                        break;
+                    case java.awt.event.KeyEvent.VK_RIGHT:
+                        keysPressed.Right = false;
+                        break;
+                }
+            }
+        });
     }
 
     void buildSnake(Snake snake) {
