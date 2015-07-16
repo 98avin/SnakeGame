@@ -68,16 +68,15 @@ public class SnakePanel extends JPanel {
 
     static AudioInputStream audioIn;
     static Clip clip;
-        
-    private static Menu menu;
-    private static JButton button;
+
+    ArrayList<Component> menuArray;
 
     //static Rect2d cambounds; //CAMERA WINDOW(Snake touches the edge of this to begin "scrolling")
     // <<CONSTRUCTOR>>
     public SnakePanel() {
-        
+
         buildMenu();
-        
+
         try {
             loadMusic();//loads the WAV file to play later, prevents lag
         } catch (Exception ex) {
@@ -232,27 +231,30 @@ public class SnakePanel extends JPanel {
         }
 
     }
-    
-    void buildMenu(){
-    menu = new Menu();
-        
-        button = new JButton("PLAY");
-        button.setPreferredSize(new Dimension((int)SnakePanel.WINDOW_WIDTH, (int)SnakePanel.WINDOW_HEIGHT));
- 
+
+    void buildMenu() {
+
+        menuArray = new ArrayList<Component>();
+
+        final JButton button = new JButton("PLAY");
+        button.setPreferredSize(new Dimension((int) SnakePanel.WINDOW_WIDTH, (int) SnakePanel.WINDOW_HEIGHT));
 
         button.addActionListener(new ActionListener() {
- 
-            public void actionPerformed(ActionEvent e)
-            {
+
+            public void actionPerformed(ActionEvent e) {
                 remove(button);
-                SnakeGame.state= SnakeGame.STATE.GAME;
-                
+                SnakeGame.state = SnakeGame.STATE.GAME;
+
             }
-        });         
+        });
+        menuArray.add(button);
+
     }
-    
-    void renderMenu(){
-    this.add(button);
+
+    void renderMenu() {
+        for (int i = 0; i < menuArray.size(); i++) {
+            this.add(menuArray.get(i));
+        }
     }
 
     // <<FILLRECT>>   (a static ‘helper’ method to draw a Rect2d)
@@ -288,53 +290,50 @@ public class SnakePanel extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
-        if(SnakeGame.state== SnakeGame.STATE.MENU){
-        renderMenu();
-        }
-      
-        else{
-        for (int i = 0; i < snakes.length; i++) {
-            if (checkLiving(snakes[i], snakes[i].getColor(), g)) {
-                return;
-            }
-        }
-        fillRect(g, back, DEFAULT_BACKGROUND_COLOR);
-        //RAINBOW CYCLE COLOR
-        backColorFlow();
-
-        COLOR_RAINBOW_CYCLE = new Color(this.backgroundColors[0],
-                this.backgroundColors[1],
-                this.backgroundColors[2]);
-        //COLOR RAINBOW CYCLE END
-
-        if (snakes[0].getScore() >= MUSIC_THRESHOLD || this.isBigger(snakes[0], 0)) {
-            try {
-                playMusic();
-            } catch (Exception ex) {
-                Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        if (SnakeGame.state == SnakeGame.STATE.MENU) {
+            renderMenu();
         } else {
-            try {
-                stopMusic();
-            } catch (Exception ex) {
-                Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
+            for (int i = 0; i < snakes.length; i++) {
+                if (checkLiving(snakes[i], snakes[i].getColor(), g)) {
+                    return;
+                }
+            }
+            fillRect(g, back, DEFAULT_BACKGROUND_COLOR);
+            //RAINBOW CYCLE COLOR
+            backColorFlow();
+
+            COLOR_RAINBOW_CYCLE = new Color(this.backgroundColors[0],
+                    this.backgroundColors[1],
+                    this.backgroundColors[2]);
+            //COLOR RAINBOW CYCLE END
+
+            if (snakes[0].getScore() >= MUSIC_THRESHOLD || this.isBigger(snakes[0], 0)) {
+                try {
+                    playMusic();
+                } catch (Exception ex) {
+                    Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else {
+                try {
+                    stopMusic();
+                } catch (Exception ex) {
+                    Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        //g.setColor(Color.white);
+            //g.drawLine((int) berninator.getHead().getCenter().x, (int) berninator.getHead().getCenter().y, (int) berninator.targettemp.getCenter().x, (int) berninator.targettemp.getCenter().y);
+            //fillRect(g, bernie1.vision, Color.yellow);
+            //fillRect(g, bernie1.pathX, Color.blue);
+            //fillRect(g, bernie1.pathY, Color.red);
+            // Fill snake's body with colors
+            fillSnake(g);
+
+            //Draw food
+            for (int i = 0; i < food.size(); i++) {
+                fillRect(g, food.get(i), FOOD_COLOR);
             }
         }
-        //g.setColor(Color.white);
-        //g.drawLine((int) berninator.getHead().getCenter().x, (int) berninator.getHead().getCenter().y, (int) berninator.targettemp.getCenter().x, (int) berninator.targettemp.getCenter().y);
-        //fillRect(g, bernie1.vision, Color.yellow);
-        //fillRect(g, bernie1.pathX, Color.blue);
-        //fillRect(g, bernie1.pathY, Color.red);
-        // Fill snake's body with colors
-        fillSnake(g);
-
-        //Draw food
-        for (int i = 0; i < food.size(); i++) {
-            fillRect(g, food.get(i), FOOD_COLOR);
-        }
     }
-    }
-    
 
     public boolean isBigger(Snake snake, int index) {
         int tempCount = 0;
