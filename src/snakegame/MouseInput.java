@@ -21,8 +21,8 @@ public class MouseInput implements MouseListener {
         int mx = e.getX();
         int my = e.getY();
         System.out.println("X: " + mx + "\nY: " + my);
-
-        if (mx >= SnakePanel.WINDOW_WIDTH / 2 + 120 && mx <= SnakePanel.WINDOW_WIDTH / 2 + 220) {
+/*public Rectangle playButton = new Rectangle((int)SnakePanel.WINDOW_WIDTH / 2 +120, 150, 100, 50);*/
+        if (mx >= (SnakePanel.WINDOW_WIDTH / 2 + 120) && mx <= (SnakePanel.WINDOW_WIDTH / 2 + 220)) {
             if (my >= 150 && my <= 200) {
                 SnakeGame.state = SnakeGame.STATE.GAME;
                 System.out.println(SnakeGame.state);

@@ -6,11 +6,12 @@
 package snakegame;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sound.sampled.AudioFormat;
@@ -69,13 +70,14 @@ public class SnakePanel extends JPanel {
     static Clip clip;
         
     private static Menu menu;
+    private static JButton button;
 
     //static Rect2d cambounds; //CAMERA WINDOW(Snake touches the edge of this to begin "scrolling")
     // <<CONSTRUCTOR>>
     public SnakePanel() {
-        menu = new Menu();
-                    this.addMouseListener(new MouseInput());
-
+        
+        buildMenu();
+        
         try {
             loadMusic();//loads the WAV file to play later, prevents lag
         } catch (Exception ex) {
@@ -111,6 +113,8 @@ public class SnakePanel extends JPanel {
 
         WINDOW_WIDTH = screenSize.getWidth() - 10;
         WINDOW_HEIGHT = screenSize.getHeight() - 72;
+        System.out.println(WINDOW_WIDTH);
+        System.out.println(WINDOW_HEIGHT);
 
         setPreferredSize(new Dimension((int) WINDOW_WIDTH, (int) WINDOW_HEIGHT));
         keysPressed = new KeysPressed();
@@ -228,6 +232,28 @@ public class SnakePanel extends JPanel {
         }
 
     }
+    
+    void buildMenu(){
+    menu = new Menu();
+        
+        button = new JButton("PLAY");
+        button.setPreferredSize(new Dimension((int)SnakePanel.WINDOW_WIDTH, (int)SnakePanel.WINDOW_HEIGHT));
+ 
+
+        button.addActionListener(new ActionListener() {
+ 
+            public void actionPerformed(ActionEvent e)
+            {
+                remove(button);
+                SnakeGame.state= SnakeGame.STATE.GAME;
+                
+            }
+        });         
+    }
+    
+    void renderMenu(){
+    this.add(button);
+    }
 
     // <<FILLRECT>>   (a static ‘helper’ method to draw a Rect2d)
     static void fillRect(Graphics g, Rect2d rect, Color c) {
@@ -263,7 +289,7 @@ public class SnakePanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         if(SnakeGame.state== SnakeGame.STATE.MENU){
-        menu.render(g);
+        renderMenu();
         }
       
         else{
