@@ -44,25 +44,25 @@ public class SnakeGame {
     public static void main(String[] args) {
 
         JFrame frame = new JFrame("Snake Game");
-        SnakePanel rectPanel = new SnakePanel();
+        SnakePanel snakePanel = new SnakePanel();
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(rectPanel);
+        frame.add(snakePanel);
 
         JLabel statusLabel = new JLabel();
         fontLoader();
         statusLabel.setFont(customFont);
         statusLabel.setForeground(TEXT_COLOR);
         statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
-        rectPanel.add(statusLabel);
+        snakePanel.add(statusLabel);
 
         frame.pack();
 
         frame.setVisible(true);
 
         while (true) {
-            rectPanel.update();
-            updateScoreboard(rectPanel, statusLabel);
+            snakePanel.update();
+            updateScoreboard(snakePanel, statusLabel);
 
             try {
                 Thread.sleep(FRAME_RATE);
