@@ -140,7 +140,6 @@ public class Snake {
             }
         }
 
-        //EVERYTHING TO FIX COLLAPSING SNAKE IS HERE
         for (int j = 1; j < this.getSSize(); j++) {
             if (Rect2d.intersect(this.getRect(j), this.getHead()) != Rect2d.EmptyRect) {//when snake touches itself
                 //this.die();

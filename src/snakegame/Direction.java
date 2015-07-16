@@ -11,7 +11,7 @@ package snakegame;
  * @author skinnnero5
  */
 public enum Direction {
-    Up,Down,Left,Right;
+    Up,Right,Down,Left;
     
     static Direction[] vals = values();
     
