@@ -67,10 +67,14 @@ public class SnakePanel extends JPanel {
 
     static AudioInputStream audioIn;
     static Clip clip;
+        
+    private static Menu menu;
 
     //static Rect2d cambounds; //CAMERA WINDOW(Snake touches the edge of this to begin "scrolling")
     // <<CONSTRUCTOR>>
     public SnakePanel() {
+        menu = new Menu();
+                    this.addMouseListener(new MouseInput());
 
         try {
             loadMusic();//loads the WAV file to play later, prevents lag
@@ -168,7 +172,7 @@ public class SnakePanel extends JPanel {
                 }
             }
         });
-        
+
         this.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -258,6 +262,11 @@ public class SnakePanel extends JPanel {
 
     @Override
     public void paintComponent(Graphics g) {
+        if(SnakeGame.state== SnakeGame.STATE.MENU){
+        menu.render(g);
+        }
+      
+        else{
         for (int i = 0; i < snakes.length; i++) {
             if (checkLiving(snakes[i], snakes[i].getColor(), g)) {
                 return;
@@ -298,6 +307,8 @@ public class SnakePanel extends JPanel {
             fillRect(g, food.get(i), FOOD_COLOR);
         }
     }
+    }
+    
 
     public boolean isBigger(Snake snake, int index) {
         int tempCount = 0;

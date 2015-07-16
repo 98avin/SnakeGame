@@ -29,6 +29,13 @@ public class SnakeGame {
     static int aiscore2 = 0;
     static SnakePanel snakePanel;
     public static JLabel statusLabel;
+    
+    public static enum STATE {
+
+        MENU, GAME
+    };
+
+    public static STATE state = STATE.MENU;
 
     public static void fontLoader() {
         try {
@@ -50,31 +57,39 @@ public class SnakeGame {
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(snakePanel);
-
-        statusLabel = new JLabel();
-        fontLoader();
-        statusLabel.setFont(customFont);
-        statusLabel.setForeground(TEXT_COLOR);
-        statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
-        snakePanel.add(statusLabel);
-
         frame.pack();
-
         frame.setVisible(true);
-        
-        updateScoreboard();
 
         while (true) {
-            snakePanel.update();
 
-            try {
-                Thread.sleep(FRAME_RATE);
-            } catch (Exception e) {
-                e.printStackTrace();
+            if (state == STATE.MENU) {
+            } else {
+                statusLabel = new JLabel();
+                fontLoader();
+                statusLabel.setFont(customFont);
+                statusLabel.setForeground(TEXT_COLOR);
+                statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
+                snakePanel.add(statusLabel);
+
+                frame.pack();
+
+                frame.setVisible(true);
+
+                updateScoreboard();
+
+                while (true) {
+                    snakePanel.update();
+
+                    try {
+                        Thread.sleep(FRAME_RATE);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    frame.repaint();
+                }
             }
-            frame.repaint();
-        }
 
+        }
     }
 
     public static void updateScoreboard() {
