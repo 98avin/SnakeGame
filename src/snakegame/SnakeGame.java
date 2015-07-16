@@ -61,8 +61,8 @@ public class SnakeGame {
         frame.setVisible(true);
 
         while (true) {
-            snakePanel.update();
             updateScoreboard(snakePanel, statusLabel);
+            snakePanel.update();
 
             try {
                 Thread.sleep(FRAME_RATE);
