@@ -63,6 +63,7 @@ public class SnakeGame {
         while (true) {
 
             if (state == STATE.MENU) {
+                frame.repaint();
             } else {
                 statusLabel = new JLabel();
                 fontLoader();

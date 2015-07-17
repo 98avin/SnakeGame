@@ -12,7 +12,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.sound.sampled.AudioFormat;
@@ -69,14 +68,16 @@ public class SnakePanel extends JPanel {
 
     static AudioInputStream audioIn;
     static Clip clip;
-
-    ArrayList<Component> menuArray;
+    
+    static Menu menu;
 
     //static Rect2d cambounds; //CAMERA WINDOW(Snake touches the edge of this to begin "scrolling")
     // <<CONSTRUCTOR>>
     public SnakePanel() {
+        
+        menu = new Menu(this);
 
-        buildMenu();
+        menu.buildMenu();
 
         try {
             loadMusic();//loads the WAV file to play later, prevents lag
@@ -233,31 +234,6 @@ public class SnakePanel extends JPanel {
 
     }
 
-    void buildMenu() {
-
-        menuArray = new ArrayList<Component>();
-
-        final JButton button = new JButton("PLAY");
-        button.setPreferredSize(new Dimension((int) SnakePanel.WINDOW_WIDTH, (int) SnakePanel.WINDOW_HEIGHT));
-
-        button.addActionListener(new ActionListener() {
-
-            public void actionPerformed(ActionEvent e) {
-                remove(button);
-                SnakeGame.state = SnakeGame.STATE.GAME;
-
-            }
-        });
-        menuArray.add(button);
-
-    }
-
-    void renderMenu() {
-        for (int i = 0; i < menuArray.size(); i++) {
-            this.add(menuArray.get(i));
-        }
-    }
-
     // <<FILLRECT>>   (a static ‘helper’ method to draw a Rect2d)
     static void fillRect(Graphics g, Rect2d rect, Color c) {
         int x = (int) rect.getLeft();
@@ -355,7 +331,10 @@ public class SnakePanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         if (SnakeGame.state == SnakeGame.STATE.MENU) {
-            renderMenu();
+            System.out.println("HERE");
+            fillRect(g, back, DEFAULT_BACKGROUND_COLOR);
+            moveStars(g);
+            menu.renderMenu(); 
         } else {
             for (int i = 0; i < snakes.length; i++) {
                 if (checkLiving(snakes[i], snakes[i].getColor(), g)) {
@@ -397,40 +376,47 @@ public class SnakePanel extends JPanel {
             for (int i = 0; i < food.size(); i++) {
                 fillRect(g, food.get(i), FOOD_COLOR);
             }
-            
-
 
         }
     }
-    
-    public void moveStars(Graphics g){
-        starx+=1;
-                            
-            STAR_TILE_SIZE =3000;
-            g.setColor(Color.white);
-            drawStars((Graphics2D) g, starx, stary, 10);
-            
-            STAR_TILE_SIZE = 2000;
-            g.setColor(Color.LIGHT_GRAY);
-            drawStars((Graphics2D) g, starx/2, stary, 5);
-            
-            STAR_TILE_SIZE = 500;
-            g.setColor(Color.GRAY);
-            drawStars((Graphics2D) g, starx / 3, stary, 3);
-            
-            starx++;
-            STAR_TILE_SIZE = 1000;
-            g.setColor(Color.DARK_GRAY);
-            drawStars((Graphics2D) g, -starx / 4, stary, 15);
-            
-            starx--;
-            STAR_TILE_SIZE = 10000;
-            g.setColor(Color.blue);
-            drawStars((Graphics2D) g, -starx / 5, stary, 8);
-            
-            STAR_TILE_SIZE = 15000;
-            g.setColor(Color.red);
-            drawStars((Graphics2D) g, -starx / 6, stary, 8);
+
+    public void moveStars(Graphics g) {
+        starx += 1;
+
+        STAR_TILE_SIZE = 3000;
+        g.setColor(Color.white);
+        drawStars((Graphics2D) g, starx, stary, 10);
+
+        STAR_TILE_SIZE = 2000;
+        g.setColor(Color.LIGHT_GRAY);
+        drawStars((Graphics2D) g, starx / 2, stary, 5);
+
+        STAR_TILE_SIZE = 500;
+        g.setColor(Color.GRAY);
+        drawStars((Graphics2D) g, starx / 3, stary, 3);
+
+        starx++;
+        STAR_TILE_SIZE = 1000;
+        g.setColor(Color.DARK_GRAY);
+        drawStars((Graphics2D) g, -starx / 4, stary, 15);
+
+        starx--;
+        STAR_TILE_SIZE = 15000;
+        g.setColor(Color.blue);
+        drawStars((Graphics2D) g, -starx / 5, stary, 8);
+
+        STAR_TILE_SIZE = 10000;
+        g.setColor(Color.red);
+        drawStars((Graphics2D) g, -starx / 3, stary, 5);
+
+        STAR_TILE_SIZE = 15000;
+        g.setColor(Color.yellow);
+        drawStars((Graphics2D) g, -starx / 4, stary, 7);
+
+        STAR_TILE_SIZE = 10000;
+        g.setColor(Color.MAGENTA);
+        drawStars((Graphics2D) g, -starx / 6, stary, 6);
+
     }
 
     public boolean isBigger(Snake snake, int index) {
