@@ -59,6 +59,10 @@ public class Snake {
         return color;
     }
 
+    Direction getDir(){
+        return dir;
+    }
+    
     double getSSize() {
         return snake.size();
     }
