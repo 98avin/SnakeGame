@@ -42,7 +42,7 @@ public class SnakePanel extends JPanel {
     public static final Color FOOD_COLOR = Color.white;
     public static final Color PLAYER_SNAKE_COLOR = Color.blue;
     public static final Color AI_SNAKE_COLOR = Color.red;
-    public static final int NUMBER_OF_FOOD = 2;
+    public static final int NUMBER_OF_FOOD = 4;
 
     public static double WINDOW_WIDTH = 800.0;
     public static double WINDOW_HEIGHT = 800.0;
@@ -54,7 +54,7 @@ public class SnakePanel extends JPanel {
 
     public static final int NUM_PLAYERS = 1;
     public static final int NUM_AI_M1000 = 1;
-    public static final int NUM_AI_M2000 = 1;
+    public static final int NUM_AI_M2000 = 3;
     private final int[] NUMBER_SNAKES = {NUM_PLAYERS, NUM_AI_M1000, NUM_AI_M2000};
     public Snake snakes[] = new Snake[(NUM_PLAYERS + NUM_AI_M1000 + NUM_AI_M2000)];
 
@@ -401,19 +401,19 @@ public class SnakePanel extends JPanel {
         drawStars((Graphics2D) g, -starx / 4, stary, 15);
 
         starx--;
-        STAR_TILE_SIZE = 15000;
+        STAR_TILE_SIZE = 10000;
         g.setColor(Color.blue);
         drawStars((Graphics2D) g, -starx / 5, stary, 8);
 
-        STAR_TILE_SIZE = 10000;
+        STAR_TILE_SIZE = 6000;
         g.setColor(Color.red);
         drawStars((Graphics2D) g, -starx / 3, stary, 5);
 
-        STAR_TILE_SIZE = 15000;
+        STAR_TILE_SIZE = 5000;
         g.setColor(Color.yellow);
         drawStars((Graphics2D) g, -starx / 4, stary, 7);
 
-        STAR_TILE_SIZE = 10000;
+        STAR_TILE_SIZE = 7000;
         g.setColor(Color.MAGENTA);
         drawStars((Graphics2D) g, -starx / 6, stary, 6);
 
