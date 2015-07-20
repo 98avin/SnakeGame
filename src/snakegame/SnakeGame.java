@@ -29,6 +29,7 @@ public class SnakeGame {
     static int aiscore2 = 0;
     static SnakePanel snakePanel;
     public static JLabel statusLabel;
+    static JFrame frame;
 
     public static enum STATE {
 
@@ -52,7 +53,7 @@ public class SnakeGame {
      */
     public static void main(String[] args) {
 
-        JFrame frame = new JFrame("Snake Game");
+        frame = new JFrame("Snake Game");
         snakePanel = new SnakePanel();
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
