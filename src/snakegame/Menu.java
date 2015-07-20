@@ -104,9 +104,6 @@ public class Menu {
 
         }
 
-        // @Override
-        // protected void paintBorder(Graphics g) {
-        //  }
         @Override
         protected void paintComponent(Graphics g) {
             g.setColor(Color.white);
