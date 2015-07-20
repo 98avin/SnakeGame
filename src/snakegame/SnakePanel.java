@@ -52,9 +52,9 @@ public class SnakePanel extends JPanel {
 
     double snakeWidth;
 
-    public static final int NUM_PLAYERS = 1;
-    public static final int NUM_AI_M1000 = 1;
-    public static final int NUM_AI_M2000 = 3;
+    public static final int NUM_PLAYERS = 0;
+    public static final int NUM_AI_M1000 = 0;
+    public static final int NUM_AI_M2000 = 100;
     private final int[] NUMBER_SNAKES = {NUM_PLAYERS, NUM_AI_M1000, NUM_AI_M2000};
     public Snake snakes[] = new Snake[(NUM_PLAYERS + NUM_AI_M1000 + NUM_AI_M2000)];
 

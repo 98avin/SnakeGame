@@ -8,25 +8,25 @@ package snakegame;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JButton;
 
 public class Menu {
-    
+
     static SnakePanel sp;
     ArrayList<Component> menuArray;
-    
+
     public Menu(SnakePanel sp) {
         this.sp = sp;
         menuArray = new ArrayList<Component>();
     }
 
     public void buildMenu() {
-
-        
 
         final MyButton button = new MyButton("PLAY");
         button.setPreferredSize(new Dimension((int) SnakePanel.WINDOW_WIDTH, (int) SnakePanel.WINDOW_HEIGHT));
@@ -49,6 +49,13 @@ public class Menu {
         }
     }
 
+    public static void fontLoader(Graphics g, float size) {
+        SnakeGame.fontLoader();
+        Font currentFont = SnakeGame.customFont;
+        Font newFont = currentFont.deriveFont(size);
+        g.setFont(newFont);
+    }
+
     static class MyButton extends JButton {
 
         String buttonWord;
@@ -65,7 +72,8 @@ public class Menu {
         @Override
         protected void paintComponent(Graphics g) {
             g.setColor(Color.white);
-            g.drawString(buttonWord, 100, 100);
+            fontLoader(g,25F);
+            g.drawString(buttonWord, 100, 100);          
         }
     }
 
