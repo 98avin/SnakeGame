@@ -37,7 +37,7 @@ public class Menu {
 
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                sp.remove(button);
+                sp.removeAll();
                 SnakeGame.state = SnakeGame.STATE.GAME;
 
             }
@@ -57,7 +57,7 @@ public class Menu {
             sp.add(menuArray.get(i));
         }
     }
-
+    
     public static Font fontLoader(float size) {
         SnakeGame.fontLoader();
         Font currentFont = SnakeGame.customFont;
