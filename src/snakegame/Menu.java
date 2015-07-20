@@ -12,9 +12,9 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 
 public class Menu {
 
@@ -29,8 +29,6 @@ public class Menu {
     public void buildMenu() {
 
         final MyButton button = new MyButton("PLAY");
-        button.setPreferredSize(new Dimension((int) SnakePanel.WINDOW_WIDTH, (int) SnakePanel.WINDOW_HEIGHT));
-
         button.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
@@ -40,6 +38,11 @@ public class Menu {
             }
         });
         menuArray.add(button);
+        
+        final JLabel title = new JLabel("SNAKE!!!");
+        
+        menuArray.add(title);
+        
 
     }
 
@@ -49,11 +52,11 @@ public class Menu {
         }
     }
 
-    public static void fontLoader(Graphics g, float size) {
+    public static Font fontLoader(float size) {
         SnakeGame.fontLoader();
         Font currentFont = SnakeGame.customFont;
         Font newFont = currentFont.deriveFont(size);
-        g.setFont(newFont);
+        return newFont;
     }
 
     static class MyButton extends JButton {
@@ -63,6 +66,7 @@ public class Menu {
         MyButton(String s) {
             super();
             this.buttonWord = s;
+            this.setPreferredSize(new Dimension(250, 100));
         }
 
         @Override
@@ -72,7 +76,7 @@ public class Menu {
         @Override
         protected void paintComponent(Graphics g) {
             g.setColor(Color.white);
-            fontLoader(g,25F);
+            g.setFont(fontLoader(25F));
             g.drawString(buttonWord, 100, 100);          
         }
     }
