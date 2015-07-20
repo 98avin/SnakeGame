@@ -29,7 +29,7 @@ public class SnakeGame {
     static int aiscore2 = 0;
     static SnakePanel snakePanel;
     public static JLabel statusLabel;
-    
+
     public static enum STATE {
 
         MENU, GAME
@@ -69,6 +69,7 @@ public class SnakeGame {
                 fontLoader();
                 statusLabel.setFont(customFont);
                 statusLabel.setForeground(TEXT_COLOR);
+                statusLabel.setBounds(0, 0, (int)SnakePanel.WINDOW_WIDTH*2, 100);
                 statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
                 snakePanel.add(statusLabel);
 

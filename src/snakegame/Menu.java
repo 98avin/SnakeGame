@@ -45,7 +45,9 @@ public class Menu {
         menuArray.add(button);
 
         final JLabel title = new JLabel("SNAKE!!!");
-
+        title.setFont(fontLoader(200F));
+        title.setForeground(Color.white);
+        title.setBounds(50,0,2500,300);
         menuArray.add(title);
 
     }
