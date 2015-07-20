@@ -529,20 +529,20 @@ public class SnakePanel extends JPanel {
         }
     }
     
-    void defineScreen(){
+    static void defineScreen(){
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); //sets window to fit screen
 
         WINDOW_WIDTH = screenSize.getWidth() - 10;
         WINDOW_HEIGHT = screenSize.getHeight() - 72;
     }
     
-    public int getScreenWidth(){
+    public static int getScreenWidth(){
         defineScreen();
         return (int)WINDOW_WIDTH;
     }
     
     
-    public int getScreenHeight(){
+    public static int getScreenHeight(){
         defineScreen();
         return (int)WINDOW_HEIGHT;
     }

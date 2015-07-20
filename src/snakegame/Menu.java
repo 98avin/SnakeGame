@@ -32,7 +32,7 @@ public class Menu {
         final JLabel title = new JLabel("SNAKE!!!");
         title.setFont(fontLoader(200F));
         title.setForeground(Color.white);
-        title.setBounds(75, 0, 2500, 250);
+        title.setBounds(sp.getScreenWidth()/22, 0, 2500, 250);
         menuArray.add(title);
 
         MyButton playButton = makeButton("PLAY", 350, 77, 63);
@@ -82,7 +82,7 @@ public class Menu {
         MyButton button = new MyButton(buttontext, textx, texty);
         button.setLayout(null);
         button.setPreferredSize(new Dimension(250, 100));
-        button.setBounds((int) ((SnakePanel.WINDOW_WIDTH) - 125), y, 250, 100);
+        button.setBounds((int) ((SnakePanel.getScreenWidth())/2)-125, y, 250, 100);
         return button;
     }
 
