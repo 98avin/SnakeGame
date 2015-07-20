@@ -50,7 +50,7 @@ public class Menu {
         songButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SnakeGame.frame.dispose();
+                System.exit(0);
             }
         });
         menuArray.add(songButton);
@@ -59,7 +59,7 @@ public class Menu {
         quitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SnakeGame.frame.dispose();
+                System.exit(0);
             }
         });
         menuArray.add(quitButton);
