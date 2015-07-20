@@ -244,6 +244,7 @@ public class SnakePanel extends JPanel {
         g.fillRect(x, y, w, h);
     }
 
+    //CREDIT TO CHRIS WELLONS --- http://nullprogram.com/blog/2011/06/13/
     public static final int STAR_SEED = 0x9d2c5680;
     public static int STAR_TILE_SIZE = 1000;
 
@@ -272,6 +273,7 @@ public class SnakePanel extends JPanel {
         }
     }
 
+    /** Robert Jenkins' 96 bit Mix Function. */
     private static int mix(int a, int b, int c) {
         a = a - b;
         a = a - c;
@@ -302,6 +304,7 @@ public class SnakePanel extends JPanel {
         c = c ^ (b >>> 15);
         return c;
     }
+    /////////////
 
     public boolean checkLiving(Snake snake, Color color, Graphics g) {
         if (!snake.isLiving()) {
