@@ -334,7 +334,6 @@ public class SnakePanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         if (SnakeGame.state == SnakeGame.STATE.MENU) {
-            System.out.println("HERE");
             fillRect(g, back, DEFAULT_BACKGROUND_COLOR);
             moveStars(g);
             menu.renderMenu(); 

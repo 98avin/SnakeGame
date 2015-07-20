@@ -35,17 +35,18 @@ public class Menu {
         title.setBounds(75, 0, 2500, 250);
         menuArray.add(title);
 
-        final MyButton playButton = makeButton("PLAY", 350, 77, 63);
+        MyButton playButton = makeButton("PLAY", 350, 77, 63);
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 sp.removeAll();
+                sp.requestFocusInWindow();
                 SnakeGame.state = SnakeGame.STATE.GAME;
             }
         });
         menuArray.add(playButton);
 
-        final MyButton songButton = makeButton("OPTIONS", 475, 41, 63);
+        MyButton songButton = makeButton("OPTIONS", 475, 41, 63);
         songButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -54,7 +55,7 @@ public class Menu {
         });
         menuArray.add(songButton);
 
-        final MyButton quitButton = makeButton("QUIT", 600, 77, 63);
+        MyButton quitButton = makeButton("QUIT", 600, 77, 63);
         quitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -77,8 +78,8 @@ public class Menu {
         return newFont;
     }
 
-    public static MyButton makeButton(String text, int y, int textx, int texty) {
-        final MyButton button = new MyButton(text, textx, texty);
+    public static MyButton makeButton(String buttontext, int y, int textx, int texty) {
+        MyButton button = new MyButton(buttontext, textx, texty);
         button.setLayout(null);
         button.setPreferredSize(new Dimension(250, 100));
         button.setBounds((int) ((SnakePanel.WINDOW_WIDTH) - 125), y, 250, 100);
@@ -114,6 +115,7 @@ public class Menu {
             g.drawString(buttonWord, textx, texty);
 
         }
+
     }
 
 }
