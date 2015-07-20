@@ -33,7 +33,7 @@ public class Menu {
 
         button.setLayout(null);
         button.setPreferredSize(new Dimension(250, 100));
-        button.setBounds((int) ((SnakePanel.WINDOW_WIDTH)), 150, 250, 100);
+        button.setBounds((int) ((SnakePanel.WINDOW_WIDTH)-125), 250, 250, 100);
 
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

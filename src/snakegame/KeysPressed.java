@@ -11,6 +11,6 @@ package snakegame;
  */
 public class KeysPressed {
 
-    boolean Up, Down, Left, Right;
+    boolean Up, Down, Left, Right,Random;
 
 }

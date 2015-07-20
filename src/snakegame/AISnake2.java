@@ -20,7 +20,7 @@ public class AISnake2 extends Snake {
     private static final int avoidEdgeDist = 10;
 
     public AISnake2(Color color, String name) {
-        super(color,name);       
+        super(color, name);
         isPathing = false;
         isPlayer = false;
         vision = new Rect2d(this.getHead().getCenter().x - 500, this.getHead().getCenter().y - 500, 1000, 1000);
@@ -48,53 +48,48 @@ public class AISnake2 extends Snake {
         return Rect2d.EmptyRect;
     }
 
-    void pathTo() {     
+    void pathTo() {
         //if there is nothing in vision 
         if (target == Rect2d.EmptyRect) {
             isPathing = false;
-                    // avoid Right side       
-        if(this.getHead().getCenter().x-avoidEdgeDist >= SnakePanel.WINDOW_WIDTH){
-            if (this.dir!= Direction.Right){
-                dir=Direction.Left;
+            // avoid Right side       
+            if (this.getHead().getCenter().x - avoidEdgeDist >= SnakePanel.WINDOW_WIDTH) {
+                if (this.dir != Direction.Right) {
+                    dir = Direction.Left;
+                } else {
+                    dir = Direction.Down;
+                }
             }
-            else {
-            dir= Direction.Down;
+            // avoid the Bottom(Its actually the bottom)
+            if (this.getHead().getCenter().y - avoidEdgeDist >= SnakePanel.WINDOW_HEIGHT) {
+                if (this.dir != Direction.Down) {
+                    dir = Direction.Up;
+                } else {
+                    dir = Direction.Right;
+                }
             }
-        }
-        // avoid the Bottom(Its actually the bottom)
-        if(this.getHead().getCenter().y-avoidEdgeDist>=SnakePanel.WINDOW_HEIGHT){
-            if (this.dir!= Direction.Down){
-                dir=Direction.Up;
+            // avoid the Top
+            if (this.getHead().getCenter().y - avoidEdgeDist < 0) {
+                if (this.dir != Direction.Up) {
+                    dir = Direction.Down;
+                } else {
+                    dir = Direction.Left;
+                }
             }
-            else {
-            dir= Direction.Right;
+            // avoid the Left
+            if (this.getHead().getCenter().x - avoidEdgeDist < 0) {
+                if (this.dir != Direction.Left) {
+                    dir = Direction.Right;
+                } else {
+                    dir = Direction.Up;
+                }
+            } else if (randomCooldown <= 0) {
+                randomDirection();
+                randomCooldown = (int) this.getSSize();
             }
-        }
-        // avoid the Top
-        if(this.getHead().getCenter().y -avoidEdgeDist<0){
-            if (this.dir!= Direction.Up){
-                dir=Direction.Down;
-            }
-            else {
-                dir=Direction.Left;
-            }
-        }
-        // avoid the Left
-        if(this.getHead().getCenter().x-avoidEdgeDist<0){
-            if (this.dir!= Direction.Left){
-                dir=Direction.Right;
-            }
-            else {
-            dir= Direction.Up;
-            }
-        }
-        else if (randomCooldown<=0){
-            randomDirection();
-            randomCooldown=(int)this.getSSize();
-        }
             return;
         }
-        
+
         //if in Straight path Up or Down
         if (Rect2d.intersect(this.pathY, target) != Rect2d.EmptyRect) {
             //if above...
@@ -106,7 +101,7 @@ public class AISnake2 extends Snake {
             if (this.getHead().getBottom() < target.getTop()) {
                 if (this.dir != Direction.Up) {
                     this.dir = Direction.Down;
-                } 
+                }
             }
             return;
         } //if in Straight path Left or Right
@@ -148,7 +143,7 @@ public class AISnake2 extends Snake {
         double distance;
         double x1 = this.getHead().getCenter().x;
         double y1 = this.getHead().getCenter().y;
-        double x2 = target.getCenter().x;        
+        double x2 = target.getCenter().x;
         double y2 = target.getCenter().y;
         double temp = (Math.pow((x2 - x1), 2)) + (Math.pow((y2 - y1), 2));
         distance = Math.sqrt(temp);
@@ -241,9 +236,12 @@ public class AISnake2 extends Snake {
 
         for (int i = 0; i < this.getHSize(); i++) {
             if (i == 0) {
-                target=scan();
+                target = scan();
                 pathTo();
                 randomCooldown--;
+                if (SnakePanel.keysPressed.Random) {
+                    randomDirection();
+                }
             } else {
                 if (this.isMoving()) {
                     this.getRect(i).moveTo(this.getH(i - 1));
