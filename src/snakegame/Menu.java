@@ -28,32 +28,35 @@ public class Menu {
     }
 
     public void buildMenu() {
-        
+
         final JLabel title = new JLabel("SNAKE!!!");
         title.setFont(fontLoader(200F));
         title.setForeground(Color.white);
-        title.setBounds(75,0,2500,250);
+        title.setBounds(75, 0, 2500, 250);
         menuArray.add(title);
-        
+
         final MyButton playButton = makeButton("PLAY", 350, 77, 63);
         playButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
-                SnakeGame.state = SnakeGame.STATE.GAME;
                 sp.removeAll();
+                SnakeGame.state = SnakeGame.STATE.GAME;
             }
         });
         menuArray.add(playButton);
-        
+
         final MyButton songButton = makeButton("OPTIONS", 475, 41, 63);
         songButton.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 SnakeGame.frame.dispose();
             }
         });
         menuArray.add(songButton);
-                
+
         final MyButton quitButton = makeButton("QUIT", 600, 77, 63);
         quitButton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 SnakeGame.frame.dispose();
             }
@@ -66,23 +69,23 @@ public class Menu {
             sp.add(menuArray.get(i));
         }
     }
-    
+
     public static Font fontLoader(float size) {
         SnakeGame.fontLoader();
         Font currentFont = SnakeGame.customFont;
         Font newFont = currentFont.deriveFont(size);
         return newFont;
     }
-    
-    public MyButton makeButton(String text, int y,int textx, int texty){
-    final MyButton button = new MyButton(text,textx,texty);
+
+    public static MyButton makeButton(String text, int y, int textx, int texty) {
+        final MyButton button = new MyButton(text, textx, texty);
         button.setLayout(null);
         button.setPreferredSize(new Dimension(250, 100));
-        button.setBounds((int) ((SnakePanel.WINDOW_WIDTH)-125), y, 250, 100);
+        button.setBounds((int) ((SnakePanel.WINDOW_WIDTH) - 125), y, 250, 100);
         return button;
     }
 
-    static class MyButton extends JButton {
+    public static class MyButton extends JButton {
 
         String buttonWord;
         int textx;
@@ -93,14 +96,14 @@ public class Menu {
             this.buttonWord = s;
             this.textx = textx;
             this.texty = texty;
-            
+
             this.setLayout(null);
 
             this.setPreferredSize(new Dimension(250, 100));
 
         }
 
-       // @Override
+        // @Override
         // protected void paintBorder(Graphics g) {
         //  }
         @Override
