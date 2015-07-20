@@ -28,52 +28,37 @@ public class Menu {
     }
 
     public void buildMenu() {
-
-        final MyButton button = new MyButton("PLAY");
-        button.setLayout(null);
-        button.setPreferredSize(new Dimension(250, 100));
-        button.setBounds((int) ((SnakePanel.WINDOW_WIDTH)-125), 350, 250, 100);
-
-        button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                sp.removeAll();
-                SnakeGame.state = SnakeGame.STATE.GAME;
-
-            }
-        });
-        menuArray.add(button);
-
-        final MyButton songbutton = new MyButton("CONF");
-        songbutton.setLayout(null);
-        songbutton.setPreferredSize(new Dimension(250, 100));
-        songbutton.setBounds((int) ((SnakePanel.WINDOW_WIDTH)-125), 475, 250, 100);
-
-        songbutton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                SnakeGame.frame.dispose();
-            }
-        });
-        menuArray.add(songbutton);
-                
-        final MyButton quitbutton = new MyButton("QUIT");
-        quitbutton.setLayout(null);
-        quitbutton.setPreferredSize(new Dimension(250, 100));
-        quitbutton.setBounds((int) ((SnakePanel.WINDOW_WIDTH)-125), 600, 250, 100);
-
-        quitbutton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                SnakeGame.frame.dispose();
-            }
-        });
-        menuArray.add(quitbutton);
         
-
         final JLabel title = new JLabel("SNAKE!!!");
         title.setFont(fontLoader(200F));
         title.setForeground(Color.white);
         title.setBounds(75,0,2500,250);
         menuArray.add(title);
-
+        
+        final MyButton playButton = makeButton("PLAY", 350, 77, 63);
+        playButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SnakeGame.state = SnakeGame.STATE.GAME;
+                sp.removeAll();
+            }
+        });
+        menuArray.add(playButton);
+        
+        final MyButton songButton = makeButton("OPTIONS", 475, 41, 63);
+        songButton.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+                SnakeGame.frame.dispose();
+            }
+        });
+        menuArray.add(songButton);
+                
+        final MyButton quitButton = makeButton("QUIT", 600, 77, 63);
+        quitButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                SnakeGame.frame.dispose();
+            }
+        });
+        menuArray.add(quitButton);
     }
 
     public void renderMenu() {
@@ -88,15 +73,27 @@ public class Menu {
         Font newFont = currentFont.deriveFont(size);
         return newFont;
     }
+    
+    public MyButton makeButton(String text, int y,int textx, int texty){
+    final MyButton button = new MyButton(text,textx,texty);
+        button.setLayout(null);
+        button.setPreferredSize(new Dimension(250, 100));
+        button.setBounds((int) ((SnakePanel.WINDOW_WIDTH)-125), y, 250, 100);
+        return button;
+    }
 
     static class MyButton extends JButton {
 
         String buttonWord;
+        int textx;
+        int texty;
 
-        MyButton(String s) {
+        MyButton(String s, int textx, int texty) {
             super();
             this.buttonWord = s;
-
+            this.textx = textx;
+            this.texty = texty;
+            
             this.setLayout(null);
 
             this.setPreferredSize(new Dimension(250, 100));
@@ -111,7 +108,7 @@ public class Menu {
             g.setColor(Color.white);
 
             g.setFont(fontLoader(25F));
-            g.drawString(buttonWord, 77, 63);
+            g.drawString(buttonWord, textx, texty);
 
         }
     }
