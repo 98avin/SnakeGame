@@ -528,6 +528,24 @@ public class SnakePanel extends JPanel {
             }
         }
     }
+    
+    void defineScreen(){
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); //sets window to fit screen
+
+        WINDOW_WIDTH = screenSize.getWidth() - 10;
+        WINDOW_HEIGHT = screenSize.getHeight() - 72;
+    }
+    
+    public int getScreenWidth(){
+        defineScreen();
+        return (int)WINDOW_WIDTH;
+    }
+    
+    
+    public int getScreenHeight(){
+        defineScreen();
+        return (int)WINDOW_HEIGHT;
+    }
 
     //FUNCTIONS NEEDED FOR CAMERA SCROLLING
     /*static boolean checkCamBounds() {
