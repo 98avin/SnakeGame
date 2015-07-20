@@ -23,16 +23,18 @@ public class Menu {
 
     public Menu(SnakePanel sp) {
         this.sp = sp;
+        sp.setLayout(null);
         menuArray = new ArrayList<Component>();
     }
 
     public void buildMenu() {
 
         final MyButton button = new MyButton("PLAY");
-        button.setPreferredSize(new Dimension((int) SnakePanel.WINDOW_WIDTH, (int) SnakePanel.WINDOW_HEIGHT));
+        button.setLayout(null);
+        button.setPreferredSize(new Dimension(250,100));
+        button.setBounds((int)((SnakePanel.WINDOW_WIDTH)),150,250,100);
 
         button.addActionListener(new ActionListener() {
-
             public void actionPerformed(ActionEvent e) {
                 sp.remove(button);
                 SnakeGame.state = SnakeGame.STATE.GAME;
@@ -63,17 +65,18 @@ public class Menu {
         MyButton(String s) {
             super();
             this.buttonWord = s;
+            this.setLayout(null);           
         }
 
-        @Override
-        protected void paintBorder(Graphics g) {
-        }
+       // @Override
+       // protected void paintBorder(Graphics g) {
+      //  }
 
         @Override
         protected void paintComponent(Graphics g) {
             g.setColor(Color.white);
             fontLoader(g,25F);
-            g.drawString(buttonWord, 100, 100);          
+            g.drawString(buttonWord, 125, 50);          
         }
     }
 
