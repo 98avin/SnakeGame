@@ -87,7 +87,7 @@ public class Menu {
             g.setColor(Color.white);
 
             g.setFont(fontLoader(25F));
-            g.drawString(buttonWord, 125, 50);
+            g.drawString(buttonWord, 77, 63);
 
         }
     }
