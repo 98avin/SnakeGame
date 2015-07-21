@@ -70,6 +70,7 @@ public class SnakePanel extends JPanel {
     static Clip clip;
     
     static Menu menu;
+    
 
     //static Rect2d cambounds; //CAMERA WINDOW(Snake touches the edge of this to begin "scrolling")
     // <<CONSTRUCTOR>>
@@ -79,11 +80,7 @@ public class SnakePanel extends JPanel {
 
         menu.buildMenu();
 
-        try {
-            loadMusic();//loads the WAV file to play later, prevents lag
-        } catch (Exception ex) {
-            Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
         for (int j = 0; j < NUMBER_SNAKES.length; j++) {
             for (int i = 0; i < NUMBER_SNAKES[j]; i++) {
                 switch (j) {
@@ -465,8 +462,8 @@ public class SnakePanel extends JPanel {
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
-    public static void loadMusic() throws Exception {
-        File file = new File("9ts.wav");
+    public static void loadMusic(String song) throws Exception {
+        File file = new File(song);
         audioIn = AudioSystem.getAudioInputStream(file);
         AudioFormat format = audioIn.getFormat();
         DataLine.Info info = new DataLine.Info(Clip.class, format);

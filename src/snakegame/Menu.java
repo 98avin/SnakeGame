@@ -13,6 +13,8 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
@@ -32,8 +34,14 @@ public class Menu {
         final JLabel title = new JLabel("SNAKE!!!");
         title.setFont(fontLoader(200F));
         title.setForeground(Color.white);
-        title.setBounds(sp.getScreenWidth()/22, 0, 2500, 250);
+        title.setBounds(sp.getScreenWidth() / 22, 0, 2500, 250);
         menuArray.add(title);
+
+        try {
+            SnakePanel.loadMusic("sandstorm1.wav");//loads the WAV file to play later, prevents lag
+        } catch (Exception ex) {
+            Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         MyButton playButton = makeButton("PLAY", 350, 77, 63);
         playButton.addActionListener(new ActionListener() {
@@ -50,7 +58,10 @@ public class Menu {
         songButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                sp.removeAll();
+                sp.requestFocusInWindow();
+                menuArray.clear();
+                buildOptions();
             }
         });
         menuArray.add(songButton);
@@ -60,6 +71,48 @@ public class Menu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
+            }
+        });
+        menuArray.add(quitButton);
+    }
+
+    public void buildOptions() {
+        final JLabel title = new JLabel("OPTIONS!!!");
+        title.setFont(fontLoader(200F));
+        title.setForeground(Color.white);
+        title.setBounds(sp.getScreenWidth() / 22, 0, 2500, 250);
+        menuArray.add(title);
+
+        MyButton playButton = makeButton("SONG1", 350, 77, 63);
+        playButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    SnakePanel.loadMusic("9ts.wav");//loads the WAV file to play later, prevents lag
+                } catch (Exception ex) {
+                    Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        menuArray.add(playButton);
+
+        MyButton songButton = makeButton("ADD AI", 475, 41, 63);
+        songButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        menuArray.add(songButton);
+
+        MyButton quitButton = makeButton("BACK", 600, 77, 63);
+        quitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sp.removeAll();
+                sp.requestFocusInWindow();
+                menuArray.clear();
+                buildMenu();
             }
         });
         menuArray.add(quitButton);
@@ -82,7 +135,7 @@ public class Menu {
         MyButton button = new MyButton(buttontext, textx, texty);
         button.setLayout(null);
         button.setPreferredSize(new Dimension(250, 100));
-        button.setBounds((int) ((SnakePanel.getScreenWidth())/2)-125, y, 250, 100);
+        button.setBounds((int) ((SnakePanel.getScreenWidth()) / 2) - 125, y, 250, 100);
         return button;
     }
 
