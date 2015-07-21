@@ -386,7 +386,7 @@ public class SnakePanel extends JPanel {
         starx += 1;
 
         STAR_TILE_SIZE = 3000;
-        g.setColor(Color.white);
+        g.setColor(COLOR_RAINBOW_CYCLE);
         drawStars((Graphics2D) g, starx, stary, 10);
 
         STAR_TILE_SIZE = 2000;
@@ -466,7 +466,7 @@ public class SnakePanel extends JPanel {
     }
 
     public static void loadMusic() throws Exception {
-        File file = new File("sandstorm1.wav");
+        File file = new File("9ts.wav");
         audioIn = AudioSystem.getAudioInputStream(file);
         AudioFormat format = audioIn.getFormat();
         DataLine.Info info = new DataLine.Info(Clip.class, format);
