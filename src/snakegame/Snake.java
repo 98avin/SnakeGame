@@ -147,8 +147,8 @@ public class Snake {
 
         for (int j = 1; j < this.getSSize(); j++) {
             if (Rect2d.intersect(this.getRect(j), this.getHead()) != Rect2d.EmptyRect) {//when snake touches itself
-                //this.die();
-                //return;
+                this.die();
+                break;
             }
         }
 
@@ -244,19 +244,19 @@ public class Snake {
          }*/
         switch (this.dir) {
             case Left:
-                this.getHead().translate(-this.getWidth(), 0.0);
+                this.getHead().translate(-this.getWidth()-1, 0.0);
                 break;
 
             case Right:
-                this.getHead().translate(this.getWidth(), 0.0);
+                this.getHead().translate(this.getWidth()+1, 0.0);
                 break;
 
             case Down:
-                this.getHead().translate(0.0, this.getWidth());
+                this.getHead().translate(0.0, this.getWidth()+1);
                 break;
 
             case Up:
-                this.getHead().translate(0.0, -this.getWidth());
+                this.getHead().translate(0.0, -this.getWidth()-1);
                 break;
         }
 
