@@ -9,9 +9,6 @@ package snakegame;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyListener;
-import java.awt.event.*;
-import static java.awt.event.KeyEvent.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -45,7 +42,7 @@ public class SnakeGame {
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("customFont.ttf")));
         } catch (IOException | FontFormatException e) {
             //Handle exception
-        }
+    }
     }
 
     /**
@@ -66,11 +63,11 @@ public class SnakeGame {
             if (state == STATE.MENU) {
                 frame.repaint();
             } else {
-                statusLabel = new JLabel();
+                statusLabel = new JLabel("",SwingConstants.CENTER);
                 fontLoader();
                 statusLabel.setFont(customFont);
                 statusLabel.setForeground(TEXT_COLOR);
-                statusLabel.setBounds(0, 0, (int)SnakePanel.WINDOW_WIDTH*2, 100);
+                statusLabel.setBounds(0, -30, (int)SnakePanel.WINDOW_WIDTH, 100);
                 snakePanel.add(statusLabel);
 
                 frame.pack();
