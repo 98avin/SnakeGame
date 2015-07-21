@@ -114,9 +114,10 @@ public class Snake {
         alive = false;
         moving = false;
         for (int i = 0; i < history.size(); i++) {
+            this.setS(i, Rect2d.EmptyRect);
             SnakePanel.food.add(new Rect2d(this.getH(i).x, this.getH(i).y, 10, 10));
         }
-        snake.clear();
+        
 
     }
 
@@ -150,7 +151,7 @@ public class Snake {
                 this.die();
                 break;
             }
-        }
+        }  
 
         for (int i = 0; i < this.getSSize(); i++) {
             this.setH(i, new SquareCoords((int) this.getRect(i).getLeft(), (int) this.getRect(i).getTop()));

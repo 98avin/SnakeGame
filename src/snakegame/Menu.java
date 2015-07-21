@@ -47,9 +47,14 @@ public class Menu {
         playButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                SnakeGame.state = SnakeGame.STATE.GAME;
                 sp.removeAll();
                 sp.requestFocusInWindow();
-                SnakeGame.state = SnakeGame.STATE.GAME;
+                sp = new SnakePanel();
+                
+                
+                //sp.constructSnake();
+                //SnakeGame.state = SnakeGame.STATE.GAME;
             }
         });
         menuArray.add(playButton);

@@ -68,34 +68,18 @@ public class SnakePanel extends JPanel {
 
     static AudioInputStream audioIn;
     static Clip clip;
-    
+
     static Menu menu;
-    
 
     //static Rect2d cambounds; //CAMERA WINDOW(Snake touches the edge of this to begin "scrolling")
     // <<CONSTRUCTOR>>
     public SnakePanel() {
-        
+
         menu = new Menu(this);
 
         menu.buildMenu();
 
-
-        for (int j = 0; j < NUMBER_SNAKES.length; j++) {
-            for (int i = 0; i < NUMBER_SNAKES[j]; i++) {
-                switch (j) {
-                    case 0:
-                        snakes[i] = new Snake(PLAYER_SNAKE_COLOR, "Bernie");
-                        break;
-                    case 1:
-                        snakes[NUM_PLAYERS + i] = new AISnake(AI_SNAKE_COLOR, "Berninator");
-                        break;
-                    case 2:
-                        snakes[NUM_PLAYERS + NUM_AI_M1000 + i] = new AISnake2(AI_SNAKE_COLOR, "Robobernie");
-                        break;
-                }
-            }
-        }
+        constructSnake();
 
         // Initialize colors for rainbow cycle
         colorDecreaseFlag = false;
@@ -122,9 +106,6 @@ public class SnakePanel extends JPanel {
         food = new ArrayList<Rect2d>();
 
         //cambounds = new Rect2d(100, 100, screenSize.width - 200, screenSize.height - 250);
-        for (int i = 0; i < snakes.length; i++) {
-            buildSnake(snakes[i]);
-        }
         for (int i = 0; i < NUMBER_OF_FOOD; i++) {
             food.add(new Rect2d(random_number(0, 1000), random_number(0, 500), 10, 10));
         }
@@ -220,6 +201,27 @@ public class SnakePanel extends JPanel {
         });
     }
 
+    void constructSnake() {
+        for (int j = 0; j < NUMBER_SNAKES.length; j++) {
+            for (int i = 0; i < NUMBER_SNAKES[j]; i++) {
+                switch (j) {
+                    case 0:
+                        snakes[i] = new Snake(PLAYER_SNAKE_COLOR, "Bernie");
+                        break;
+                    case 1:
+                        snakes[NUM_PLAYERS + i] = new AISnake(AI_SNAKE_COLOR, "Berninator");
+                        break;
+                    case 2:
+                        snakes[NUM_PLAYERS + NUM_AI_M1000 + i] = new AISnake2(AI_SNAKE_COLOR, "Robobernie");
+                        break;
+                }
+            }
+        }
+        for (int i = 0; i < snakes.length; i++) {
+            buildSnake(snakes[i]);
+        }
+    }
+
     void buildSnake(Snake snake) {
         for (int i = 1; i < 0; i++) {
             snake.addS(new Rect2d(30.0 + (i * 30), 170.0, snake.getWidth(), snake.getWidth()));
@@ -270,7 +272,9 @@ public class SnakePanel extends JPanel {
         }
     }
 
-    /** Robert Jenkins' 96 bit Mix Function. */
+    /**
+     * Robert Jenkins' 96 bit Mix Function.
+     */
     private static int mix(int a, int b, int c) {
         a = a - b;
         a = a - c;
@@ -303,17 +307,12 @@ public class SnakePanel extends JPanel {
     }
     /////////////
 
-    public boolean checkLiving(Snake snake, Color color, Graphics g) {
+    public boolean checkLiving(Snake snake, Graphics g) {
         if (!snake.isLiving()) {
             try {
                 stopMusic();
             } catch (Exception ex) {
                 Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            fillRect(g, back, DEFAULT_BACKGROUND_COLOR);
-
-            for (int i = 1; i < snake.getSSize(); i++) {
-                fillRect(g, snake.getRect(i), color);
             }
 
             for (int i = 0; i < food.size(); i++) {
@@ -324,21 +323,42 @@ public class SnakePanel extends JPanel {
         return false;
     }
 
+    public boolean checkAllLiving(Snake[] snakes, Graphics g) {
+        int temp = 0;
+        for (int i = 0; i < snakes.length; i++) {
+            if (checkLiving(snakes[i], g)) {
+                temp++;
+            }
+        }
+        return (temp == snakes.length);
+    }
+
     public static int starx = 0;
     public static int stary = 0;
     public static int starscale = 10;
+
+    public void clearGame() {
+        this.removeAll();
+        food.clear();
+        try {
+            stopMusic();
+        } catch (Exception ex) {
+            Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 
     @Override
     public void paintComponent(Graphics g) {
         if (SnakeGame.state == SnakeGame.STATE.MENU) {
             fillRect(g, back, DEFAULT_BACKGROUND_COLOR);
             moveStars(g);
-            menu.renderMenu(); 
+
+            menu.renderMenu();
         } else {
-            for (int i = 0; i < snakes.length; i++) {
-                if (checkLiving(snakes[i], snakes[i].getColor(), g)) {
-                    return;
-                }
+            if (checkAllLiving(snakes, g)) {
+                clearGame();
+                SnakeGame.state = SnakeGame.STATE.MENU;
             }
             fillRect(g, back, DEFAULT_BACKGROUND_COLOR);
             //RAINBOW CYCLE COLOR
@@ -525,23 +545,22 @@ public class SnakePanel extends JPanel {
             }
         }
     }
-    
-    static void defineScreen(){
+
+    static void defineScreen() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); //sets window to fit screen
 
         WINDOW_WIDTH = screenSize.getWidth() - 10;
         WINDOW_HEIGHT = screenSize.getHeight() - 72;
     }
-    
-    public static int getScreenWidth(){
+
+    public static int getScreenWidth() {
         defineScreen();
-        return (int)WINDOW_WIDTH;
+        return (int) WINDOW_WIDTH;
     }
-    
-    
-    public static int getScreenHeight(){
+
+    public static int getScreenHeight() {
         defineScreen();
-        return (int)WINDOW_HEIGHT;
+        return (int) WINDOW_HEIGHT;
     }
 
     //FUNCTIONS NEEDED FOR CAMERA SCROLLING
