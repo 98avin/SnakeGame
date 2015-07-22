@@ -122,7 +122,7 @@ public class Menu {
             public void actionPerformed(ActionEvent e) {
                 musicIndex--;
                 if (musicIndex == -1) {
-                    musicIndex = SnakePanel.musicArray.length;
+                    musicIndex = SnakePanel.musicArray.length-1;
                 }
                 currentSong.setText(SnakePanel.musicArray[musicIndex]);
                 try {
