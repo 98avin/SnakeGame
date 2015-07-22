@@ -48,17 +48,16 @@ public class SnakeGame {
     /**
      * @param args the command line arguments
      */
+    
     static GraphicsDevice device = GraphicsEnvironment
         .getLocalGraphicsEnvironment().getScreenDevices()[0];
-    
+
     public static void main(String[] args) {
 
         frame = new JFrame("Snake Game");
         snakePanel = new SnakePanel();
-
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setUndecorated(true);
-        device.setFullScreenWindow(frame);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(snakePanel);
         frame.pack();
         frame.setVisible(true);

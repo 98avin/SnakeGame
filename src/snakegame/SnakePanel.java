@@ -37,7 +37,7 @@ public class SnakePanel extends JPanel {
     public static final int MIN_COLOR_VALUE = 0;
     public static final int COLOR_INCREMENT = 10;
 
-    public static final int MUSIC_THRESHOLD = 10;
+    public static final int MUSIC_THRESHOLD = 0;
 
     public static final Color FOOD_COLOR = Color.white;
     public static final Color PLAYER_SNAKE_COLOR = Color.blue;
@@ -59,6 +59,7 @@ public class SnakePanel extends JPanel {
     public Snake snakes[] = new Snake[(NUM_PLAYERS + NUM_AI_M1000 + NUM_AI_M2000)];
 
     public boolean music;
+    public static String[] musicArray ={"sandstorm1.wav", "remix10.wav", "MEGA_MAN.wav", "9ts.wav"};
 
     public static ArrayList<Rect2d> food;
 
@@ -482,13 +483,18 @@ public class SnakePanel extends JPanel {
         clip.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
-    public static void loadMusic(String song) throws Exception {
-        File file = new File(song);
+    public static void loadMusic(int index) throws Exception {
+        System.out.println("CHANGING SONG TO: " + index);
+        File file = new File(musicArray[index]);
         audioIn = AudioSystem.getAudioInputStream(file);
         AudioFormat format = audioIn.getFormat();
         DataLine.Info info = new DataLine.Info(Clip.class, format);
         clip = (Clip) AudioSystem.getLine(info);
         clip.open(audioIn);
+    }
+    
+    public static void unLoadMusic() {
+    clip.drain();
     }
 
     public static void stopMusic() throws Exception {
