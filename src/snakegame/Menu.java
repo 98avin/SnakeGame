@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 public class Menu {
 
@@ -31,10 +32,10 @@ public class Menu {
 
     public void buildMenu() {
 
-        final JLabel title = new JLabel("SNAKE!!!");
+        final JLabel title = new JLabel("SNAKE!!!", SwingConstants.CENTER);
         title.setFont(fontLoader(200F));
         title.setForeground(Color.white);
-        title.setBounds(sp.getScreenWidth() / 22, 0, 2500, 250);
+        title.setBounds(-sp.getScreenWidth() / 4, 0, 2500, 250);
         menuArray.add(title);
 
         try {

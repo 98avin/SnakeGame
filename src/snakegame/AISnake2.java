@@ -224,8 +224,8 @@ public class AISnake2 extends Snake {
 
         for (int j = 1; j < this.getSSize(); j++) {
             if (Rect2d.intersect(this.getRect(j), this.getHead()) != Rect2d.EmptyRect) {//when snake touches food
-                this.die();
-                break;
+                //this.die();
+                //break;
             }
         }
 
@@ -253,19 +253,19 @@ public class AISnake2 extends Snake {
 
         switch (this.dir) {
             case Left:
-                this.getHead().translate(-this.getWidth()-1, 0.0);
+                this.getHead().translate(-this.getWidth(), 0.0);
                 break;
 
             case Right:
-                this.getHead().translate(this.getWidth()+1, 0.0);
+                this.getHead().translate(this.getWidth(), 0.0);
                 break;
 
             case Down:
-                this.getHead().translate(0.0, this.getWidth()+1);
+                this.getHead().translate(0.0, this.getWidth());
                 break;
 
             case Up:
-                this.getHead().translate(0.0, -this.getWidth()+1);
+                this.getHead().translate(0.0, -this.getWidth());
                 break;
         }
 
