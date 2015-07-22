@@ -494,7 +494,7 @@ public class SnakePanel extends JPanel {
     }
     
     public static void unLoadMusic() {
-    clip.drain();
+    clip.close();
     }
 
     public static void stopMusic() throws Exception {
