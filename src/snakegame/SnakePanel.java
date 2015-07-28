@@ -32,6 +32,7 @@ public class SnakePanel extends JPanel {
     boolean colorDecreaseFlag;
     public static final Color DEFAULT_BACKGROUND_COLOR = Color.black;
     public static Color COLOR_RAINBOW_CYCLE = new Color(0, 0, 0);
+    public static Color COLOR_RAINBOW_CYCLE2 = new Color(0, 0, 0);
     public static final int NUM_BACK_COLORS = 3;
     public static final int MAX_COLOR_VALUE = 255;
     public static final int MIN_COLOR_VALUE = 0;
@@ -57,6 +58,8 @@ public class SnakePanel extends JPanel {
     public static final int NUM_AI_M2000 = 1;
     private final int[] NUMBER_SNAKES = {NUM_PLAYERS, NUM_AI_M1000, NUM_AI_M2000};
     public Snake snakes[] = new Snake[(NUM_PLAYERS + NUM_AI_M1000 + NUM_AI_M2000)];
+    //Just a large list of names for AI snakes.
+    String[] modelName={"Berninator","Bern-OS","Robo-Bernie","Bernie-Prime","Star Bern","Telebernie","iBernie","B.E.R.N.I.E","Bern Machine","B3RN1E"};
 
     public boolean music;
     public static String[] musicArray ={"sandstorm1.wav", "remix10.wav", "MEGA_MAN.wav", "9ts.wav"};
@@ -210,10 +213,10 @@ public class SnakePanel extends JPanel {
                         snakes[i] = new Snake(PLAYER_SNAKE_COLOR, "Bernie");
                         break;
                     case 1:
-                        snakes[NUM_PLAYERS + i] = new AISnake(AI_SNAKE_COLOR, "Berninator");
+                        snakes[NUM_PLAYERS + i] = new AISnake(AI_SNAKE_COLOR, (modelName[random_number(0,this.modelName.length)] +" "+ random_number(0,9000)));
                         break;
                     case 2:
-                        snakes[NUM_PLAYERS + NUM_AI_M1000 + i] = new AISnake2(AI_SNAKE_COLOR, "Robobernie");
+                        snakes[NUM_PLAYERS + NUM_AI_M1000 + i] = new AISnake2(AI_SNAKE_COLOR, (modelName[random_number(0,this.modelName.length)] +" "+ random_number(0,9000)));
                         break;
                 }
             }
@@ -368,6 +371,9 @@ public class SnakePanel extends JPanel {
             COLOR_RAINBOW_CYCLE = new Color(this.backgroundColors[0],
                     this.backgroundColors[1],
                     this.backgroundColors[2]);
+            COLOR_RAINBOW_CYCLE2 = new Color(this.backgroundColors[1],
+                    this.backgroundColors[2],
+                    this.backgroundColors[0]);
             //COLOR RAINBOW CYCLE END
 
             if (snakes[0].getScore() >= MUSIC_THRESHOLD || this.isBigger(snakes[0], 0)) {
@@ -404,7 +410,7 @@ public class SnakePanel extends JPanel {
         starx += 1;
 
         STAR_TILE_SIZE = 3000;
-        g.setColor(COLOR_RAINBOW_CYCLE);
+        g.setColor(COLOR_RAINBOW_CYCLE2);
         drawStars((Graphics2D) g, starx, stary, 10);
 
         STAR_TILE_SIZE = 2000;
@@ -484,7 +490,6 @@ public class SnakePanel extends JPanel {
     }
 
     public static void loadMusic(int index) throws Exception {
-        System.out.println("CHANGING SONG TO: " + index);
         File file = new File(musicArray[index]);
         audioIn = AudioSystem.getAudioInputStream(file);
         AudioFormat format = audioIn.getFormat();

@@ -25,21 +25,26 @@ public class Menu {
     public static int musicIndex = 0;
 
     static SnakePanel sp;
-    ArrayList<Component> menuArray;
+    Component[] menuArray;
+    Component[] optArray;
+    Component[] visibleArray;
 
     public Menu(SnakePanel sp) {
         this.sp = sp;
         sp.setLayout(null);
-        menuArray = new ArrayList<Component>();
+        menuArray = buildMenu();
+        optArray = buildOptions();
+        visibleArray=menuArray;
     }
-
-    public void buildMenu() {
+    public Component[] buildMenu() {
+        ArrayList<Component> tempList;
+        tempList = new ArrayList<>();
 
         final JLabel title = new JLabel("SNAKE!!!", SwingConstants.CENTER);
         title.setFont(fontLoader(200F));
         title.setForeground(Color.white);
         title.setBounds(-sp.getScreenWidth() / 4, 0, 2500, 250);
-        menuArray.add(title);
+        tempList.add(title);
 
         try {
             SnakePanel.loadMusic(musicIndex);//loads the WAV file to play later, prevents lag
@@ -57,19 +62,21 @@ public class Menu {
                 sp = new SnakePanel();
             }
         });
-        menuArray.add(playButton);
+        tempList.add(playButton);
 
         MyButton optButton = makeButton("OPTIONS", 475, 41, 63);
         optButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 sp.removeAll();
-                sp.requestFocusInWindow();
-                menuArray.clear();
-                buildOptions();
+                sp.requestFocusInWindow();                
+                for(int i = 0; i<optArray.length;i++){
+                sp.add(optArray[i]);
+                }
+                visibleArray=optArray;
             }
         });
-        menuArray.add(optButton);
+        tempList.add(optButton);
 
         MyButton quitButton = makeButton("QUIT", 600, 77, 63);
         quitButton.addActionListener(new ActionListener() {
@@ -78,22 +85,28 @@ public class Menu {
                 System.exit(0);
             }
         });
-        menuArray.add(quitButton);
+        tempList.add(quitButton);
+        Component[] tempArray= new Component[tempList.size()];
+        for(int i = 0; i < tempList.size();i++){
+            tempArray[i]=tempList.get(i);
+        }
+        return tempArray;
     }
 
-    public void buildOptions() {
+    public Component[] buildOptions() {
+        ArrayList<Component> tempList = new ArrayList<>();
         final JLabel title = new JLabel("OPTIONS!!!");
         title.setFont(fontLoader(200F));
         title.setForeground(Color.white);
         title.setBounds(sp.getScreenWidth() / 22, 0, 2500, 250);
-        menuArray.add(title);
+        tempList.add(title);
 
         final JLabel currentSong = new JLabel(SnakePanel.musicArray[musicIndex]);
         currentSong.setForeground(Color.white);
         currentSong.setFont(fontLoader(20F));
         currentSong.setLayout(null);
         currentSong.setBounds((int) ((SnakePanel.getScreenWidth()) / 2) - 125, 350, 250, 100);
-        menuArray.add(currentSong);
+        tempList.add(currentSong);
 
         MyButton nextSong = makeButton(">", 350, 20, 20);
         nextSong.setBounds((int) ((SnakePanel.getScreenWidth()) / 2) + 200, 400, 50, 50);
@@ -113,7 +126,7 @@ public class Menu {
                 }
             }
         });
-        menuArray.add(nextSong);
+        tempList.add(nextSong);
         
         MyButton prevSong = makeButton("<", 350, 20, 20);
         prevSong.setBounds((int) ((SnakePanel.getScreenWidth()) / 2)-250, 400, 50, 50);
@@ -133,7 +146,7 @@ public class Menu {
                 }
             }
         });
-        menuArray.add(prevSong);
+        tempList.add(prevSong);
 
         MyButton AIButton = makeButton("ADD AI", 475, 41, 63);
         AIButton.addActionListener(new ActionListener() {
@@ -142,7 +155,7 @@ public class Menu {
 
             }
         });
-        menuArray.add(AIButton);
+        tempList.add(AIButton);
 
         MyButton backButton = makeButton("BACK", 600, 77, 63);
         backButton.addActionListener(new ActionListener() {
@@ -150,16 +163,24 @@ public class Menu {
             public void actionPerformed(ActionEvent e) {
                 sp.removeAll();
                 sp.requestFocusInWindow();
-                menuArray.clear();
-                buildMenu();
+                for(int i = 0; i<menuArray.length;i++){
+                sp.add(menuArray[i]);
+                }
+                visibleArray=menuArray;
             }
         });
-        menuArray.add(backButton);
+        tempList.add(backButton);
+        
+        Component[] tempArray= new Component[tempList.size()];
+        for(int i = 0; i < tempList.size();i++){
+            tempArray[i]=tempList.get(i);
+        }
+        return tempArray;
     }
 
     public void renderMenu() {
-        for (int i = 0; i < menuArray.size(); i++) {
-            sp.add(menuArray.get(i));
+        for (int i = 0; i < visibleArray.length; i++) {
+            sp.add(visibleArray[i]);
         }
     }
 
@@ -204,7 +225,9 @@ public class Menu {
             g.drawString(buttonWord, textx, texty);
 
         }
-
+        @Override
+        protected void paintBorder(Graphics g){
+            
+        }
     }
-
 }
