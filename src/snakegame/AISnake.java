@@ -29,9 +29,6 @@ public class AISnake extends Snake {
     static ArrayList<Integer> whichfood = new ArrayList<Integer>();
     Rect2d targettemp;
 
-    private static ArrayList<Rect2d> snake;
-    private static ArrayList<SquareCoords> history;
-
     public AISnake(Color color, String name) {
         super(color,name);
         isPathing = false;
@@ -44,7 +41,7 @@ public class AISnake extends Snake {
 
     void scan() {
 
-        System.out.println("--------------------Scanning--------------------");
+        //System.out.println("--------------------Scanning--------------------");
         if (!isPathing) {
             //fooddist.clear();
             //whichfood.clear();
@@ -56,7 +53,7 @@ public class AISnake extends Snake {
             }
 
             if (isFood()) {//ENTER HERE IF THERE IS FOOD IN VISION
-                System.out.println("food found");
+                //System.out.println("food found");
                 isPathing = true;//BEGIN QUEST FOR TARGET
                 pathTo(giveClosest());//FIND CLOSEST TARGET AND GOOOOO
                 targettemp = giveClosest();//SINCE WE CAN'T ENTER THIS LOOP AGAIN UNTIL FOOD IS EATEN, GIVE THE SNAKE SOMETHING TO REMEMBER TO FOLLOW
@@ -66,19 +63,19 @@ public class AISnake extends Snake {
             }
 
         }
-        System.out.println("--------------------End Scan--------------------");
+        //System.out.println("--------------------End Scan--------------------");
         pathTo(targettemp);
 
     }
 
     void pathTo(Rect2d target) {
-        System.out.println("----------------------Pathing----------------------");
-        System.out.println("TargetX: " + target.getLeft());
-        System.out.println("TargetY: " + target.getTop());
-        System.out.println("PATHX: " + pathX.getLeft());
-        System.out.println("PATHY: " + pathY.getTop());
+        //System.out.println("----------------------Pathing----------------------");
+        //System.out.println("TargetX: " + target.getLeft());
+        //System.out.println("TargetY: " + target.getTop());
+        //System.out.println("PATHX: " + pathX.getLeft());
+        //System.out.println("PATHY: " + pathY.getTop());
         if (!pathX.checkCollisions(target)) {
-            System.out.println("horizontal change needed");
+            //System.out.println("horizontal change needed");
             if (pathX.getLeft() < target.getLeft()) {
                 this.dir = Direction.Right;
                 return;
@@ -88,7 +85,7 @@ public class AISnake extends Snake {
                 return;
             }
         } else if (pathX.checkCollisions(target)) {
-            System.out.println("vertical change needed");
+            //System.out.println("vertical change needed");
             if (!pathY.checkCollisions(target)) {
                 if (pathY.getTop() > target.getTop()) {
                     this.dir = Direction.Up;
@@ -101,7 +98,7 @@ public class AISnake extends Snake {
 
             } else if (pathY.checkCollisions(target)) {
                 isPathing = false;
-                System.out.println("----------------------Pathing Success----------------------");
+                //System.out.println("----------------------Pathing Success----------------------");
                 return;
             }
 
@@ -112,7 +109,7 @@ public class AISnake extends Snake {
     Rect2d giveClosest() {
 
        int index = whichfood.get(returnLowest());
-       System.out.println("1: " + findDistance(SnakePanel.food.get(index)) + "2: " + fooddist.get(returnLowest()));
+       //System.out.println("1: " + findDistance(SnakePanel.food.get(index)) + "2: " + fooddist.get(returnLowest()));
 
         return SnakePanel.food.get(index);
     }
@@ -140,11 +137,11 @@ public class AISnake extends Snake {
     int returnLowest() {
         double x = Collections.min(fooddist);//FIND SMALLEST DISTANCE VALUE
         double y = Collections.max(fooddist);//FIND GREATEST DISTANCE VALUE
-        System.out.println("DISTANCE OF CLOSEST FOOD: " + x);
-        System.out.println("DISTANCE OF FARTHEST FOOD: " + y);
+        //System.out.println("DISTANCE OF CLOSEST FOOD: " + x);
+       // System.out.println("DISTANCE OF FARTHEST FOOD: " + y);
         for (int i = 0; i < fooddist.size(); i++) {
             if (fooddist.get(i) == x) {//FIND LOCATION OF FOOD WITH SMALLEST DISTANCE VALUE(RECREATION OF SCAN LOOP)
-                System.out.println("INDEX VAL:" + i);
+               // System.out.println("INDEX VAL:" + i);
                 return i; //RETURN INDEX OF CLOSEST FOOD
             }
         }

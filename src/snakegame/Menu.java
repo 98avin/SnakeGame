@@ -59,7 +59,6 @@ public class Menu {
                 SnakeGame.state = SnakeGame.STATE.GAME;
                 sp.removeAll();
                 sp.requestFocusInWindow();
-                sp = new SnakePanel();
             }
         });
         tempList.add(playButton);

@@ -59,10 +59,10 @@ public class SnakePanel extends JPanel {
     private final int[] NUMBER_SNAKES = {NUM_PLAYERS, NUM_AI_M1000, NUM_AI_M2000};
     public Snake snakes[] = new Snake[(NUM_PLAYERS + NUM_AI_M1000 + NUM_AI_M2000)];
     //Just a large list of names for AI snakes.
-    String[] modelName={"Berninator","Bern-OS","Robo-Bernie","Bernie-Prime","Star Bern","Telebernie","iBernie","B.E.R.N.I.E","Bern Machine","B3RN1E"};
+    String[] modelName = {"Berninator", "Bern-OS", "Robo-Bernie", "Bernie-Prime", "Star Bern", "Telebernie", "iBernie", "B.E.R.N.I.E", "Bern Machine", "B3RN1E"};
 
     public boolean music;
-    public static String[] musicArray ={"sandstorm1.wav", "remix10.wav", "MEGA_MAN.wav", "9ts.wav"};
+    public static String[] musicArray = {"sandstorm1.wav", "remix10.wav", "MEGA_MAN.wav", "9ts.wav"};
 
     public static ArrayList<Rect2d> food;
 
@@ -99,15 +99,12 @@ public class SnakePanel extends JPanel {
 
         WINDOW_WIDTH = screenSize.getWidth();
         WINDOW_HEIGHT = screenSize.getHeight();
-        System.out.println(WINDOW_WIDTH);
-        System.out.println(WINDOW_HEIGHT);
-
         setPreferredSize(new Dimension((int) WINDOW_WIDTH, (int) WINDOW_HEIGHT));
         keysPressed = new KeysPressed();
 
         back = new Rect2d(-500, -500, 10000, 10000);
 
-        food = new ArrayList<Rect2d>();
+        food = new ArrayList<>();
 
         //cambounds = new Rect2d(100, 100, screenSize.width - 200, screenSize.height - 250);
         for (int i = 0; i < NUMBER_OF_FOOD; i++) {
@@ -137,6 +134,23 @@ public class SnakePanel extends JPanel {
                     case java.awt.event.KeyEvent.VK_D:
                         keysPressed.Right = true;
                         break;
+                    case java.awt.event.KeyEvent.VK_UP:
+                        keysPressed.Up = true;
+                        break;
+                    case java.awt.event.KeyEvent.VK_DOWN:
+                        keysPressed.Down = true;
+                        break;
+                    case java.awt.event.KeyEvent.VK_LEFT:
+                        keysPressed.Left = true;
+                        break;
+                    case java.awt.event.KeyEvent.VK_RIGHT:
+                        keysPressed.Right = true;
+                        break;
+                    case java.awt.event.KeyEvent.VK_ESCAPE:
+                        for(int i = 0;i<snakes.length;i++){
+                            snakes[i].die();
+                        }
+                        break;
                 }
             }
 
@@ -156,38 +170,6 @@ public class SnakePanel extends JPanel {
                     case java.awt.event.KeyEvent.VK_D:
                         keysPressed.Right = false;
                         break;
-                }
-            }
-        });
-
-        this.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                int keycode = e.getKeyCode();
-                switch (keycode) {
-                    case java.awt.event.KeyEvent.VK_UP:
-                        keysPressed.Up = true;
-                        break;
-                    case java.awt.event.KeyEvent.VK_DOWN:
-                        keysPressed.Down = true;
-                        break;
-                    case java.awt.event.KeyEvent.VK_LEFT:
-                        keysPressed.Left = true;
-                        break;
-                    case java.awt.event.KeyEvent.VK_RIGHT:
-                        keysPressed.Right = true;
-                        break;
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-                int keycode = e.getKeyCode();
-                switch (keycode) {
                     case java.awt.event.KeyEvent.VK_UP:  // the keycode for W (Virtual Key)
                         keysPressed.Up = false;
                         break;
@@ -200,44 +182,48 @@ public class SnakePanel extends JPanel {
                     case java.awt.event.KeyEvent.VK_RIGHT:
                         keysPressed.Right = false;
                         break;
+                    case java.awt.event.KeyEvent.VK_ESCAPE:                        
+                        break;
                 }
             }
         });
     }
 
-    void constructSnake() {
+        void constructSnake(){
         for (int j = 0; j < NUMBER_SNAKES.length; j++) {
-            for (int i = 0; i < NUMBER_SNAKES[j]; i++) {
-                switch (j) {
-                    case 0:
-                        snakes[i] = new Snake(PLAYER_SNAKE_COLOR, "Bernie");
-                        break;
-                    case 1:
-                        snakes[NUM_PLAYERS + i] = new AISnake(AI_SNAKE_COLOR, (modelName[random_number(0,this.modelName.length)] +" "+ random_number(0,9000)));
-                        break;
-                    case 2:
-                        snakes[NUM_PLAYERS + NUM_AI_M1000 + i] = new AISnake2(AI_SNAKE_COLOR, (modelName[random_number(0,this.modelName.length)] +" "+ random_number(0,9000)));
-                        break;
+                for (int i = 0; i < NUMBER_SNAKES[j]; i++) {
+                    switch (j) {
+                        case 0:
+                            snakes[i] = new Snake(PLAYER_SNAKE_COLOR, "Bernie");
+                            break;
+                        case 1:
+                            snakes[NUM_PLAYERS + i] = new AISnake(AI_SNAKE_COLOR, (modelName[random_number(0, this.modelName.length)] + " " + random_number(0, 9000)));
+                            break;
+                        case 2:
+                            snakes[NUM_PLAYERS + NUM_AI_M1000 + i] = new AISnake2(AI_SNAKE_COLOR, (modelName[random_number(0, this.modelName.length)] + " " + random_number(0, 9000)));
+                            break;
+                    }
                 }
             }
+            for (int i = 0; i < snakes.length; i++) {
+                buildSnake(snakes[i]);
+            }
         }
-        for (int i = 0; i < snakes.length; i++) {
-            buildSnake(snakes[i]);
-        }
-    }
 
-    void buildSnake(Snake snake) {
+        void buildSnake
+        (Snake snake
+        
+            ) {
         for (int i = 1; i < 0; i++) {
-            snake.addS(new Rect2d(30.0 + (i * 30), 170.0, snake.getWidth(), snake.getWidth()));
+                snake.addS(new Rect2d(30.0 + (i * 30), 170.0, snake.getWidth(), snake.getWidth()));
+            }
+
+            for (int i = 0; i < snake.getSSize(); i++) {
+                snake.addH(new SquareCoords((int) snake.getRect(i).getLeft(), (int) snake.getRect(i).getTop()));
+            }
+
         }
-
-        for (int i = 0; i < snake.getSSize(); i++) {
-            snake.addH(new SquareCoords((int) snake.getRect(i).getLeft(), (int) snake.getRect(i).getTop()));
-        }
-
-    }
-
-    // <<FILLRECT>>   (a static ‘helper’ method to draw a Rect2d)
+        // <<FILLRECT>>   (a static ‘helper’ method to draw a Rect2d)
     static void fillRect(Graphics g, Rect2d rect, Color c) {
         int x = (int) rect.getLeft();
         int y = (int) rect.getTop();
@@ -357,12 +343,18 @@ public class SnakePanel extends JPanel {
         if (SnakeGame.state == SnakeGame.STATE.MENU) {
             fillRect(g, back, DEFAULT_BACKGROUND_COLOR);
             moveStars(g);
-
             menu.renderMenu();
         } else {
+            //this needs fixin (it causes the game to be unable to play mutiple times)
             if (checkAllLiving(snakes, g)) {
                 clearGame();
                 SnakeGame.state = SnakeGame.STATE.MENU;
+                for(int i = 0; i<snakes.length;i++){
+                    snakes[i].reset();
+                }
+                for (int i = 0; i < NUMBER_OF_FOOD; i++) {
+            food.add(new Rect2d(random_number(0, 1000), random_number(0, 500), 10, 10));
+        }
             }
             fillRect(g, back, DEFAULT_BACKGROUND_COLOR);
             //RAINBOW CYCLE COLOR
@@ -497,9 +489,9 @@ public class SnakePanel extends JPanel {
         clip = (Clip) AudioSystem.getLine(info);
         clip.open(audioIn);
     }
-    
+
     public static void unLoadMusic() {
-    clip.close();
+        clip.close();
     }
 
     public static void stopMusic() throws Exception {

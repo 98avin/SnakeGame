@@ -93,11 +93,7 @@ public class Rect2d {
     }
 
     boolean checkCollisions(Rect2d B) {
-        if (intersect(this, B) != EmptyRect) {
-            return true;
-        } else {
-            return false;
-        }
+        return intersect(this, B) != EmptyRect;
     }
 
     void translate(double xMove, double yMove) {

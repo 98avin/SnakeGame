@@ -26,6 +26,7 @@ public class Snake {
     int transval = 15;
     Color color;
     String name;
+    double startX,startY;
 
     public Snake(Color color, String name) {
         this.dir = Direction.Right;
@@ -34,7 +35,9 @@ public class Snake {
         snake = new ArrayList<Rect2d>();
         history = new ArrayList<SquareCoords>();
         snakeWidth = 10;
-        head = new Rect2d(500.0, 500.0, snakeWidth, snakeWidth);
+        startX=(double)random_number(0, SnakePanel.getScreenWidth());
+        startY=(double)random_number(0, SnakePanel.getScreenHeight());
+        head = new Rect2d(500,500, snakeWidth, snakeWidth);
         this.addS(head);
         moving = false;
         alive = true;
@@ -138,7 +141,7 @@ public class Snake {
                 this.addS(new Rect2d(1000, 1000.0, this.getWidth(), this.getWidth()));
                 this.addH(new SquareCoords(0, 0));
                 SnakePanel.food.remove(j);
-                SnakePanel.food.add(new Rect2d(random_number(0, 1000), random_number(0, 500), 10, 10));
+                SnakePanel.food.add(new Rect2d(random_number(0, SnakePanel.getScreenWidth()/10), random_number(0, SnakePanel.getScreenHeight()/10), 10, 10));
                 SnakeGame.updateScoreboard();
                 //widthfactor = this.getSSize() / 10;
                 //widthfactor += 1;
@@ -146,9 +149,9 @@ public class Snake {
             }
         }
 
-        for (int j = 1; j < this.getSSize(); j++) {
+        for (int j = 4; j < this.getSSize(); j++) {
             if (Rect2d.intersect(this.getRect(j), this.getHead()) != Rect2d.EmptyRect) {//when snake touches itself
-                //this.die();
+                this.die();
                 //break;
             }
         }  
@@ -268,5 +271,16 @@ public class Snake {
     Rect2d getHead() {
         return snake.get(0);
     }
-
+    void reset(){
+        this.alive=true;
+        this.snakeWidth=10;
+        this.moving= true;
+        for(int i = 1; i < snake.size();i++){
+        this.snake.remove(i);
+        }
+        for (int i = 1; i < history.size(); i++){
+        this.history.remove(i);
+        }   
+        this.setS(0, head);
+    }
 }
