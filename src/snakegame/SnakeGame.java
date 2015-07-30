@@ -42,15 +42,14 @@ public class SnakeGame {
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("customFont.ttf")));
         } catch (IOException | FontFormatException e) {
             //Handle exception
-    }
+        }
     }
 
     /**
      * @param args the command line arguments
      */
-    
     static GraphicsDevice device = GraphicsEnvironment
-        .getLocalGraphicsEnvironment().getScreenDevices()[0];
+            .getLocalGraphicsEnvironment().getScreenDevices()[0];
 
     public static void main(String[] args) {
 
@@ -66,12 +65,12 @@ public class SnakeGame {
 
             if (state == STATE.MENU) {
                 frame.repaint();
-            } else {
-                statusLabel = new JLabel("",SwingConstants.CENTER);
+            } else if (state == STATE.GAME) {
+                statusLabel = new JLabel("", SwingConstants.CENTER);
                 fontLoader();
                 statusLabel.setFont(customFont);
                 statusLabel.setForeground(TEXT_COLOR);
-                statusLabel.setBounds(0, -30, (int)SnakePanel.WINDOW_WIDTH, 100);
+                statusLabel.setBounds(0, -30, (int) SnakePanel.WINDOW_WIDTH, 100);
                 snakePanel.add(statusLabel);
 
                 frame.pack();
@@ -80,7 +79,8 @@ public class SnakeGame {
 
                 updateScoreboard();
 
-                while (true) {
+                while (state == STATE.GAME) {
+
                     snakePanel.update();
 
                     try {
@@ -90,6 +90,7 @@ public class SnakeGame {
                     }
                     frame.repaint();
                 }
+
             }
 
         }
@@ -101,6 +102,19 @@ public class SnakeGame {
         for (int i = 0; i < snakePanel.snakes.length; i++) {
             statusLabel.setText(statusLabel.getText() + " " + snakePanel.snakes[i].getName() + ":" + snakePanel.snakes[i].getScore());
         }
+    }
+
+    public static void pause() {
+        state = STATE.MENU;
+        snakePanel.menu.pause();
+        snakePanel.menu.renderMenu();
+        try {
+            snakePanel.stopMusic();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        frame.repaint();
+
     }
 
     public static int random_number(int low, int high) {

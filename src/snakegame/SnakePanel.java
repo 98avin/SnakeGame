@@ -38,7 +38,7 @@ public class SnakePanel extends JPanel {
     public static final int MIN_COLOR_VALUE = 0;
     public static final int COLOR_INCREMENT = 10;
 
-    public static final int MUSIC_THRESHOLD = 0;
+    public static final int MUSIC_THRESHOLD = 1;
 
     public static final Color FOOD_COLOR = Color.white;
     public static final Color PLAYER_SNAKE_COLOR = Color.blue;
@@ -147,9 +147,10 @@ public class SnakePanel extends JPanel {
                         keysPressed.Right = true;
                         break;
                     case java.awt.event.KeyEvent.VK_ESCAPE:
-                        for(int i = 0;i<snakes.length;i++){
-                            snakes[i].die();
-                        }
+                        SnakeGame.pause();
+                        /*for(int i = 0;i<snakes.length;i++){
+                         snakes[i].die();
+                         }*/
                         break;
                 }
             }
@@ -182,48 +183,47 @@ public class SnakePanel extends JPanel {
                     case java.awt.event.KeyEvent.VK_RIGHT:
                         keysPressed.Right = false;
                         break;
-                    case java.awt.event.KeyEvent.VK_ESCAPE:                        
+                    case java.awt.event.KeyEvent.VK_ESCAPE:
                         break;
                 }
             }
         });
     }
 
-        void constructSnake(){
+    void constructSnake() {
         for (int j = 0; j < NUMBER_SNAKES.length; j++) {
-                for (int i = 0; i < NUMBER_SNAKES[j]; i++) {
-                    switch (j) {
-                        case 0:
-                            snakes[i] = new Snake(PLAYER_SNAKE_COLOR, "Bernie");
-                            break;
-                        case 1:
-                            snakes[NUM_PLAYERS + i] = new AISnake(AI_SNAKE_COLOR, (modelName[random_number(0, this.modelName.length)] + " " + random_number(0, 9000)));
-                            break;
-                        case 2:
-                            snakes[NUM_PLAYERS + NUM_AI_M1000 + i] = new AISnake2(AI_SNAKE_COLOR, (modelName[random_number(0, this.modelName.length)] + " " + random_number(0, 9000)));
-                            break;
-                    }
+            for (int i = 0; i < NUMBER_SNAKES[j]; i++) {
+                switch (j) {
+                    case 0:
+                        snakes[i] = new Snake(PLAYER_SNAKE_COLOR, "Bernie");
+                        break;
+                    case 1:
+                        snakes[NUM_PLAYERS + i] = new AISnake(AI_SNAKE_COLOR, (modelName[random_number(0, this.modelName.length)] + " " + random_number(0, 9000)));
+                        break;
+                    case 2:
+                        snakes[NUM_PLAYERS + NUM_AI_M1000 + i] = new AISnake2(AI_SNAKE_COLOR, (modelName[random_number(0, this.modelName.length)] + " " + random_number(0, 9000)));
+                        break;
                 }
             }
-            for (int i = 0; i < snakes.length; i++) {
-                buildSnake(snakes[i]);
-            }
         }
+        for (int i = 0; i < snakes.length; i++) {
+            buildSnake(snakes[i]);
+        }
+    }
 
-        void buildSnake
-        (Snake snake
-        
-            ) {
+    void buildSnake(Snake snake) {
         for (int i = 1; i < 0; i++) {
-                snake.addS(new Rect2d(30.0 + (i * 30), 170.0, snake.getWidth(), snake.getWidth()));
-            }
-
-            for (int i = 0; i < snake.getSSize(); i++) {
-                snake.addH(new SquareCoords((int) snake.getRect(i).getLeft(), (int) snake.getRect(i).getTop()));
-            }
-
+            snake.addS(new Rect2d(30.0 + (i * 30), 170.0, snake.getWidth(), snake.getWidth()));
         }
-        // <<FILLRECT>>   (a static ‘helper’ method to draw a Rect2d)
+
+        for (int i = 0; i < snake.getSSize(); i++) {
+            snake.addH(new SquareCoords((int) snake.getRect(i).getLeft(), (int) snake.getRect(i).getTop()));
+        }
+
+    }
+
+    // <<FILLRECT>>   (a static ‘helper’ method to draw a Rect2d)
+
     static void fillRect(Graphics g, Rect2d rect, Color c) {
         int x = (int) rect.getLeft();
         int y = (int) rect.getTop();
@@ -299,12 +299,7 @@ public class SnakePanel extends JPanel {
 
     public boolean checkLiving(Snake snake, Graphics g) {
         if (!snake.isLiving()) {
-            try {
-                stopMusic();
-            } catch (Exception ex) {
-                Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
+            //Convert snake to food
             for (int i = 0; i < food.size(); i++) {
                 fillRect(g, food.get(i), FOOD_COLOR);
             }
@@ -332,10 +327,10 @@ public class SnakePanel extends JPanel {
         food.clear();
         try {
             stopMusic();
+            unLoadMusic();
         } catch (Exception ex) {
             Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 
     @Override
@@ -344,17 +339,17 @@ public class SnakePanel extends JPanel {
             fillRect(g, back, DEFAULT_BACKGROUND_COLOR);
             moveStars(g);
             menu.renderMenu();
-        } else {
+        } else if(SnakeGame.state == SnakeGame.STATE.GAME){
             //this needs fixin (it causes the game to be unable to play mutiple times)
-            if (checkAllLiving(snakes, g)) {
+            if (checkLiving(snakes[0], g)) {
                 clearGame();
                 SnakeGame.state = SnakeGame.STATE.MENU;
-                for(int i = 0; i<snakes.length;i++){
+                for (int i = 0; i < snakes.length; i++) {
                     snakes[i].reset();
                 }
                 for (int i = 0; i < NUMBER_OF_FOOD; i++) {
-            food.add(new Rect2d(random_number(0, 1000), random_number(0, 500), 10, 10));
-        }
+                    food.add(new Rect2d(random_number(0, 1000), random_number(0, 500), 10, 10));
+                }
             }
             fillRect(g, back, DEFAULT_BACKGROUND_COLOR);
             //RAINBOW CYCLE COLOR
