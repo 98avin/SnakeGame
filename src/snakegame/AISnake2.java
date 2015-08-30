@@ -28,7 +28,6 @@ public class AISnake2 extends Snake {
         pathY = new Rect2d(this.getHead().getLeft(), this.getHead().getCenter().y - 500, this.getWidth(), 1000);
         randomCooldown = 0;
         dir = Direction.Right;
-        randomDirection();
         target = Rect2d.EmptyRect;
     }
 

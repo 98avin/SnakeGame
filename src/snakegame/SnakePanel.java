@@ -45,7 +45,7 @@ public class SnakePanel extends JPanel {
     public static final Color FOOD_COLOR = Color.white;
     public static final Color PLAYER_SNAKE_COLOR = Color.blue;
     public static final Color AI_SNAKE_COLOR = Color.red;
-    public static final int NUMBER_OF_FOOD = 1;
+    public static final int NUMBER_OF_FOOD = 10;
 
     public static double WINDOW_WIDTH = 800.0;
     public static double WINDOW_HEIGHT = 800.0;
@@ -57,13 +57,13 @@ public class SnakePanel extends JPanel {
 
     public static final int NUM_PLAYERS = 0;
     public static final int NUM_AI_M1000 = 0;
-    public static final int NUM_AI_M2000 = 2000;
+    public static final int NUM_AI_M2000 = 1000;
     private final int[] NUMBER_SNAKES = {NUM_PLAYERS, NUM_AI_M1000, NUM_AI_M2000};
     public Snake snakes[] = new Snake[(NUM_PLAYERS + NUM_AI_M1000 + NUM_AI_M2000)];
     //Just a large list of names for AI snakes.
     String[] modelName = {"Berninator", "Bern-OS", "Robo-Bernie", "Bernie-Prime", "Star Bern", "Telebernie", "iBernie", "B.E.R.N.I.E", "Bern Machine", "B3RN1E"};
 
-    public static final int WINNING_SNAKE_WIDTH=3;
+    public static final int WINNING_SNAKE_WIDTH=1;
     public static final int LOSING_SNAKE_WIDTH=1;
     
     public boolean music;
@@ -156,6 +156,9 @@ public class SnakePanel extends JPanel {
                         /*for(int i = 0;i<snakes.length;i++){
                          snakes[i].die();
                          }*/
+                        break;
+                    case java.awt.event.KeyEvent.VK_SPACE:
+                        keysPressed.Random = !keysPressed.Random;
                         break;
                 }
             }
