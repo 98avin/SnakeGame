@@ -25,20 +25,171 @@ public class Menu {
     public static int musicIndex = 0;
 
     static SnakePanel sp;
-    Component[] menuArray;
+    Component[] mainArray;
     Component[] optArray;
     Component[] pauseArray;
+    Component[] musicArray;
+    Component[] aiArray;
     Component[] visibleArray;
+
+    public static final int MAIN_BUTTON1_YLOCATION = 350;
+    public static final int MAIN_BUTTON2_YLOCATION = 475;
+    public static final int MAIN_BUTTON3_YLOCATION = 600;
+
+    public static final int OPT_BUTTON1_YLOCATION = 350;
+    public static final int OPT_BUTTON2_YLOCATION = 475;
+    public static final int OPT_BUTTON3_YLOCATION = 600;
+    public static final int OPT_BUTTON4_YLOCATION = 725;
+
+    public static final int PAUSE_BUTTON1_YLOCATION = 350;
+    public static final int PAUSE_BUTTON2_YLOCATION = 475;
+    public static final int PAUSE_BUTTON3_YLOCATION = 600;
+
+    public static final int MUSIC_BUTTON1_YLOCATION = 350;
+    public static final int MUSIC_BUTTON2_YLOCATION = 475;
+
+    public static final int AI_BUTTON1_YLOCATION = 350;
+    public static final int AI_BUTTON2_YLOCATION = 475;
+    public static final int AI_BUTTON3_YLOCATION = 600;
 
     public Menu(SnakePanel sp) {
         this.sp = sp;
         sp.setLayout(null);
-        menuArray = buildMenu();
+        mainArray = buildMain();
         optArray = buildOptions();
         pauseArray = buildPause();
-        visibleArray=menuArray;
+        musicArray = buildMusic();
+        aiArray = buildAI();
+        visibleArray = mainArray;
     }
-    public Component[] buildPause(){
+
+    public Component[] buildMain() {
+        ArrayList<Component> tempList;
+        tempList = new ArrayList<>();
+
+        final JLabel title = new JLabel("SNAKE!!!", SwingConstants.CENTER);
+        title.setFont(fontLoader(200F));
+        title.setForeground(Color.white);
+        title.setBounds(-sp.getScreenWidth() / 4, 0, 2500, 250);
+        tempList.add(title);
+
+        try {
+            SnakePanel.loadMusic(musicIndex);//loads the WAV file to play later, prevents lag
+        } catch (Exception ex) {
+            Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        MyButton playButton = makeButton("PLAY", MAIN_BUTTON1_YLOCATION, 77, 63);
+        playButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SnakeGame.state = SnakeGame.STATE.GAME;
+                sp.removeAll();
+                sp.requestFocusInWindow();
+            }
+        });
+        tempList.add(playButton);
+
+        MyButton optButton = makeButton("OPTIONS", MAIN_BUTTON2_YLOCATION, 41, 63);
+        optButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sp.removeAll();
+                sp.requestFocusInWindow();
+                for (int i = 0; i < optArray.length; i++) {
+                    sp.add(optArray[i]);
+                }
+                visibleArray = optArray;
+            }
+        });
+        tempList.add(optButton);
+
+        MyButton quitButton = makeButton("QUIT", MAIN_BUTTON3_YLOCATION, 77, 63);
+        quitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        tempList.add(quitButton);
+        Component[] tempArray = new Component[tempList.size()];
+        for (int i = 0; i < tempList.size(); i++) {
+            tempArray[i] = tempList.get(i);
+        }
+        return tempArray;
+    }
+
+    public Component[] buildOptions() {
+        ArrayList<Component> tempList = new ArrayList<>();
+
+        final JLabel title = new JLabel("OPTIONS!!!");
+        title.setFont(fontLoader(200F));
+        title.setForeground(Color.white);
+        title.setBounds(sp.getScreenWidth() / 22, 0, 2500, 250);
+        tempList.add(title);
+
+        MyButton songButton = makeButton("SONG", OPT_BUTTON1_YLOCATION, 77, 63);
+        songButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sp.removeAll();
+                sp.requestFocusInWindow();
+                for (int i = 0; i < musicArray.length; i++) {
+                    sp.add(musicArray[i]);
+                }
+                visibleArray = musicArray;
+            }
+        });
+        tempList.add(songButton);
+
+        MyButton AIButton = makeButton("AI", OPT_BUTTON2_YLOCATION, 77, 63);
+        AIButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sp.removeAll();
+                sp.requestFocusInWindow();
+                for (int i = 0; i < aiArray.length; i++) {
+                    sp.add(aiArray[i]);
+                }
+                visibleArray = aiArray;
+            }
+        });
+        tempList.add(AIButton);
+
+        MyButton playButton = makeButton("PLAY", OPT_BUTTON3_YLOCATION, 77, 63);
+        playButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SnakeGame.state = SnakeGame.STATE.GAME;
+                sp.removeAll();
+                sp.requestFocusInWindow();
+                
+            }
+        });
+        tempList.add(playButton);
+
+        MyButton backButton = makeButton("BACK", OPT_BUTTON4_YLOCATION, 77, 63);
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sp.removeAll();
+                sp.requestFocusInWindow();
+                for (int i = 0; i < mainArray.length; i++) {
+                    sp.add(mainArray[i]);
+                }
+                visibleArray = mainArray;
+            }
+        });
+        tempList.add(backButton);
+
+        Component[] tempArray = new Component[tempList.size()];
+        for (int i = 0; i < tempList.size(); i++) {
+            tempArray[i] = tempList.get(i);
+        }
+        return tempArray;
+    }
+
+    public Component[] buildPause() {
         ArrayList<Component> tempList = new ArrayList<>();
         final JLabel title = new JLabel("OPTIONS!!!");
         title.setFont(fontLoader(200F));
@@ -72,15 +223,15 @@ public class Menu {
             }
         });
         tempList.add(nextSong);
-        
+
         MyButton prevSong = makeButton("<", 350, 20, 20);
-        prevSong.setBounds((int) ((SnakePanel.getScreenWidth()) / 2)-250, 400, 50, 50);
+        prevSong.setBounds((int) ((SnakePanel.getScreenWidth()) / 2) - 250, 400, 50, 50);
         prevSong.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 musicIndex--;
                 if (musicIndex == -1) {
-                    musicIndex = SnakePanel.musicArray.length-1;
+                    musicIndex = SnakePanel.musicArray.length - 1;
                 }
                 currentSong.setText(SnakePanel.musicArray[musicIndex]);
                 try {
@@ -92,7 +243,7 @@ public class Menu {
             }
         });
         tempList.add(prevSong);
-        
+
         MyButton playButton = makeButton("PLAY", 475, 77, 63);
         playButton.addActionListener(new ActionListener() {
             @Override
@@ -111,80 +262,25 @@ public class Menu {
                 sp.removeAll();
                 sp.requestFocusInWindow();
                 sp.clearGame();
-                for(int i = 0; i<menuArray.length;i++){
-                sp.add(menuArray[i]);
+                for (int i = 0; i < mainArray.length; i++) {
+                    sp.add(mainArray[i]);
                 }
-                visibleArray=menuArray;
+                visibleArray = mainArray;
             }
         });
         tempList.add(backButton);
-        
-        Component[] tempArray= new Component[tempList.size()];
-        for(int i = 0; i < tempList.size();i++){
-            tempArray[i]=tempList.get(i);
-        }
-        return tempArray;
-    }
-    
-    public Component[] buildMenu() {
-        ArrayList<Component> tempList;
-        tempList = new ArrayList<>();
 
-        final JLabel title = new JLabel("SNAKE!!!", SwingConstants.CENTER);
-        title.setFont(fontLoader(200F));
-        title.setForeground(Color.white);
-        title.setBounds(-sp.getScreenWidth() / 4, 0, 2500, 250);
-        tempList.add(title);
-
-        try {
-            SnakePanel.loadMusic(musicIndex);//loads the WAV file to play later, prevents lag
-        } catch (Exception ex) {
-            Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        MyButton playButton = makeButton("PLAY", 350, 77, 63);
-        playButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SnakeGame.state = SnakeGame.STATE.GAME;
-                sp.removeAll();
-                sp.requestFocusInWindow();
-            }
-        });
-        tempList.add(playButton);
-
-        MyButton optButton = makeButton("OPTIONS", 475, 41, 63);
-        optButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                sp.removeAll();
-                sp.requestFocusInWindow();                
-                for(int i = 0; i<optArray.length;i++){
-                sp.add(optArray[i]);
-                }
-                visibleArray = optArray;
-            }
-        });
-        tempList.add(optButton);
-
-        MyButton quitButton = makeButton("QUIT", 600, 77, 63);
-        quitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.exit(0);
-            }
-        });
-        tempList.add(quitButton);
-        Component[] tempArray= new Component[tempList.size()];
-        for(int i = 0; i < tempList.size();i++){
-            tempArray[i]=tempList.get(i);
+        Component[] tempArray = new Component[tempList.size()];
+        for (int i = 0; i < tempList.size(); i++) {
+            tempArray[i] = tempList.get(i);
         }
         return tempArray;
     }
 
-    public Component[] buildOptions() {
+    public Component[] buildMusic() {
         ArrayList<Component> tempList = new ArrayList<>();
-        final JLabel title = new JLabel("OPTIONS!!!");
+
+        final JLabel title = new JLabel("MUSIC!!!");
         title.setFont(fontLoader(200F));
         title.setForeground(Color.white);
         title.setBounds(sp.getScreenWidth() / 22, 0, 2500, 250);
@@ -194,11 +290,11 @@ public class Menu {
         currentSong.setForeground(Color.white);
         currentSong.setFont(fontLoader(20F));
         currentSong.setLayout(null);
-        currentSong.setBounds((int) ((SnakePanel.getScreenWidth()) / 2) - 125, 350, 250, 100);
+        currentSong.setBounds((int) ((SnakePanel.getScreenWidth()) / 2) - 125, MUSIC_BUTTON1_YLOCATION, 250, 100);
         tempList.add(currentSong);
 
-        MyButton nextSong = makeButton(">", 350, 20, 20);
-        nextSong.setBounds((int) ((SnakePanel.getScreenWidth()) / 2) + 200, 400, 50, 50);
+        MyButton nextSong = makeButton(">", 350, 20, 60);
+        nextSong.setBounds((int) ((SnakePanel.getScreenWidth()) / 2) + 200, MUSIC_BUTTON1_YLOCATION, 50, 70);
         nextSong.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -216,15 +312,15 @@ public class Menu {
             }
         });
         tempList.add(nextSong);
-        
-        MyButton prevSong = makeButton("<", 350, 20, 20);
-        prevSong.setBounds((int) ((SnakePanel.getScreenWidth()) / 2)-250, 400, 50, 50);
+
+        MyButton prevSong = makeButton("<", 350, 20, 60);
+        prevSong.setBounds((int) ((SnakePanel.getScreenWidth()) / 2) - 250, MUSIC_BUTTON1_YLOCATION, 50, 70);
         prevSong.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 musicIndex--;
                 if (musicIndex == -1) {
-                    musicIndex = SnakePanel.musicArray.length-1;
+                    musicIndex = SnakePanel.musicArray.length - 1;
                 }
                 currentSong.setText(SnakePanel.musicArray[musicIndex]);
                 try {
@@ -237,50 +333,100 @@ public class Menu {
         });
         tempList.add(prevSong);
 
-        MyButton AIButton = makeButton("ADD AI", 475, 41, 63);
-        AIButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-        tempList.add(AIButton);
-        
-        MyButton playButton = makeButton("PLAY", 600, 77, 63);
-        playButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SnakeGame.state = SnakeGame.STATE.GAME;
-                sp.removeAll();
-                sp.requestFocusInWindow();
-            }
-        });
-        tempList.add(playButton);
-
-        MyButton backButton = makeButton("BACK", 725, 77, 63);
+        MyButton backButton = makeButton("BACK", MUSIC_BUTTON2_YLOCATION, 77, 63);
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 sp.removeAll();
                 sp.requestFocusInWindow();
-                for(int i = 0; i<menuArray.length;i++){
-                sp.add(menuArray[i]);
+                for (int i = 0; i < optArray.length; i++) {
+                    sp.add(optArray[i]);
                 }
-                visibleArray=menuArray;
+                visibleArray = optArray;
             }
         });
         tempList.add(backButton);
-        
-        Component[] tempArray= new Component[tempList.size()];
-        for(int i = 0; i < tempList.size();i++){
-            tempArray[i]=tempList.get(i);
+
+        Component[] tempArray = new Component[tempList.size()];
+        for (int i = 0; i < tempList.size(); i++) {
+            tempArray[i] = tempList.get(i);
         }
         return tempArray;
     }
 
-    public void pause(){
+    public Component[] buildAI() {
+        ArrayList<Component> tempList = new ArrayList<>();
+
+        final JLabel title = new JLabel("AI!!!");
+        title.setFont(fontLoader(200F));
+        title.setForeground(Color.white);
+        title.setBounds(sp.getScreenWidth() / 22, 0, 2500, 250);
+        tempList.add(title);
+
+        final JLabel AI1 = new JLabel("AI_M1000");
+        AI1.setForeground(Color.white);
+        AI1.setFont(fontLoader(20F));
+        AI1.setLayout(null);
+        AI1.setBounds((int) ((SnakePanel.getScreenWidth()) / 2) - 150, MUSIC_BUTTON1_YLOCATION, 250, 100);
+        tempList.add(AI1);
+        
+        final JLabel NUM_AI1 = new JLabel(Integer.toString(sp.NUM_AI_M1000));
+        NUM_AI1.setForeground(Color.white);
+        NUM_AI1.setFont(fontLoader(20F));
+        NUM_AI1.setLayout(null);
+        NUM_AI1.setBounds((int) ((SnakePanel.getScreenWidth()) / 2)+65, MUSIC_BUTTON1_YLOCATION, 250, 100);
+        tempList.add(NUM_AI1);
+
+        MyButton plusAI = makeButton("+", 350, 20, 60);
+        plusAI.setBounds((int) ((SnakePanel.getScreenWidth()) / 2) + 95, MUSIC_BUTTON1_YLOCATION, 50, 70);
+        plusAI.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //sp.NUM_AI_M1000++;
+                System.out.println(sp.NUM_AI_M1000);
+                NUM_AI1.setText(Integer.toString(sp.NUM_AI_M1000));
+            }
+        });
+        tempList.add(plusAI);
+        
+        MyButton minusAI = makeButton("-", 350, 20, 60);
+        minusAI.setBounds((int) ((SnakePanel.getScreenWidth()) / 2-5), MUSIC_BUTTON1_YLOCATION, 50, 70);
+        minusAI.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(sp.NUM_AI_M1000 != 0){
+                //sp.NUM_AI_M1000--;
+                NUM_AI1.setText(Integer.toString(sp.NUM_AI_M1000));
+                }
+            }
+        });
+        tempList.add(minusAI);
+
+        MyButton backButton = makeButton("BACK", MUSIC_BUTTON2_YLOCATION, 77, 63);
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sp.removeAll();
+                sp.requestFocusInWindow();
+                for (int i = 0; i < optArray.length; i++) {
+                    sp.add(optArray[i]);
+                }
+                visibleArray = optArray;
+            }
+        });
+        tempList.add(backButton);
+
+        Component[] tempArray = new Component[tempList.size()];
+        for (int i = 0; i < tempList.size(); i++) {
+            tempArray[i] = tempList.get(i);
+        }
+        return tempArray;
+    }
+
+    public void pause() {
         visibleArray = pauseArray;
     }
+
     public void renderMenu() {
         for (int i = 0; i < visibleArray.length; i++) {
             sp.add(visibleArray[i]);
@@ -328,9 +474,10 @@ public class Menu {
             g.drawString(buttonWord, textx, texty);
 
         }
+
         @Override
-        protected void paintBorder(Graphics g){
-            
+        protected void paintBorder(Graphics g) {
+
         }
     }
 }

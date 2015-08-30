@@ -20,7 +20,7 @@ public class SnakeGame {
 
     static Font customFont;
     static Color TEXT_COLOR = Color.lightGray;
-    static int FRAME_RATE = 35;
+    static int FRAME_RATE = 5;
     static int playerscore = 0;
     static int aiscore = 0;
     static int aiscore2 = 0;

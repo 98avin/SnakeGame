@@ -27,6 +27,8 @@ import javax.swing.*;
  */
 public class SnakePanel extends JPanel {
 
+    public static boolean starfield = false;
+    
     // <<DATA>>
     int colorOrder;
     boolean colorDecreaseFlag;
@@ -43,7 +45,7 @@ public class SnakePanel extends JPanel {
     public static final Color FOOD_COLOR = Color.white;
     public static final Color PLAYER_SNAKE_COLOR = Color.blue;
     public static final Color AI_SNAKE_COLOR = Color.red;
-    public static final int NUMBER_OF_FOOD = 4;
+    public static final int NUMBER_OF_FOOD = 1;
 
     public static double WINDOW_WIDTH = 800.0;
     public static double WINDOW_HEIGHT = 800.0;
@@ -53,14 +55,17 @@ public class SnakePanel extends JPanel {
 
     double snakeWidth;
 
-    public static final int NUM_PLAYERS = 1;
-    public static final int NUM_AI_M1000 = 1;
-    public static final int NUM_AI_M2000 = 1;
+    public static final int NUM_PLAYERS = 0;
+    public static final int NUM_AI_M1000 = 0;
+    public static final int NUM_AI_M2000 = 2000;
     private final int[] NUMBER_SNAKES = {NUM_PLAYERS, NUM_AI_M1000, NUM_AI_M2000};
     public Snake snakes[] = new Snake[(NUM_PLAYERS + NUM_AI_M1000 + NUM_AI_M2000)];
     //Just a large list of names for AI snakes.
     String[] modelName = {"Berninator", "Bern-OS", "Robo-Bernie", "Bernie-Prime", "Star Bern", "Telebernie", "iBernie", "B.E.R.N.I.E", "Bern Machine", "B3RN1E"};
 
+    public static final int WINNING_SNAKE_WIDTH=3;
+    public static final int LOSING_SNAKE_WIDTH=1;
+    
     public boolean music;
     public static String[] musicArray = {"sandstorm1.wav", "remix10.wav", "MEGA_MAN.wav", "9ts.wav"};
 
@@ -81,8 +86,8 @@ public class SnakePanel extends JPanel {
 
         menu = new Menu(this);
 
-        menu.buildMenu();
-
+        menu.buildMain();
+        
         constructSnake();
 
         // Initialize colors for rainbow cycle
@@ -339,7 +344,7 @@ public class SnakePanel extends JPanel {
             fillRect(g, back, DEFAULT_BACKGROUND_COLOR);
             moveStars(g);
             menu.renderMenu();
-        } else if(SnakeGame.state == SnakeGame.STATE.GAME){
+        } else if(SnakeGame.state == SnakeGame.STATE.GAME){         
             //this needs fixin (it causes the game to be unable to play mutiple times)
             if (checkLiving(snakes[0], g)) {
                 clearGame();
@@ -394,6 +399,8 @@ public class SnakePanel extends JPanel {
     }
 
     public void moveStars(Graphics g) {
+        if(starfield){
+        
         starx += 1;
 
         STAR_TILE_SIZE = 3000;
@@ -430,6 +437,7 @@ public class SnakePanel extends JPanel {
         g.setColor(Color.MAGENTA);
         drawStars((Graphics2D) g, -starx / 6, stary, 6);
 
+        }
     }
 
     public boolean isBigger(Snake snake, int index) {
@@ -447,8 +455,10 @@ public class SnakePanel extends JPanel {
         for (int i = 0; i < snakes.length; i++) {
             for (int j = 0; j < snakes[i].getSSize(); j++) {
                 if (isBigger(snakes[i], i)) {
+                    snakes[i].snakeWidth=WINNING_SNAKE_WIDTH;
                     fillRect(g, snakes[i].getRect(j), COLOR_RAINBOW_CYCLE);
                 } else {
+                    snakes[i].snakeWidth =LOSING_SNAKE_WIDTH;
                     fillRect(g, snakes[i].getRect(j), snakes[i].getColor());
                 }
             }

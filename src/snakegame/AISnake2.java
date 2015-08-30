@@ -28,6 +28,7 @@ public class AISnake2 extends Snake {
         pathY = new Rect2d(this.getHead().getLeft(), this.getHead().getCenter().y - 500, this.getWidth(), 1000);
         randomCooldown = 0;
         dir = Direction.Right;
+        randomDirection();
         target = Rect2d.EmptyRect;
     }
 
@@ -49,8 +50,10 @@ public class AISnake2 extends Snake {
     }
 
     void pathTo() {
+        this.color = Color.red;
         //if there is nothing in vision 
         if (target == Rect2d.EmptyRect) {
+            this.color = Color.blue;
             isPathing = false;
             // avoid Right side       
             if (this.getHead().getCenter().x - avoidEdgeDist >= SnakePanel.WINDOW_WIDTH) {
@@ -84,7 +87,7 @@ public class AISnake2 extends Snake {
                     dir = Direction.Up;
                 }
             } else if (randomCooldown <= 0) {
-                randomDirection();
+                randomDirection();                
                 randomCooldown = (int) this.getSSize();
             }
             return;
