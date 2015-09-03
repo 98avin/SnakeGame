@@ -22,15 +22,16 @@ import javax.swing.SwingConstants;
 
 public class Menu {
 
-    public static int musicIndex = 0;
+    public static int musicIndex = 1;
 
     static SnakePanel sp;
-    Component[] mainArray;
-    Component[] optArray;
-    Component[] pauseArray;
-    Component[] musicArray;
-    Component[] aiArray;
-    Component[] visibleArray;
+    static Component[] mainArray;
+    static Component[] optArray;
+    static Component[] pauseArray;
+    static Component[] musicArray;
+    static Component[] aiArray;
+    static Component[] gameoverArray;
+    static Component[] visibleArray;
 
     public static final int MAIN_BUTTON1_YLOCATION = 350;
     public static final int MAIN_BUTTON2_YLOCATION = 475;
@@ -60,6 +61,7 @@ public class Menu {
         pauseArray = buildPause();
         musicArray = buildMusic();
         aiArray = buildAI();
+        gameoverArray = buildGameover();
         visibleArray = mainArray;
     }
 
@@ -422,6 +424,45 @@ public class Menu {
         }
         return tempArray;
     }
+    
+    public Component[] buildGameover() {
+        ArrayList<Component> tempList = new ArrayList<>();
+
+        final JLabel title = new JLabel("   GAME");
+        title.setFont(fontLoader(150F));
+        title.setForeground(Color.white);
+        title.setBounds((-sp.getScreenWidth() / 15) + 25, 50, 2500, 250);
+        tempList.add(title);
+        
+        final JLabel title1 = new JLabel("  OVER");
+        title1.setFont(fontLoader(150F));
+        title1.setForeground(Color.white);
+        title1.setBounds((sp.getScreenWidth() / 22) + 25, 250, 2500, 250);
+        tempList.add(title1);
+        
+
+        MyButton backButton = makeButton("MAIN", 600, 77, 63);
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sp.removeAll();
+                sp.requestFocusInWindow();
+                //sp.clearGame();
+                for (int i = 0; i < mainArray.length; i++) {
+                    sp.add(mainArray[i]);
+                }
+                visibleArray = mainArray;
+            }
+        });
+        tempList.add(backButton);
+
+        Component[] tempArray = new Component[tempList.size()];
+        for (int i = 0; i < tempList.size(); i++) {
+            tempArray[i] = tempList.get(i);
+        }
+        return tempArray;
+    }
+
 
     public void pause() {
         visibleArray = pauseArray;
