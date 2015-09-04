@@ -18,6 +18,9 @@ public class AISnake2 extends Snake {
     public Rect2d vision, pathX, pathY, target;
     int randomCooldown;
     private static final int avoidEdgeDist = 10;
+    
+    public static Color PATHING_COLOR = Color.red;
+    public static Color NOT_PATHING_COLOR = Color.green;
 
     public AISnake2(Color color, String name) {
         super(color, name);
@@ -49,10 +52,10 @@ public class AISnake2 extends Snake {
     }
 
     void pathTo() {
-        this.color = Color.red;
+        this.color = PATHING_COLOR;
         //if there is nothing in vision 
         if (target == Rect2d.EmptyRect) {
-            this.color = Color.blue;
+            this.color = NOT_PATHING_COLOR;
             isPathing = false;
             // avoid Right side       
             if (this.getHead().getCenter().x - avoidEdgeDist >= SnakePanel.WINDOW_WIDTH) {

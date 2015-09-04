@@ -27,6 +27,8 @@ public class SnakeGame {
     static SnakePanel snakePanel;
     static JLabel statusLabel;
     static JFrame frame;
+    
+    static boolean ingame = true;
 
     public static enum STATE {
 
@@ -52,49 +54,56 @@ public class SnakeGame {
             .getLocalGraphicsEnvironment().getScreenDevices()[0];
 
     public static void main(String[] args) {
+        while(true){
 
-        frame = new JFrame("Snake Game");
-        snakePanel = new SnakePanel();
-        System.out.println("RESET");
-        frame.setUndecorated(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(snakePanel);
-        frame.pack();
-        frame.setVisible(true);
+            frame = new JFrame("Snake Game");
 
-        while (true) {
+            snakePanel = new SnakePanel();
 
-            if (state == STATE.MENU) {
+            frame.setUndecorated(true);
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.add(snakePanel);
+            frame.pack();
+            frame.setVisible(true);
+
+            while (ingame) {
+
+                if (state == STATE.MENU) {
                 frame.repaint();
-            } else if (state == STATE.GAME) {
-                statusLabel = new JLabel("", SwingConstants.CENTER);
-                fontLoader();
-                statusLabel.setFont(customFont);
-                statusLabel.setForeground(TEXT_COLOR);
-                statusLabel.setBounds(0, -30, (int) SnakePanel.WINDOW_WIDTH, 100);
-                snakePanel.add(statusLabel);
+                } else if (state == STATE.GAME) {
+                    statusLabel = new JLabel("", SwingConstants.CENTER);
+                    fontLoader();
+                    statusLabel.setFont(customFont);
+                    statusLabel.setForeground(TEXT_COLOR);
+                    statusLabel.setBounds(0, -30, (int) SnakePanel.WINDOW_WIDTH, 100);
+                    snakePanel.add(statusLabel);
 
-                frame.pack();
+                    frame.pack();
 
-                frame.setVisible(true);
+                    frame.setVisible(true);
 
-                updateScoreboard();
+                    updateScoreboard();
 
-                while (state == STATE.GAME) {
+                    while (state == STATE.GAME) {
+                        System.out.println("STILL IN GAME");
+                        snakePanel.update();
 
-                    snakePanel.update();
-
-                    try {
-                        Thread.sleep(FRAME_RATE);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                        try {
+                            Thread.sleep(FRAME_RATE);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        frame.repaint();
                     }
-                    frame.repaint();
+
                 }
 
             }
-
+            ingame = true;
+        System.out.println("END OF GAME");
         }
+        
+        
     }
 
     public static void updateScoreboard() {
@@ -107,80 +116,78 @@ public class SnakeGame {
 
     /////
     public static class MyJLabel extends JLabel {
-    public static final int MARQUEE_SPEED_DIV = 1;
-    public static final int REPAINT_WITHIN_MS = 5;
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -7737312573505856484L;
+        public static final int MARQUEE_SPEED_DIV = 1;
+        public static final int REPAINT_WITHIN_MS = 5;
 
-    /**
-     * 
-     */
-    
-    public MyJLabel() {
-        super();
-        // TODO Auto-generated constructor stub
+        /**
+         *
+         */
+        private static final long serialVersionUID = -7737312573505856484L;
+
+        /**
+         *
+         */
+        public MyJLabel() {
+            super();
+            // TODO Auto-generated constructor stub
+        }
+
+        /**
+         * @param image
+         * @param horizontalAlignment
+         */
+        public MyJLabel(Icon image, int horizontalAlignment) {
+            super(image, horizontalAlignment);
+            // TODO Auto-generated constructor stub
+        }
+
+        /**
+         * @param image
+         */
+        public MyJLabel(Icon image) {
+            super(image);
+            // TODO Auto-generated constructor stub
+        }
+
+        /**
+         * @param text
+         * @param icon
+         * @param horizontalAlignment
+         */
+        public MyJLabel(String text, Icon icon, int horizontalAlignment) {
+            super(text, icon, horizontalAlignment);
+            // TODO Auto-generated constructor stub
+        }
+
+        /**
+         * @param text
+         * @param horizontalAlignment
+         */
+        public MyJLabel(String text, int horizontalAlignment) {
+            super(text, horizontalAlignment);
+            // TODO Auto-generated constructor stub
+        }
+
+        /**
+         * @param text
+         */
+        public MyJLabel(String text) {
+            super(text);
+        }
+
+        /* (non-Javadoc)
+         * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+         */
+        @Override
+        protected void paintComponent(Graphics g) {
+            g.translate((int) ((System.currentTimeMillis() / MARQUEE_SPEED_DIV) % (getWidth() * 2)) - getWidth(), 0);
+            super.paintComponent(g);
+            repaint(REPAINT_WITHIN_MS);
+        }
     }
-
-    /**
-     * @param image
-     * @param horizontalAlignment
-     */
-    public MyJLabel(Icon image, int horizontalAlignment) {
-        super(image, horizontalAlignment);
-        // TODO Auto-generated constructor stub
-    }
-
-    /**
-     * @param image
-     */
-    public MyJLabel(Icon image) {
-        super(image);
-        // TODO Auto-generated constructor stub
-    }
-
-    /**
-     * @param text
-     * @param icon
-     * @param horizontalAlignment
-     */
-    public MyJLabel(String text, Icon icon, int horizontalAlignment) {
-        super(text, icon, horizontalAlignment);
-        // TODO Auto-generated constructor stub
-    }
-
-    /**
-     * @param text
-     * @param horizontalAlignment
-     */
-    public MyJLabel(String text, int horizontalAlignment) {
-        super(text, horizontalAlignment);
-        // TODO Auto-generated constructor stub
-    }
-
-    /**
-     * @param text
-     */
-    public MyJLabel(String text) {
-        super(text);
-    }
-
-
-
-    /* (non-Javadoc)
-     * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
-     */
-    @Override
-    protected void paintComponent(Graphics g) {
-        g.translate((int)((System.currentTimeMillis() / MARQUEE_SPEED_DIV) % (getWidth() * 2)) - getWidth(), 0);
-        super.paintComponent(g);
-        repaint(REPAINT_WITHIN_MS);
-    }
-}
     /////
-    
+
     public static void pause() {
         state = STATE.MENU;
         snakePanel.menu.pause();

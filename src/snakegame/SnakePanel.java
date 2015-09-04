@@ -6,11 +6,11 @@
 package snakegame;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
+import java.io.IOException;
+import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,19 +28,22 @@ import javax.swing.*;
 public class SnakePanel extends JPanel {
 
     public static boolean starfield = true;
-    
+
     // <<DATA>>
     int colorOrder;
     boolean colorDecreaseFlag;
-    public static final Color DEFAULT_BACKGROUND_COLOR = Color.black;
+    
     public static Color COLOR_RAINBOW_CYCLE = new Color(0, 0, 0);
     public static Color COLOR_RAINBOW_CYCLE2 = new Color(0, 0, 0);
+    
     public static final int NUM_BACK_COLORS = 3;
     public static final int MAX_COLOR_VALUE = 255;
     public static final int MIN_COLOR_VALUE = 0;
     public static final int COLOR_INCREMENT = 10;
 
-    public static final int MUSIC_THRESHOLD = 1;
+    public static final Color DEFAULT_BACKGROUND_COLOR = Color.black;
+    
+    public static final int MUSIC_THRESHOLD = 0;
 
     public static final Color FOOD_COLOR = Color.white;
     public static final Color PLAYER_SNAKE_COLOR = Color.blue;
@@ -63,9 +66,9 @@ public class SnakePanel extends JPanel {
     //Just a large list of names for AI snakes.
     String[] modelName = {"Berninator", "Bern-OS", "Robo-Bernie", "Bernie-Prime", "Star Bern", "Telebernie", "iBernie", "B.E.R.N.I.E", "Bern Machine", "B3RN1E"};
 
-    public static final int WINNING_SNAKE_WIDTH=10;
-    public static final int LOSING_SNAKE_WIDTH=10;
-    
+    public static final int WINNING_SNAKE_WIDTH = 10;
+    public static final int LOSING_SNAKE_WIDTH = 10;
+
     public boolean music;
     public static String[] musicArray = {"sandstorm1.wav", "remix10.wav", "MEGA_MAN.wav", "9ts.wav"};
 
@@ -231,7 +234,6 @@ public class SnakePanel extends JPanel {
     }
 
     // <<FILLRECT>>   (a static ‘helper’ method to draw a Rect2d)
-
     static void fillRect(Graphics g, Rect2d rect, Color c) {
         int x = (int) rect.getLeft();
         int y = (int) rect.getTop();
@@ -331,15 +333,21 @@ public class SnakePanel extends JPanel {
     public static int starscale = 10;
 
     public void clearGame() {
-        this.removeAll();
-        food.clear();
-        try {
-            stopMusic();
-            unLoadMusic();
-        } catch (Exception ex) {
-            Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+     System.out.println("Clearing...");
+     try {
+     stopMusic();
+     unloadMusic();
+     } catch (Exception ex) {
+     Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
+     }
+     this.removeAll();
+     SnakeGame.frame.removeAll();
+     SnakeGame.ingame = false;
+     //SnakeGame.state = SnakeGame.STATE.MENU;
+     //SnakeGame.frame.removeAll();
+     /*food.clear();*/
+     
+     }
 
     @Override
     public void paintComponent(Graphics g) {
@@ -347,10 +355,9 @@ public class SnakePanel extends JPanel {
             fillRect(g, back, DEFAULT_BACKGROUND_COLOR);
             moveStars(g);
             menu.renderMenu();
-        } else if(SnakeGame.state == SnakeGame.STATE.GAME){         
+        } else if (SnakeGame.state == SnakeGame.STATE.GAME) {
             //this needs fixin (it causes the game to be unable to play mutiple times)
             if (checkLiving(snakes[0], g)) {
-                clearGame();
                 Menu.visibleArray = Menu.gameoverArray;
                 SnakeGame.state = SnakeGame.STATE.MENU;
                 for (int i = 0; i < snakes.length; i++) {
@@ -403,43 +410,43 @@ public class SnakePanel extends JPanel {
     }
 
     public void moveStars(Graphics g) {
-        if(starfield){
-        
-        starx += 1;
+        if (starfield) {
 
-        STAR_TILE_SIZE = 3000;
-        g.setColor(COLOR_RAINBOW_CYCLE2);
-        drawStars((Graphics2D) g, starx, stary, 10);
+            starx += 1;
 
-        STAR_TILE_SIZE = 2000;
-        g.setColor(Color.LIGHT_GRAY);
-        drawStars((Graphics2D) g, starx / 2, stary, 5);
+            STAR_TILE_SIZE = 3000;
+            g.setColor(COLOR_RAINBOW_CYCLE2);
+            drawStars((Graphics2D) g, starx, stary, 10);
 
-        STAR_TILE_SIZE = 500;
-        g.setColor(Color.GRAY);
-        drawStars((Graphics2D) g, starx / 3, stary, 3);
+            STAR_TILE_SIZE = 2000;
+            g.setColor(Color.LIGHT_GRAY);
+            drawStars((Graphics2D) g, starx / 2, stary, 5);
 
-        starx++;
-        STAR_TILE_SIZE = 1000;
-        g.setColor(Color.DARK_GRAY);
-        drawStars((Graphics2D) g, -starx / 4, stary, 15);
+            STAR_TILE_SIZE = 500;
+            g.setColor(Color.GRAY);
+            drawStars((Graphics2D) g, starx / 3, stary, 3);
 
-        starx--;
-        STAR_TILE_SIZE = 10000;
-        g.setColor(Color.blue);
-        drawStars((Graphics2D) g, -starx / 5, stary, 8);
+            starx++;
+            STAR_TILE_SIZE = 1000;
+            g.setColor(Color.DARK_GRAY);
+            drawStars((Graphics2D) g, -starx / 4, stary, 15);
 
-        STAR_TILE_SIZE = 6000;
-        g.setColor(Color.red);
-        drawStars((Graphics2D) g, -starx / 3, stary, 5);
+            starx--;
+            STAR_TILE_SIZE = 10000;
+            g.setColor(Color.blue);
+            drawStars((Graphics2D) g, -starx / 5, stary, 8);
 
-        STAR_TILE_SIZE = 5000;
-        g.setColor(Color.yellow);
-        drawStars((Graphics2D) g, -starx / 4, stary, 7);
+            STAR_TILE_SIZE = 6000;
+            g.setColor(Color.red);
+            drawStars((Graphics2D) g, -starx / 3, stary, 5);
 
-        STAR_TILE_SIZE = 7000;
-        g.setColor(Color.MAGENTA);
-        drawStars((Graphics2D) g, -starx / 6, stary, 6);
+            STAR_TILE_SIZE = 5000;
+            g.setColor(Color.yellow);
+            drawStars((Graphics2D) g, -starx / 4, stary, 7);
+
+            STAR_TILE_SIZE = 7000;
+            g.setColor(Color.MAGENTA);
+            drawStars((Graphics2D) g, -starx / 6, stary, 6);
 
         }
     }
@@ -459,10 +466,10 @@ public class SnakePanel extends JPanel {
         for (int i = 0; i < snakes.length; i++) {
             for (int j = 0; j < snakes[i].getSSize(); j++) {
                 if (isBigger(snakes[i], i)) {
-                    snakes[i].snakeWidth=WINNING_SNAKE_WIDTH;
+                    snakes[i].snakeWidth = WINNING_SNAKE_WIDTH;
                     fillRect(g, snakes[i].getRect(j), COLOR_RAINBOW_CYCLE);
                 } else {
-                    snakes[i].snakeWidth =LOSING_SNAKE_WIDTH;
+                    snakes[i].snakeWidth = LOSING_SNAKE_WIDTH;
                     fillRect(g, snakes[i].getRect(j), snakes[i].getColor());
                 }
             }
@@ -499,7 +506,7 @@ public class SnakePanel extends JPanel {
         clip.open(audioIn);
     }
 
-    public static void unLoadMusic() {
+    public static void unloadMusic() {
         clip.close();
     }
 
