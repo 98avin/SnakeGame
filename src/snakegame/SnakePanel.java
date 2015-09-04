@@ -6,6 +6,8 @@
 package snakegame;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.File;
@@ -20,6 +22,8 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 import javax.swing.*;
+import static snakegame.Menu.fontLoader;
+import static snakegame.Menu.sp;
 
 /**
  *
@@ -29,6 +33,7 @@ public class SnakePanel extends JPanel {
 
     public static boolean starfield = true;
 
+    public static boolean updateornaw = true;
     // <<DATA>>
     int colorOrder;
     boolean colorDecreaseFlag;
@@ -353,8 +358,33 @@ public class SnakePanel extends JPanel {
         } else if (SnakeGame.state == SnakeGame.STATE.GAME) {
             //this needs fixin (it causes the game to be unable to play mutiple times)
             if (checkLiving(snakes[0], g)) {
-                Menu.visibleArray = Menu.gameoverArray;
+                //Menu.visibleArray = Menu.gameoverArray;
+                
+                final JLabel title = new JLabel("   GAME");
+        title.setFont(fontLoader(150F));
+        title.setForeground(Color.white);
+        title.setBounds((-sp.getScreenWidth() / 15) + 25, 50, 2500, 250);
+        this.add(title);
+        
+        final JLabel title1 = new JLabel("  OVER");
+        title1.setFont(fontLoader(150F));
+        title1.setForeground(Color.white);
+        title1.setBounds((sp.getScreenWidth() / 22) + 25, 250, 2500, 250);
+        this.add(title1);
+        
+
+        Menu.MyButton backButton = Menu.makeButton("MAIN", 600, 77, 63);
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sp.clearGame();
                 SnakeGame.state = SnakeGame.STATE.MENU;
+            }
+        });
+        this.add(backButton);
+        
+                updateornaw = false;
+                //SnakeGame.state = SnakeGame.STATE.MENU;
                 for (int i = 0; i < snakes.length; i++) {
                     snakes[i].reset();
                 }
@@ -472,8 +502,10 @@ public class SnakePanel extends JPanel {
     }
 
     public void update() {
+        if(updateornaw){
         for (int i = 0; i < snakes.length; i++) {
             snakes[i].update();
+        }
         }
     }
 
