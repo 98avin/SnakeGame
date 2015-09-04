@@ -261,13 +261,7 @@ public class Menu {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //sp.removeAll();
-                //sp.requestFocusInWindow();
                 sp.clearGame();
-                /*for (int i = 0; i < mainArray.length; i++) {
-                    sp.add(mainArray[i]);
-                }
-                visibleArray = mainArray;*/
             }
         });
         tempList.add(backButton);
@@ -445,13 +439,7 @@ public class Menu {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //sp.removeAll();
-                //sp.requestFocusInWindow();
                 sp.clearGame();
-                /*for (int i = 0; i < mainArray.length; i++) {
-                    sp.add(mainArray[i]);
-                }
-                visibleArray = mainArray;*/
             }
         });
         tempList.add(backButton);

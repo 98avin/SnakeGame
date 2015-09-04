@@ -333,7 +333,6 @@ public class SnakePanel extends JPanel {
     public static int starscale = 10;
 
     public void clearGame() {
-     System.out.println("Clearing...");
      try {
      stopMusic();
      unloadMusic();
@@ -343,10 +342,6 @@ public class SnakePanel extends JPanel {
      this.removeAll();
      SnakeGame.frame.removeAll();
      SnakeGame.ingame = false;
-     //SnakeGame.state = SnakeGame.STATE.MENU;
-     //SnakeGame.frame.removeAll();
-     /*food.clear();*/
-     
      }
 
     @Override
