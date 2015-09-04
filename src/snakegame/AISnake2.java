@@ -20,7 +20,7 @@ public class AISnake2 extends Snake {
     private static final int avoidEdgeDist = 10;
     
     public static Color PATHING_COLOR = Color.red;
-    public static Color NOT_PATHING_COLOR = Color.green;
+    public static Color NOT_PATHING_COLOR = Color.YELLOW;
 
     public AISnake2(Color color, String name) {
         super(color, name);

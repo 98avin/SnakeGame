@@ -55,7 +55,6 @@ public class SnakeGame {
 
     public static void main(String[] args) {
         while(true){
-
             frame = new JFrame("Snake Game");
 
             snakePanel = new SnakePanel();
@@ -69,7 +68,12 @@ public class SnakeGame {
             while (ingame) {
 
                 if (state == STATE.MENU) {
-                frame.repaint();
+                try {
+                            Thread.sleep(FRAME_RATE);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        frame.repaint();
                 } else if (state == STATE.GAME) {
                     statusLabel = new JLabel("", SwingConstants.CENTER);
                     fontLoader();
@@ -85,7 +89,6 @@ public class SnakeGame {
                     updateScoreboard();
 
                     while (state == STATE.GAME) {
-                        System.out.println("STILL IN GAME");
                         snakePanel.update();
 
                         try {
@@ -100,10 +103,7 @@ public class SnakeGame {
 
             }
             ingame = true;
-        System.out.println("END OF GAME");
         }
-        
-        
     }
 
     public static void updateScoreboard() {
