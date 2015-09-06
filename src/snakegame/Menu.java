@@ -18,23 +18,17 @@ import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import static snakegame.SnakePanel.MUSIC_THRESHOLD;
-import static snakegame.SnakePanel.playMusic;
-import static snakegame.SnakePanel.stopMusic;
-import static snakegame.SnakePanel.unloadMusic;
-import static snakegame.SnakePanel.updateornaw;
 
 public class Menu {
 
-    public static int musicIndex = 1;
+    public static final int DEFAULT_MUSIC_INDEX = 1;
+    public static int musicIndex = DEFAULT_MUSIC_INDEX;
 
     static SnakePanel sp;
     static Component[] mainArray;
     static Component[] optArray;
-    static Component[] pauseArray;
     static Component[] musicArray;
     static Component[] aiArray;
-    static Component[] gameoverArray;
     static Component[] visibleArray;
 
     public static final int MAIN_BUTTON1_YLOCATION = 350;
@@ -202,26 +196,26 @@ public class Menu {
         title.setBounds(sp.getScreenWidth() / 22, 0, 2500, 250);
         tempList.add(title);
 
-        final JLabel currentSong = new JLabel(SnakePanel.musicArray[musicIndex]);
+        final JLabel currentSong = new JLabel(sp.musicArray[musicIndex]);
         currentSong.setForeground(Color.white);
         currentSong.setFont(fontLoader(20F));
         currentSong.setLayout(null);
-        currentSong.setBounds((int) ((SnakePanel.getScreenWidth()) / 2) - 125, MUSIC_BUTTON1_YLOCATION, 250, 100);
+        currentSong.setBounds((int) ((sp.getScreenWidth()) / 2) - 125, MUSIC_BUTTON1_YLOCATION, 250, 100);
         tempList.add(currentSong);
 
         MyButton nextSong = makeButton(">", 350, 20, 60);
-        nextSong.setBounds((int) ((SnakePanel.getScreenWidth()) / 2) + 200, MUSIC_BUTTON1_YLOCATION, 50, 70);
+        nextSong.setBounds((int) ((sp.getScreenWidth()) / 2) + 200, MUSIC_BUTTON1_YLOCATION, 50, 70);
         nextSong.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 musicIndex++;
-                if (musicIndex == SnakePanel.musicArray.length) {
+                if (musicIndex == sp.musicArray.length) {
                     musicIndex = 0;
                 }
-                currentSong.setText(SnakePanel.musicArray[musicIndex]);
+                currentSong.setText(sp.musicArray[musicIndex]);
                 try {
-                    SnakePanel.unloadMusic();
-                    SnakePanel.loadMusic(musicIndex);//loads the WAV file to play later, prevents lag
+                    sp.unloadMusic();
+                    sp.loadMusic(musicIndex);//loads the WAV file to play later, prevents lag
                 } catch (Exception ex) {
                     Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -230,18 +224,18 @@ public class Menu {
         tempList.add(nextSong);
 
         MyButton prevSong = makeButton("<", 350, 20, 60);
-        prevSong.setBounds((int) ((SnakePanel.getScreenWidth()) / 2) - 250, MUSIC_BUTTON1_YLOCATION, 50, 70);
+        prevSong.setBounds((int) ((sp.getScreenWidth()) / 2) - 250, MUSIC_BUTTON1_YLOCATION, 50, 70);
         prevSong.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 musicIndex--;
                 if (musicIndex == -1) {
-                    musicIndex = SnakePanel.musicArray.length - 1;
+                    musicIndex = sp.musicArray.length - 1;
                 }
-                currentSong.setText(SnakePanel.musicArray[musicIndex]);
+                currentSong.setText(sp.musicArray[musicIndex]);
                 try {
-                    SnakePanel.unloadMusic();
-                    SnakePanel.loadMusic(musicIndex);//loads the WAV file to play later, prevents lag
+                    sp.unloadMusic();
+                    sp.loadMusic(musicIndex);//loads the WAV file to play later, prevents lag
                 } catch (Exception ex) {
                     Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -340,6 +334,12 @@ public class Menu {
     }
 
     public static void gameOver() {
+        try {
+            sp.stopMusic();
+            sp.unloadMusic();
+        } catch (Exception ex) {
+            Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         final JLabel title = new JLabel("   GAME");
         title.setFont(fontLoader(150F));
@@ -358,12 +358,13 @@ public class Menu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 sp.clearGame();
+                sp.updateornaw = true;
                 SnakeGame.state = SnakeGame.STATE.MENU;
             }
         });
         sp.add(backButton);
 
-        updateornaw = false;
+        sp.updateornaw = false;
     }
 
     public static void pause() {
@@ -374,26 +375,26 @@ public class Menu {
         title.setBounds(sp.getScreenWidth() / 22, 50, 2500, 250);
         sp.add(title);
 
-        final JLabel currentSong = new JLabel(SnakePanel.musicArray[musicIndex]);
+        final JLabel currentSong = new JLabel(sp.musicArray[musicIndex]);
         currentSong.setForeground(Color.white);
         currentSong.setFont(fontLoader(20F));
         currentSong.setLayout(null);
-        currentSong.setBounds((int) ((SnakePanel.getScreenWidth()) / 2) - 125, 350, 250, 100);
+        currentSong.setBounds((int) ((sp.getScreenWidth()) / 2) - 125, 350, 250, 100);
         sp.add(currentSong);
 
-        final MyButton nextSong = makeButton(">", 350, 20, 20);
-        nextSong.setBounds((int) ((SnakePanel.getScreenWidth()) / 2) + 200, 400, 50, 50);
+        final MyButton nextSong = makeButton(">", 350, 20, 60);
+        nextSong.setBounds((int) ((sp.getScreenWidth()) / 2) + 200, MUSIC_BUTTON1_YLOCATION, 50, 70);
         nextSong.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 musicIndex++;
-                if (musicIndex == SnakePanel.musicArray.length) {
+                if (musicIndex == sp.musicArray.length) {
                     musicIndex = 0;
                 }
-                currentSong.setText(SnakePanel.musicArray[musicIndex]);
+                currentSong.setText(sp.musicArray[musicIndex]);
                 try {
-                    SnakePanel.unloadMusic();
-                    SnakePanel.loadMusic(musicIndex);//loads the WAV file to play later, prevents lag
+                    sp.unloadMusic();
+                    sp.loadMusic(musicIndex);//loads the WAV file to play later, prevents lag
                 } catch (Exception ex) {
                     Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -401,19 +402,19 @@ public class Menu {
         });
         sp.add(nextSong);
 
-        final MyButton prevSong = makeButton("<", 350, 20, 20);
-        prevSong.setBounds((int) ((SnakePanel.getScreenWidth()) / 2) - 250, 400, 50, 50);
+        final MyButton prevSong = makeButton("<", 350, 20, 60);
+        prevSong.setBounds((int) ((sp.getScreenWidth()) / 2) - 250, MUSIC_BUTTON1_YLOCATION, 50, 70);
         prevSong.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 musicIndex--;
                 if (musicIndex == -1) {
-                    musicIndex = SnakePanel.musicArray.length - 1;
+                    musicIndex = sp.musicArray.length - 1;
                 }
-                currentSong.setText(SnakePanel.musicArray[musicIndex]);
+                currentSong.setText(sp.musicArray[musicIndex]);
                 try {
-                    SnakePanel.unloadMusic();
-                    SnakePanel.loadMusic(musicIndex);//loads the WAV file to play later, prevents lag
+                    sp.unloadMusic();
+                    sp.loadMusic(musicIndex);//loads the WAV file to play later, prevents lag
                 } catch (Exception ex) {
                     Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -426,7 +427,7 @@ public class Menu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 sp.clearGame();
-                updateornaw = true;
+                sp.updateornaw = true;
                 SnakeGame.state = SnakeGame.STATE.MENU;
             }
         });
@@ -443,13 +444,13 @@ public class Menu {
                 sp.remove(playButton);
                 sp.remove(backButton);
                 sp.requestFocusInWindow();
-                updateornaw = true;
+                sp.updateornaw = true;
 
             }
         });
         sp.add(playButton);
 
-        updateornaw = false;
+        sp.updateornaw = false;
     }
 
     public void renderMenu() {

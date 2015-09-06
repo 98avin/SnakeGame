@@ -37,17 +37,17 @@ public class SnakePanel extends JPanel {
     // <<DATA>>
     int colorOrder;
     boolean colorDecreaseFlag;
-    
+
     public static Color COLOR_RAINBOW_CYCLE = new Color(0, 0, 0);
     public static Color COLOR_RAINBOW_CYCLE2 = new Color(0, 0, 0);
-    
+
     public static final int NUM_BACK_COLORS = 3;
     public static final int MAX_COLOR_VALUE = 255;
     public static final int MIN_COLOR_VALUE = 0;
     public static final int COLOR_INCREMENT = 10;
 
     public static final Color DEFAULT_BACKGROUND_COLOR = Color.black;
-    
+
     public static final int MUSIC_THRESHOLD = 0;
 
     public static final Color FOOD_COLOR = Color.white;
@@ -95,7 +95,7 @@ public class SnakePanel extends JPanel {
         menu = new Menu(this);
 
         menu.buildMain();
-        
+
         constructSnake();
 
         // Initialize colors for rainbow cycle
@@ -160,8 +160,8 @@ public class SnakePanel extends JPanel {
                         keysPressed.Right = true;
                         break;
                     case java.awt.event.KeyEvent.VK_ESCAPE:
-                        if(SnakeGame.state == SnakeGame.STATE.GAME){
-                        Menu.pause();
+                        if (SnakeGame.state == SnakeGame.STATE.GAME) {
+                            Menu.pause();
                         }
                         /*for(int i = 0;i<snakes.length;i++){
                          snakes[i].die();
@@ -340,16 +340,17 @@ public class SnakePanel extends JPanel {
     public static int starscale = 10;
 
     public void clearGame() {
-     try {
-     stopMusic();
-     unloadMusic();
-     } catch (Exception ex) {
-     Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
-     }
-     this.removeAll();
-     SnakeGame.frame.removeAll();
-     SnakeGame.ingame = false;
-     }
+        try {
+            stopMusic();
+            unloadMusic();
+        } catch (Exception ex) {
+            Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Menu.musicIndex = Menu.DEFAULT_MUSIC_INDEX;
+        this.removeAll();
+        SnakeGame.frame.removeAll();
+        SnakeGame.ingame = false;
+    }
 
     @Override
     public void paintComponent(Graphics g) {
@@ -477,10 +478,10 @@ public class SnakePanel extends JPanel {
     }
 
     public void update() {
-        if(updateornaw){
-        for (int i = 0; i < snakes.length; i++) {
-            snakes[i].update();
-        }
+        if (updateornaw) {
+            for (int i = 0; i < snakes.length; i++) {
+                snakes[i].update();
+            }
         }
     }
 
