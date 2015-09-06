@@ -160,7 +160,9 @@ public class SnakePanel extends JPanel {
                         keysPressed.Right = true;
                         break;
                     case java.awt.event.KeyEvent.VK_ESCAPE:
-                        SnakeGame.pause();
+                        if(SnakeGame.state == SnakeGame.STATE.GAME){
+                        Menu.pause();
+                        }
                         /*for(int i = 0;i<snakes.length;i++){
                          snakes[i].die();
                          }*/
@@ -356,35 +358,8 @@ public class SnakePanel extends JPanel {
             moveStars(g);
             menu.renderMenu();
         } else if (SnakeGame.state == SnakeGame.STATE.GAME) {
-            //this needs fixin (it causes the game to be unable to play mutiple times)
             if (checkLiving(snakes[0], g)) {
-                //Menu.visibleArray = Menu.gameoverArray;
-                
-                final JLabel title = new JLabel("   GAME");
-        title.setFont(fontLoader(150F));
-        title.setForeground(Color.white);
-        title.setBounds((-sp.getScreenWidth() / 15) + 25, 50, 2500, 250);
-        this.add(title);
-        
-        final JLabel title1 = new JLabel("  OVER");
-        title1.setFont(fontLoader(150F));
-        title1.setForeground(Color.white);
-        title1.setBounds((sp.getScreenWidth() / 22) + 25, 250, 2500, 250);
-        this.add(title1);
-        
-
-        Menu.MyButton backButton = Menu.makeButton("MAIN", 600, 77, 63);
-        backButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                sp.clearGame();
-                SnakeGame.state = SnakeGame.STATE.MENU;
-            }
-        });
-        this.add(backButton);
-        
-                updateornaw = false;
-                //SnakeGame.state = SnakeGame.STATE.MENU;
+                Menu.gameOver();
                 for (int i = 0; i < snakes.length; i++) {
                     snakes[i].reset();
                 }

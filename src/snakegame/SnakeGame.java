@@ -188,19 +188,6 @@ public class SnakeGame {
     }
     /////
 
-    public static void pause() {
-        state = STATE.MENU;
-        snakePanel.menu.pause();
-        snakePanel.menu.renderMenu();
-        try {
-            snakePanel.stopMusic();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        frame.repaint();
-
-    }
-
     public static int random_number(int low, int high) {
         double rand = Math.random(); //generates a random number
         int rand2 = (int) (rand * 100000); //casts the random number as int

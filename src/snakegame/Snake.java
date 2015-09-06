@@ -134,7 +134,7 @@ public class Snake {
         }
 
         //System.out.println("s" + this.getSSize());
-        double widthfactor = 1;
+        //double widthfactor = 1;
         for (int j = 0; j < SnakePanel.food.size(); j++) {
             if (Rect2d.intersect(SnakePanel.food.get(j), this.getHead()) != Rect2d.EmptyRect) {//when snake touches food
                 //Rect2d.resolveOverlap(food.get(j), snake.get(0));
