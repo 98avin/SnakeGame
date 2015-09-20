@@ -72,7 +72,7 @@ public class SnakePanel extends JPanel {
     public static final int LOSING_AI2SNAKE_WIDTH = 7;
 
     public static final int WINNING_PLAYERSNAKE_WIDTH = 10;
-    public static final int LOSING_PLAYERSNAKE_WIDTH = 10;
+    public static final int LOSING_PLAYERSNAKE_WIDTH = 9;
 
     public boolean music;
     public static String[] musicArray = {"sandstorm1.wav", "remix10.wav", "MEGA_MAN.wav", "9ts.wav"};
