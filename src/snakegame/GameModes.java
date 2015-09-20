@@ -16,6 +16,9 @@ public class GameModes {
     //depending on an int value determined through menu, a certain function will be ran
     //an example is provided below
     
+    //also how to go about doing juggernaut? call on gameMode function multiple times to change values
+    //of winning snake?
+    
     public int gameMode = 0;
     public static final String[] gameModes = new String[]{"DEFAULT", "MICROBIAL ONSLAUGHT", "JUGGERNAUT"};
     
