@@ -17,6 +17,7 @@ public class GameModes {
     //an example is provided below
     
     public int gameMode = 0;
+    public static final String[] gameModes = new String[]{"DEFAULT", "MICROBIAL ONSLAUGHT", "JUGGERNAUT"};
     
     public GameModes(int a){
     
