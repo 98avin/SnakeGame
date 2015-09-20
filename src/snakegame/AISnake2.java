@@ -266,19 +266,19 @@ public class AISnake2 extends Snake {
 
         switch (this.dir) {
             case Left:
-                this.getHead().translate(-SnakePanel.AI2_SPEED_MULTIPLIER*this.getWidth(), 0.0);
+                this.getHead().translate(-AI2_SPEED_MULTIPLIER*this.getWidth(), 0.0);
                 break;
 
             case Right:
-                this.getHead().translate(SnakePanel.AI2_SPEED_MULTIPLIER*this.getWidth(), 0.0);
+                this.getHead().translate(AI2_SPEED_MULTIPLIER*this.getWidth(), 0.0);
                 break;
 
             case Down:
-                this.getHead().translate(0.0, SnakePanel.AI2_SPEED_MULTIPLIER*this.getWidth());
+                this.getHead().translate(0.0, AI2_SPEED_MULTIPLIER*this.getWidth());
                 break;
 
             case Up:
-                this.getHead().translate(0.0, -SnakePanel.AI2_SPEED_MULTIPLIER*this.getWidth());
+                this.getHead().translate(0.0, -AI2_SPEED_MULTIPLIER*this.getWidth());
                 break;
         }
 

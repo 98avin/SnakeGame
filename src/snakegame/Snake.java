@@ -27,7 +27,10 @@ public class Snake {
     Color color;
     String name;
     double startX, startY;
-    
+
+    public static final int DEFAULT_SPEED_MULTIPLIER = 1;
+    public static final int AI1_SPEED_MULTIPLIER = 1;
+    public static final int AI2_SPEED_MULTIPLIER = 1;
 
     public Snake(Color color, String name) {
         this.dir = Direction.Right;
@@ -44,8 +47,8 @@ public class Snake {
     }
 
     public void setHeadLoc() {
-        startX = (double) random_number(0, SnakePanel.getScreenWidth());
-        startY = (double) random_number(0, SnakePanel.getScreenHeight());
+        startX = (double) random_number(10, SnakePanel.getScreenWidth()-10);
+        startY = (double) random_number(10, SnakePanel.getScreenHeight()-10);
         head = new Rect2d(startX, startY, snakeWidth, snakeWidth);
         this.addS(head);
     }
@@ -267,19 +270,19 @@ public class Snake {
          }*/
         switch (this.dir) {
             case Left:
-                this.getHead().translate(-SnakePanel.DEFAULT_SPEED_MULTIPLIER*this.getWidth(), 0.0);
+                this.getHead().translate(-DEFAULT_SPEED_MULTIPLIER * this.getWidth(), 0.0);
                 break;
 
             case Right:
-                this.getHead().translate(SnakePanel.DEFAULT_SPEED_MULTIPLIER*this.getWidth(), 0.0);
+                this.getHead().translate(DEFAULT_SPEED_MULTIPLIER * this.getWidth(), 0.0);
                 break;
 
             case Down:
-                this.getHead().translate(0.0, SnakePanel.DEFAULT_SPEED_MULTIPLIER*this.getWidth());
+                this.getHead().translate(0.0, DEFAULT_SPEED_MULTIPLIER * this.getWidth());
                 break;
 
             case Up:
-                this.getHead().translate(0.0, -SnakePanel.DEFAULT_SPEED_MULTIPLIER*this.getWidth());
+                this.getHead().translate(0.0, -DEFAULT_SPEED_MULTIPLIER * this.getWidth());
                 break;
         }
 

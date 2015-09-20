@@ -58,22 +58,21 @@ public class SnakePanel extends JPanel {
     double snakeWidth;
 
     public static final int NUM_PLAYERS = 1;
-    public static final int NUM_AI_M1000 = 0;
-    public static final int NUM_AI_M2000 = 10;
+    public static final int NUM_AI_M1000 = 1;
+    public static final int NUM_AI_M2000 = 1;
     private final int[] NUMBER_SNAKES = {NUM_PLAYERS, NUM_AI_M1000, NUM_AI_M2000};
     public static Snake snakes[] = new Snake[(NUM_PLAYERS + NUM_AI_M1000 + NUM_AI_M2000)];
     //Just a large list of names for AI snakes.
     String[] modelName = {"Berninator", "Bern-OS", "Robo-Bernie", "Bernie-Prime", "Star Bern", "Telebernie", "iBernie", "B.E.R.N.I.E", "Bern Machine", "B3RN1E"};
 
-    public static final int WINNING_AISNAKE_WIDTH = 10;
-    public static final int LOSING_AISNAKE_WIDTH = 10;
+    public static final int WINNING_AI1SNAKE_WIDTH = 10;
+    public static final int LOSING_AI1SNAKE_WIDTH = 5;
+
+    public static final int WINNING_AI2SNAKE_WIDTH = 10;
+    public static final int LOSING_AI2SNAKE_WIDTH = 7;
 
     public static final int WINNING_PLAYERSNAKE_WIDTH = 10;
     public static final int LOSING_PLAYERSNAKE_WIDTH = 10;
-    
-    public static final int DEFAULT_SPEED_MULTIPLIER = 1;
-    public static final int AI1_SPEED_MULTIPLIER = 1;
-    public static final int AI2_SPEED_MULTIPLIER = 1;
 
     public boolean music;
     public static String[] musicArray = {"sandstorm1.wav", "remix10.wav", "MEGA_MAN.wav", "9ts.wav"};
@@ -471,16 +470,22 @@ public class SnakePanel extends JPanel {
                     if (i < NUM_PLAYERS) {
                         snakes[i].snakeWidth = WINNING_PLAYERSNAKE_WIDTH;
                         fillRect(g, snakes[i].getRect(j), COLOR_RAINBOW_CYCLE);
-                    } else {
-                        snakes[i].snakeWidth = WINNING_AISNAKE_WIDTH;
+                    } else if (i < NUM_PLAYERS + NUM_AI_M1000) {
+                        snakes[i].snakeWidth = WINNING_AI1SNAKE_WIDTH;
+                        fillRect(g, snakes[i].getRect(j), COLOR_RAINBOW_CYCLE);
+                    } else if (i < NUM_PLAYERS + NUM_AI_M1000 + NUM_AI_M2000) {
+                        snakes[i].snakeWidth = WINNING_AI2SNAKE_WIDTH;
                         fillRect(g, snakes[i].getRect(j), COLOR_RAINBOW_CYCLE);
                     }
                 } else {
                     if (i < NUM_PLAYERS) {
                         snakes[i].snakeWidth = LOSING_PLAYERSNAKE_WIDTH;
                         fillRect(g, snakes[i].getRect(j), snakes[i].getColor());
-                    } else {
-                        snakes[i].snakeWidth = LOSING_AISNAKE_WIDTH;
+                    } else if (i < NUM_PLAYERS + NUM_AI_M1000) {
+                        snakes[i].snakeWidth = LOSING_AI1SNAKE_WIDTH;
+                        fillRect(g, snakes[i].getRect(j), snakes[i].getColor());
+                    } else if (i < NUM_PLAYERS + NUM_AI_M1000 + NUM_AI_M2000) {
+                        snakes[i].snakeWidth = LOSING_AI2SNAKE_WIDTH;
                         fillRect(g, snakes[i].getRect(j), snakes[i].getColor());
                     }
                 }
