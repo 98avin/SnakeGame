@@ -34,14 +34,18 @@ public class Snake {
         this.name = name;
         snake = new ArrayList<Rect2d>();
         history = new ArrayList<SquareCoords>();
+        setHeadLoc();
         snakeWidth = 10;
+        moving = false;
+        alive = true;
+        isPlayer = true;
+    }
+
+    public void setHeadLoc() {
         startX = (double) random_number(0, SnakePanel.getScreenWidth());
         startY = (double) random_number(0, SnakePanel.getScreenHeight());
         head = new Rect2d(startX, startY, snakeWidth, snakeWidth);
         this.addS(head);
-        moving = false;
-        alive = true;
-        isPlayer = true;
     }
 
     String getName() {
