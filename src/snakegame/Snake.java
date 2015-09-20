@@ -26,28 +26,28 @@ public class Snake {
     int transval = 15;
     Color color;
     String name;
-    double startX,startY;
+    double startX, startY;
 
     public Snake(Color color, String name) {
         this.dir = Direction.Right;
-        this.color= color;
+        this.color = color;
         this.name = name;
         snake = new ArrayList<Rect2d>();
         history = new ArrayList<SquareCoords>();
         snakeWidth = 10;
-        startX=(double)random_number(0, SnakePanel.getScreenWidth());
-        startY=(double)random_number(0, SnakePanel.getScreenHeight());
-        head = new Rect2d(500,500, snakeWidth, snakeWidth);
+        startX = (double) random_number(0, SnakePanel.getScreenWidth());
+        startY = (double) random_number(0, SnakePanel.getScreenHeight());
+        head = new Rect2d(startX, startY, snakeWidth, snakeWidth);
         this.addS(head);
         moving = false;
         alive = true;
         isPlayer = true;
     }
 
-    String getName(){
-    return name;
+    String getName() {
+        return name;
     }
-    
+
     Rect2d getRect(int i) {
         return snake.get(i);
     }
@@ -55,17 +55,19 @@ public class Snake {
     SquareCoords getH(int i) {
         return history.get(i);
     }
-    int getScore(){
-        return (int)this.getSSize()-1;
+
+    int getScore() {
+        return (int) this.getSSize() - 1;
     }
-    Color getColor(){
+
+    Color getColor() {
         return color;
     }
 
-    Direction getDir(){
+    Direction getDir() {
         return dir;
     }
-    
+
     double getSSize() {
         return snake.size();
     }
@@ -120,7 +122,6 @@ public class Snake {
             this.setS(i, Rect2d.EmptyRect);
             SnakePanel.food.add(new Rect2d(this.getH(i).x, this.getH(i).y, 10, 10));
         }
-        
 
     }
 
@@ -141,7 +142,7 @@ public class Snake {
                 this.addS(new Rect2d(1000, 1000.0, this.getWidth(), this.getWidth()));
                 this.addH(new SquareCoords(0, 0));
                 SnakePanel.food.remove(j);
-                SnakePanel.food.add(new Rect2d(random_number(0, SnakePanel.getScreenWidth()/10), random_number(0, SnakePanel.getScreenHeight()/10), 10, 10));
+                SnakePanel.food.add(new Rect2d(random_number(0, SnakePanel.getScreenWidth() / 10), random_number(0, SnakePanel.getScreenHeight() / 10), 10, 10));
                 SnakeGame.updateScoreboard();
                 //widthfactor = this.getSSize() / 10;
                 //widthfactor += 1;
@@ -154,7 +155,7 @@ public class Snake {
                 this.die();
                 //break;
             }
-        }  
+        }
 
         for (int i = 0; i < this.getSSize(); i++) {
             this.setH(i, new SquareCoords((int) this.getRect(i).getLeft(), (int) this.getRect(i).getTop()));
@@ -271,16 +272,17 @@ public class Snake {
     Rect2d getHead() {
         return snake.get(0);
     }
-    void reset(){
-        this.alive=true;
-        this.snakeWidth=10;
-        this.moving= true;
-        for(int i = 1; i < snake.size();i++){
-        this.snake.remove(i);
+
+    void reset() {
+        this.alive = true;
+        this.snakeWidth = 10;
+        this.moving = true;
+        for (int i = 1; i < snake.size(); i++) {
+            this.snake.remove(i);
         }
-        for (int i = 1; i < history.size(); i++){
-        this.history.remove(i);
-        }   
+        for (int i = 1; i < history.size(); i++) {
+            this.history.remove(i);
+        }
         this.setS(0, head);
     }
 }

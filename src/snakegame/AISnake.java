@@ -15,7 +15,7 @@ import java.util.Collections;
  * @author skinnnero5
  */
 public class AISnake extends Snake {
-    
+
     double x1;
     double x2;
     double y1;
@@ -30,7 +30,7 @@ public class AISnake extends Snake {
     Rect2d targettemp;
 
     public AISnake(Color color, String name) {
-        super(color,name);
+        super(color, name);
         isPathing = false;
         isPlayer = false;
         vision = new Rect2d(this.getHead().getCenter().x - 500, this.getHead().getCenter().y - 500, 1000, 1000);
@@ -108,8 +108,8 @@ public class AISnake extends Snake {
 
     Rect2d giveClosest() {
 
-       int index = whichfood.get(returnLowest());
-       //System.out.println("1: " + findDistance(SnakePanel.food.get(index)) + "2: " + fooddist.get(returnLowest()));
+        int index = whichfood.get(returnLowest());
+        //System.out.println("1: " + findDistance(SnakePanel.food.get(index)) + "2: " + fooddist.get(returnLowest()));
 
         return SnakePanel.food.get(index);
     }
@@ -129,19 +129,18 @@ public class AISnake extends Snake {
         y2 = target.getCenter().y;
 
         distance = Math.sqrt((Math.pow((x2 - x1), 2)) + (Math.pow((y2 - y1), 2)));
-        
+
         return distance;
     }
-    
 
     int returnLowest() {
         double x = Collections.min(fooddist);//FIND SMALLEST DISTANCE VALUE
         double y = Collections.max(fooddist);//FIND GREATEST DISTANCE VALUE
         //System.out.println("DISTANCE OF CLOSEST FOOD: " + x);
-       // System.out.println("DISTANCE OF FARTHEST FOOD: " + y);
+        // System.out.println("DISTANCE OF FARTHEST FOOD: " + y);
         for (int i = 0; i < fooddist.size(); i++) {
             if (fooddist.get(i) == x) {//FIND LOCATION OF FOOD WITH SMALLEST DISTANCE VALUE(RECREATION OF SCAN LOOP)
-               // System.out.println("INDEX VAL:" + i);
+                // System.out.println("INDEX VAL:" + i);
                 return i; //RETURN INDEX OF CLOSEST FOOD
             }
         }

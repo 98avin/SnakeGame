@@ -6,6 +6,8 @@
 package snakegame;
 
 import java.awt.Color;
+import static snakegame.AISnake.random_number;
+import static snakegame.SnakePanel.random_number;
 
 /**
  *
@@ -18,7 +20,7 @@ public class AISnake2 extends Snake {
     public Rect2d vision, pathX, pathY, target;
     int randomCooldown;
     private static final int avoidEdgeDist = 10;
-    
+
     public static Color PATHING_COLOR = Color.red;
     public static Color NOT_PATHING_COLOR = Color.YELLOW;
 
@@ -89,7 +91,7 @@ public class AISnake2 extends Snake {
                     dir = Direction.Up;
                 }
             } else if (randomCooldown <= 0) {
-                randomDirection();                
+                randomDirection();
                 randomCooldown = (int) this.getSSize();
             }
             return;
