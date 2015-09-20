@@ -6,8 +6,6 @@
 package snakegame;
 
 import java.awt.Color;
-import static snakegame.AISnake.random_number;
-import static snakegame.SnakePanel.random_number;
 
 /**
  *
@@ -34,6 +32,14 @@ public class AISnake2 extends Snake {
         randomCooldown = 0;
         dir = Direction.Right;
         target = Rect2d.EmptyRect;
+    }
+
+    @Override
+    public void setHeadLoc() {
+        startX = (double) random_number(0, SnakePanel.getScreenWidth());
+        startY = (double) random_number(0, SnakePanel.getScreenHeight());
+        head = new Rect2d(500, 500, snakeWidth, snakeWidth);
+        this.addS(head);
     }
 
     Rect2d scan() {// find the closest food
@@ -260,19 +266,19 @@ public class AISnake2 extends Snake {
 
         switch (this.dir) {
             case Left:
-                this.getHead().translate(-this.getWidth(), 0.0);
+                this.getHead().translate(-SnakePanel.AI2_SPEED_MULTIPLIER*this.getWidth(), 0.0);
                 break;
 
             case Right:
-                this.getHead().translate(this.getWidth(), 0.0);
+                this.getHead().translate(SnakePanel.AI2_SPEED_MULTIPLIER*this.getWidth(), 0.0);
                 break;
 
             case Down:
-                this.getHead().translate(0.0, this.getWidth());
+                this.getHead().translate(0.0, SnakePanel.AI2_SPEED_MULTIPLIER*this.getWidth());
                 break;
 
             case Up:
-                this.getHead().translate(0.0, -this.getWidth());
+                this.getHead().translate(0.0, -SnakePanel.AI2_SPEED_MULTIPLIER*this.getWidth());
                 break;
         }
 

@@ -23,10 +23,11 @@ public class Snake {
     boolean alive;
     boolean isPlayer;
     Rect2d head;
-    int transval = 15;
+    Rect2d bounds;
     Color color;
     String name;
     double startX, startY;
+    
 
     public Snake(Color color, String name) {
         this.dir = Direction.Right;
@@ -34,6 +35,7 @@ public class Snake {
         this.name = name;
         snake = new ArrayList<Rect2d>();
         history = new ArrayList<SquareCoords>();
+        bounds = new Rect2d(0, 0, SnakePanel.getScreenWidth(), SnakePanel.getScreenHeight());
         setHeadLoc();
         snakeWidth = 10;
         moving = false;
@@ -161,6 +163,18 @@ public class Snake {
             }
         }
 
+        if (Rect2d.intersect(bounds, this.getHead()) == Rect2d.EmptyRect) {
+            this.die();
+        }
+
+        for (int i = 1; i < SnakePanel.snakes.length; i++) {
+            for (int j = 0; j < SnakePanel.snakes[i].getSSize(); j++) {
+                if (Rect2d.intersect(SnakePanel.snakes[i].getRect(j), this.getHead()) != Rect2d.EmptyRect) {
+                    this.die();
+                }
+            }
+        }
+
         for (int i = 0; i < this.getSSize(); i++) {
             this.setH(i, new SquareCoords((int) this.getRect(i).getLeft(), (int) this.getRect(i).getTop()));
         }
@@ -253,19 +267,19 @@ public class Snake {
          }*/
         switch (this.dir) {
             case Left:
-                this.getHead().translate(-this.getWidth(), 0.0);
+                this.getHead().translate(-SnakePanel.PLAYER_SPEED_MULTIPLIER*this.getWidth(), 0.0);
                 break;
 
             case Right:
-                this.getHead().translate(this.getWidth(), 0.0);
+                this.getHead().translate(SnakePanel.PLAYER_SPEED_MULTIPLIER*this.getWidth(), 0.0);
                 break;
 
             case Down:
-                this.getHead().translate(0.0, this.getWidth());
+                this.getHead().translate(0.0, SnakePanel.PLAYER_SPEED_MULTIPLIER*this.getWidth());
                 break;
 
             case Up:
-                this.getHead().translate(0.0, -this.getWidth());
+                this.getHead().translate(0.0, -SnakePanel.PLAYER_SPEED_MULTIPLIER*this.getWidth());
                 break;
         }
 

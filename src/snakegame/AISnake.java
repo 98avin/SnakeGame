@@ -205,19 +205,19 @@ public class AISnake extends Snake {
 
         switch (this.dir) {
             case Left:
-                this.getHead().translate(-this.getWidth(), 0.0);
+                this.getHead().translate(-SnakePanel.AI1_SPEED_MULTIPLIER*this.getWidth(), 0.0);
                 break;
 
             case Right:
-                this.getHead().translate(this.getWidth(), 0.0);
+                this.getHead().translate(SnakePanel.AI1_SPEED_MULTIPLIER*this.getWidth(), 0.0);
                 break;
 
             case Down:
-                this.getHead().translate(0.0, this.getWidth());
+                this.getHead().translate(0.0, SnakePanel.AI1_SPEED_MULTIPLIER*this.getWidth());
                 break;
 
             case Up:
-                this.getHead().translate(0.0, -this.getWidth());
+                this.getHead().translate(0.0, -SnakePanel.AI1_SPEED_MULTIPLIER*this.getWidth());
                 break;
         }
         vision = new Rect2d(this.getHead().getCenter().x - 500, this.getHead().getCenter().y - 500, 1000, 1000);
