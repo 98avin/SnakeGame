@@ -25,7 +25,7 @@ import javax.swing.*;
  */
 public class SnakePanel extends JPanel {
 
-    public static boolean starfield = false;
+    public static boolean starfield = true;
 
     public static boolean updateornaw = true;
     // <<DATA>>
@@ -71,7 +71,7 @@ public class SnakePanel extends JPanel {
     public static final int WINNING_PLAYERSNAKE_WIDTH = 10;
     public static final int LOSING_PLAYERSNAKE_WIDTH = 10;
     
-    public static final int PLAYER_SPEED_MULTIPLIER = 1;
+    public static final int DEFAULT_SPEED_MULTIPLIER = 1;
     public static final int AI1_SPEED_MULTIPLIER = 1;
     public static final int AI2_SPEED_MULTIPLIER = 1;
 
