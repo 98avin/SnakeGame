@@ -30,7 +30,7 @@ public class Snake {
 
     public static final int DEFAULT_SPEED_MULTIPLIER = 1;
     public static final int AI1_SPEED_MULTIPLIER = 1;
-    public static final int AI2_SPEED_MULTIPLIER = 1;
+    public static final int AI2_SPEED_MULTIPLIER = 2;
 
     public Snake(Color color, String name) {
         this.dir = Direction.Right;

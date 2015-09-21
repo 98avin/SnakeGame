@@ -47,7 +47,7 @@ public class SnakePanel extends JPanel {
     public static final Color FOOD_COLOR = Color.white;
     public static final Color PLAYER_SNAKE_COLOR = Color.blue;
     public static final Color AI_SNAKE_COLOR = Color.red;
-    public static final int NUMBER_OF_FOOD = 1;
+    public static final int NUMBER_OF_FOOD = 10;
 
     public static double WINDOW_WIDTH = 800.0;
     public static double WINDOW_HEIGHT = 800.0;
@@ -58,20 +58,20 @@ public class SnakePanel extends JPanel {
     double snakeWidth;
 
     public static final int NUM_PLAYERS = 1;
-    public static final int NUM_AI_M1000 = 1;
-    public static final int NUM_AI_M2000 = 1;
+    public static final int NUM_AI_M1000 = 0;
+    public static final int NUM_AI_M2000 = 1000;
     private final int[] NUMBER_SNAKES = {NUM_PLAYERS, NUM_AI_M1000, NUM_AI_M2000};
     public static Snake snakes[] = new Snake[(NUM_PLAYERS + NUM_AI_M1000 + NUM_AI_M2000)];
     //Just a large list of names for AI snakes.
     String[] modelName = {"Berninator", "Bern-OS", "Robo-Bernie", "Bernie-Prime", "Star Bern", "Telebernie", "iBernie", "B.E.R.N.I.E", "Bern Machine", "B3RN1E"};
 
-    public static final int WINNING_AI1SNAKE_WIDTH = 10;
+    public static final int WINNING_AI1SNAKE_WIDTH = 5;
     public static final int LOSING_AI1SNAKE_WIDTH = 5;
 
-    public static final int WINNING_AI2SNAKE_WIDTH = 10;
-    public static final int LOSING_AI2SNAKE_WIDTH = 7;
+    public static final int WINNING_AI2SNAKE_WIDTH = 3;
+    public static final int LOSING_AI2SNAKE_WIDTH = 3;
 
-    public static final int WINNING_PLAYERSNAKE_WIDTH = 10;
+    public static final int WINNING_PLAYERSNAKE_WIDTH = 9;
     public static final int LOSING_PLAYERSNAKE_WIDTH = 9;
 
     public boolean music;
