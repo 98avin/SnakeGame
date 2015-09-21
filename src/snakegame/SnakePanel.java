@@ -59,7 +59,7 @@ public class SnakePanel extends JPanel {
 
     public static final int NUM_PLAYERS = 1;
     public static final int NUM_AI_M1000 = 0;
-    public static final int NUM_AI_M2000 = 1000;
+    public static final int NUM_AI_M2000 = 100;
     private final int[] NUMBER_SNAKES = {NUM_PLAYERS, NUM_AI_M1000, NUM_AI_M2000};
     public static Snake snakes[] = new Snake[(NUM_PLAYERS + NUM_AI_M1000 + NUM_AI_M2000)];
     //Just a large list of names for AI snakes.

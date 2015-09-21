@@ -34,13 +34,14 @@ public class AISnake2 extends Snake {
         target = Rect2d.EmptyRect;
     }
 
-    @Override
+    //DISABLE COMMENTS TO DIS-ENGAGE RANDOM SPAWNING
+    /*@Override
     public void setHeadLoc() {
         startX = (double) random_number(0, SnakePanel.getScreenWidth());
         startY = (double) random_number(0, SnakePanel.getScreenHeight());
         head = new Rect2d(500, 500, snakeWidth, snakeWidth);
         this.addS(head);
-    }
+    }*/
 
     Rect2d scan() {// find the closest food
         double tempDist;
