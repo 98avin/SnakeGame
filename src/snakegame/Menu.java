@@ -280,7 +280,7 @@ public class Menu {
         AI1.setBounds((int) ((SnakePanel.getScreenWidth()) / 2) - 150, MUSIC_BUTTON1_YLOCATION, 250, 100);
         tempList.add(AI1);
 
-        final JLabel NUM_AI1 = new JLabel(Integer.toString(sp.NUM_AI_M1000));
+        final JLabel NUM_AI1 = new JLabel(Integer.toString(sp.NUM_AI1));
         NUM_AI1.setForeground(Color.white);
         NUM_AI1.setFont(fontLoader(20F));
         NUM_AI1.setLayout(null);
@@ -293,8 +293,8 @@ public class Menu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //sp.NUM_AI_M1000++;
-                System.out.println(sp.NUM_AI_M1000);
-                NUM_AI1.setText(Integer.toString(sp.NUM_AI_M1000));
+                System.out.println(sp.NUM_AI1);
+                NUM_AI1.setText(Integer.toString(sp.NUM_AI1));
             }
         });
         tempList.add(plusAI);
@@ -304,9 +304,9 @@ public class Menu {
         minusAI.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (sp.NUM_AI_M1000 != 0) {
+                if (sp.NUM_AI1 != 0) {
                     //sp.NUM_AI_M1000--;
-                    NUM_AI1.setText(Integer.toString(sp.NUM_AI_M1000));
+                    NUM_AI1.setText(Integer.toString(sp.NUM_AI1));
                 }
             }
         });

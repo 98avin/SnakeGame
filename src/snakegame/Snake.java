@@ -7,7 +7,6 @@ package snakegame;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import static snakegame.SnakePanel.random_number;
 
 /**
  *
@@ -28,20 +27,20 @@ public class Snake {
     String name;
     double startX, startY;
 
-    public static final int DEFAULT_SPEED_MULTIPLIER = 1;
+    public static final int PLAYER_SPEED_MULTIPLIER = 1;
     public static final int AI1_SPEED_MULTIPLIER = 1;
-    public static final int AI2_SPEED_MULTIPLIER = 2;
-    
-    public static final boolean DEFAULT_RANDOM_SPAWN_TOGGLE = true;
+    public static final int AI2_SPEED_MULTIPLIER = 1;
+
+    public static final boolean PLAYER_RANDOM_SPAWN_TOGGLE = true;
     public static final boolean AI1_RANDOM_SPAWN_TOGGLE = true;
     public static final boolean AI2_RANDOM_SPAWN_TOGGLE = true;
-    
-    public static final int DEFAULT_NON_RANDOM_SPAWN_X = 250;
-    public static final int DEFAULT_NON_RANDOM_SPAWN_Y = 250;
-    
+
+    public static final int PLAYER_NON_RANDOM_SPAWN_X = 250;
+    public static final int PLAYER_NON_RANDOM_SPAWN_Y = 250;
+
     public static final int AI1_NON_RANDOM_SPAWN_X = 500;
     public static final int AI1_NON_RANDOM_SPAWN_Y = 500;
-    
+
     public static final int AI2_NON_RANDOM_SPAWN_X = 750;
     public static final int AI2_NON_RANDOM_SPAWN_Y = 750;
 
@@ -51,7 +50,7 @@ public class Snake {
         this.name = name;
         snake = new ArrayList<Rect2d>();
         history = new ArrayList<SquareCoords>();
-        bounds = new Rect2d(0, 0, SnakePanel.getScreenWidth(), SnakePanel.getScreenHeight());
+        bounds = new Rect2d(0, 0, SnakePanel.WINDOW_WIDTH, SnakePanel.WINDOW_HEIGHT);
         setHeadLoc();
         snakeWidth = 10;
         moving = false;
@@ -60,15 +59,14 @@ public class Snake {
     }
 
     public void setHeadLoc() {
-        if(DEFAULT_RANDOM_SPAWN_TOGGLE){
-        startX = (double) random_number(10, SnakePanel.getScreenWidth()-10);
-        startY = (double) random_number(10, SnakePanel.getScreenHeight()-10);
-        head = new Rect2d(startX, startY, snakeWidth, snakeWidth);
-        this.addS(head);
-        }
-        else{
-        head = new Rect2d(DEFAULT_NON_RANDOM_SPAWN_X, DEFAULT_NON_RANDOM_SPAWN_Y, snakeWidth, snakeWidth);
-        this.addS(head);
+        if (PLAYER_RANDOM_SPAWN_TOGGLE) {
+            startX = (double) random_number(10, SnakePanel.getScreenWidth() - 10);
+            startY = (double) random_number(10, SnakePanel.getScreenHeight() - 10);
+            head = new Rect2d(startX, startY, snakeWidth, snakeWidth);
+            this.addS(head);
+        } else {
+            head = new Rect2d(PLAYER_NON_RANDOM_SPAWN_X, PLAYER_NON_RANDOM_SPAWN_Y, snakeWidth, snakeWidth);
+            this.addS(head);
         }
     }
 
@@ -289,19 +287,19 @@ public class Snake {
          }*/
         switch (this.dir) {
             case Left:
-                this.getHead().translate(-DEFAULT_SPEED_MULTIPLIER * this.getWidth(), 0.0);
+                this.getHead().translate(-PLAYER_SPEED_MULTIPLIER * this.getWidth(), 0.0);
                 break;
 
             case Right:
-                this.getHead().translate(DEFAULT_SPEED_MULTIPLIER * this.getWidth(), 0.0);
+                this.getHead().translate(PLAYER_SPEED_MULTIPLIER * this.getWidth(), 0.0);
                 break;
 
             case Down:
-                this.getHead().translate(0.0, DEFAULT_SPEED_MULTIPLIER * this.getWidth());
+                this.getHead().translate(0.0, PLAYER_SPEED_MULTIPLIER * this.getWidth());
                 break;
 
             case Up:
-                this.getHead().translate(0.0, -DEFAULT_SPEED_MULTIPLIER * this.getWidth());
+                this.getHead().translate(0.0, -PLAYER_SPEED_MULTIPLIER * this.getWidth());
                 break;
         }
 
@@ -324,5 +322,15 @@ public class Snake {
             this.history.remove(i);
         }
         this.setS(0, head);
+    }
+
+    public static int random_number(int low, int high) {
+        double rand = Math.random(); //generates a random number
+        int rand2 = (int) (rand * 100000); //casts the random number as int
+        int interval = high - low;//interval in which to put the number ie 1-100
+        rand2 = rand2 % interval;//puts the number into the interval
+        rand2 = rand2 + low;//acertains that the number is above the minimum
+        int randNum = rand2;//assigns the random number's value
+        return randNum;//returns the random number's value
     }
 }

@@ -8,13 +8,12 @@ package snakegame;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collections;
-import static snakegame.SnakePanel.random_number;
 
 /**
  *
  * @author skinnnero5
  */
-public class AISnake extends Snake {
+public class AISnake1 extends Snake {
 
     double x1;
     double x2;
@@ -29,7 +28,7 @@ public class AISnake extends Snake {
     static ArrayList<Integer> whichfood = new ArrayList<Integer>();
     Rect2d targettemp;
 
-    public AISnake(Color color, String name) {
+    public AISnake1(Color color, String name) {
         super(color, name);
         isPathing = false;
         isPlayer = false;
@@ -41,18 +40,17 @@ public class AISnake extends Snake {
 
     @Override
     public void setHeadLoc() {
-        if(AI1_RANDOM_SPAWN_TOGGLE){
-        startX = (double) random_number(10, SnakePanel.getScreenWidth()-10);
-        startY = (double) random_number(10, SnakePanel.getScreenHeight()-10);
-        head = new Rect2d(startX, startY, snakeWidth, snakeWidth);
-        this.addS(head);
-        }
-        else{
-        head = new Rect2d(AI1_NON_RANDOM_SPAWN_X, AI1_NON_RANDOM_SPAWN_Y, snakeWidth, snakeWidth);
-        this.addS(head);
+        if (AI1_RANDOM_SPAWN_TOGGLE) {
+            startX = (double) random_number(10, SnakePanel.getScreenWidth() - 10);
+            startY = (double) random_number(10, SnakePanel.getScreenHeight() - 10);
+            head = new Rect2d(startX, startY, snakeWidth, snakeWidth);
+            this.addS(head);
+        } else {
+            head = new Rect2d(AI1_NON_RANDOM_SPAWN_X, AI1_NON_RANDOM_SPAWN_Y, snakeWidth, snakeWidth);
+            this.addS(head);
         }
     }
-    
+
     void scan() {
 
         //System.out.println("--------------------Scanning--------------------");
@@ -131,8 +129,9 @@ public class AISnake extends Snake {
     boolean isFood() {
         if (fooddist.isEmpty()) {
             return false;
+        } else {
+            return true;
         }
-        return true;
     }
 
     double findDistance(Rect2d target) {
@@ -209,19 +208,19 @@ public class AISnake extends Snake {
 
         switch (this.dir) {
             case Left:
-                this.getHead().translate(-AI1_SPEED_MULTIPLIER*this.getWidth(), 0.0);
+                this.getHead().translate(-AI1_SPEED_MULTIPLIER * this.getWidth(), 0.0);
                 break;
 
             case Right:
-                this.getHead().translate(AI1_SPEED_MULTIPLIER*this.getWidth(), 0.0);
+                this.getHead().translate(AI1_SPEED_MULTIPLIER * this.getWidth(), 0.0);
                 break;
 
             case Down:
-                this.getHead().translate(0.0, AI1_SPEED_MULTIPLIER*this.getWidth());
+                this.getHead().translate(0.0, AI1_SPEED_MULTIPLIER * this.getWidth());
                 break;
 
             case Up:
-                this.getHead().translate(0.0, -AI1_SPEED_MULTIPLIER*this.getWidth());
+                this.getHead().translate(0.0, -AI1_SPEED_MULTIPLIER * this.getWidth());
                 break;
         }
         vision = new Rect2d(this.getHead().getCenter().x - 500, this.getHead().getCenter().y - 500, 1000, 1000);
@@ -230,4 +229,13 @@ public class AISnake extends Snake {
         this.updateSize();
     }
 
+    public static int random_number(int low, int high) {
+        double rand = Math.random(); //generates a random number
+        int rand2 = (int) (rand * 100000); //casts the random number as int
+        int interval = high - low;//interval in which to put the number ie 1-100
+        rand2 = rand2 % interval;//puts the number into the interval
+        rand2 = rand2 + low;//acertains that the number is above the minimum
+        int randNum = rand2;//assigns the random number's value
+        return randNum;//returns the random number's value
+    }
 }

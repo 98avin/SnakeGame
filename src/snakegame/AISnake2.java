@@ -6,7 +6,6 @@
 package snakegame;
 
 import java.awt.Color;
-import static snakegame.SnakePanel.random_number;
 
 /**
  *
@@ -287,5 +286,16 @@ public class AISnake2 extends Snake {
         this.updateSize();
 
     }
+    
+      public static int random_number(int low, int high) {
+        double rand = Math.random(); //generates a random number
+        int rand2 = (int) (rand * 100000); //casts the random number as int
+        int interval = high - low;//interval in which to put the number ie 1-100
+        rand2 = rand2 % interval;//puts the number into the interval
+        rand2 = rand2 + low;//acertains that the number is above the minimum
+        int randNum = rand2;//assigns the random number's value
+        return randNum;//returns the random number's value
+    }
+
 
 }

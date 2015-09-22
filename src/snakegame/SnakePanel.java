@@ -27,30 +27,29 @@ public class SnakePanel extends JPanel {
 
     //**********************CONSTANTS*************************
     ////GAMEPLAY
-
     public static boolean starfield = true;
     public static final int MUSIC_THRESHOLD = 0;
     public static String[] musicArray = {"sandstorm1.wav", "remix10.wav", "MEGA_MAN.wav", "9ts.wav"};
     /////////////////////////////////////////////////////////////////////////////////////////
     ////SNAKE WIDTH
-    public static final int WINNING_AI1SNAKE_WIDTH = 5;
-    public static final int LOSING_AI1SNAKE_WIDTH = 5;
+    public static final int WINNING_PLAYERSNAKE_WIDTH = 9;
+    public static final int LOSING_PLAYERSNAKE_WIDTH = 9;
+    
+    public static final int WINNING_AI1SNAKE_WIDTH = 3;
+    public static final int LOSING_AI1SNAKE_WIDTH = 3;
 
     public static final int WINNING_AI2SNAKE_WIDTH = 3;
     public static final int LOSING_AI2SNAKE_WIDTH = 3;
-
-    public static final int WINNING_PLAYERSNAKE_WIDTH = 9;
-    public static final int LOSING_PLAYERSNAKE_WIDTH = 9;
     /////////////////////////////////////////////////////////////////////////////////////////
     ////# OF FOOD AND SNAKES
     public static final int NUMBER_OF_FOOD = 10;
     
     public static final int NUM_PLAYERS = 1;
-    public static final int NUM_AI_M1000 = 10;
-    public static final int NUM_AI_M2000 = 100;
+    public static final int NUM_AI1 = 50;
+    public static final int NUM_AI2 = 50;
     
-    private final int[] NUMBER_SNAKES = {NUM_PLAYERS, NUM_AI_M1000, NUM_AI_M2000};
-    public static Snake snakes[] = new Snake[(NUM_PLAYERS + NUM_AI_M1000 + NUM_AI_M2000)];
+    private final int[] NUMBER_SNAKES = {NUM_PLAYERS, NUM_AI1, NUM_AI2};
+    public static Snake snakes[] = new Snake[(NUM_PLAYERS + NUM_AI1 + NUM_AI2)];
     String[] modelName = {"Berninator", "Bern-OS", "Robo-Bernie", "Bernie-Prime", "Star Bern", "Telebernie", "iBernie", "B.E.R.N.I.E", "Bern Machine", "B3RN1E"};
     /////////////////////////////////////////////////////////////////////////////////////////
     ////OBJECT COLORS
@@ -220,10 +219,10 @@ public class SnakePanel extends JPanel {
                         snakes[i] = new Snake(PLAYER_SNAKE_COLOR, "Bernie");
                         break;
                     case 1:
-                        snakes[NUM_PLAYERS + i] = new AISnake(AI_SNAKE_COLOR, (modelName[random_number(0, this.modelName.length)] + " " + random_number(0, 9000)));
+                        snakes[NUM_PLAYERS + i] = new AISnake1(AI_SNAKE_COLOR, (modelName[random_number(0, this.modelName.length)] + " " + random_number(0, 9000)));
                         break;
                     case 2:
-                        snakes[NUM_PLAYERS + NUM_AI_M1000 + i] = new AISnake2(AI_SNAKE_COLOR, (modelName[random_number(0, this.modelName.length)] + " " + random_number(0, 9000)));
+                        snakes[NUM_PLAYERS + NUM_AI1 + i] = new AISnake2(AI_SNAKE_COLOR, (modelName[random_number(0, this.modelName.length)] + " " + random_number(0, 9000)));
                         break;
                 }
             }
@@ -475,10 +474,10 @@ public class SnakePanel extends JPanel {
                     if (i < NUM_PLAYERS) {
                         snakes[i].snakeWidth = WINNING_PLAYERSNAKE_WIDTH;
                         fillRect(g, snakes[i].getRect(j), COLOR_RAINBOW_CYCLE);
-                    } else if (i < NUM_PLAYERS + NUM_AI_M1000) {
+                    } else if (i < NUM_PLAYERS + NUM_AI1) {
                         snakes[i].snakeWidth = WINNING_AI1SNAKE_WIDTH;
                         fillRect(g, snakes[i].getRect(j), COLOR_RAINBOW_CYCLE);
-                    } else if (i < NUM_PLAYERS + NUM_AI_M1000 + NUM_AI_M2000) {
+                    } else if (i < NUM_PLAYERS + NUM_AI1 + NUM_AI2) {
                         snakes[i].snakeWidth = WINNING_AI2SNAKE_WIDTH;
                         fillRect(g, snakes[i].getRect(j), COLOR_RAINBOW_CYCLE);
                     }
@@ -486,10 +485,10 @@ public class SnakePanel extends JPanel {
                     if (i < NUM_PLAYERS) {
                         snakes[i].snakeWidth = LOSING_PLAYERSNAKE_WIDTH;
                         fillRect(g, snakes[i].getRect(j), snakes[i].getColor());
-                    } else if (i < NUM_PLAYERS + NUM_AI_M1000) {
+                    } else if (i < NUM_PLAYERS + NUM_AI1) {
                         snakes[i].snakeWidth = LOSING_AI1SNAKE_WIDTH;
                         fillRect(g, snakes[i].getRect(j), snakes[i].getColor());
-                    } else if (i < NUM_PLAYERS + NUM_AI_M1000 + NUM_AI_M2000) {
+                    } else if (i < NUM_PLAYERS + NUM_AI1 + NUM_AI2) {
                         snakes[i].snakeWidth = LOSING_AI2SNAKE_WIDTH;
                         fillRect(g, snakes[i].getRect(j), snakes[i].getColor());
                     }
@@ -592,8 +591,8 @@ public class SnakePanel extends JPanel {
     static void defineScreen() {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); //sets window to fit screen
 
-        WINDOW_WIDTH = screenSize.getWidth() - 10;
-        WINDOW_HEIGHT = screenSize.getHeight() - 72;
+        WINDOW_WIDTH = screenSize.getWidth();
+        WINDOW_HEIGHT = screenSize.getHeight();
     }
 
     public static int getScreenWidth() {
