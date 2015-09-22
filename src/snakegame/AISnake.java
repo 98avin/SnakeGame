@@ -6,9 +6,9 @@
 package snakegame;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Collections;
+import static snakegame.SnakePanel.random_number;
 
 /**
  *
@@ -39,6 +39,20 @@ public class AISnake extends Snake {
         randomCooldown = 0;
     }
 
+    @Override
+    public void setHeadLoc() {
+        if(AI1_RANDOM_SPAWN_TOGGLE){
+        startX = (double) random_number(10, SnakePanel.getScreenWidth()-10);
+        startY = (double) random_number(10, SnakePanel.getScreenHeight()-10);
+        head = new Rect2d(startX, startY, snakeWidth, snakeWidth);
+        this.addS(head);
+        }
+        else{
+        head = new Rect2d(AI1_NON_RANDOM_SPAWN_X, AI1_NON_RANDOM_SPAWN_Y, snakeWidth, snakeWidth);
+        this.addS(head);
+        }
+    }
+    
     void scan() {
 
         //System.out.println("--------------------Scanning--------------------");
@@ -145,16 +159,6 @@ public class AISnake extends Snake {
             }
         }
         return 26812334;//SHOULDN'T EVER GET HERE
-    }
-
-    public static int random_number(int low, int high) {
-        double rand = Math.random(); //generates a random number
-        int rand2 = (int) (rand * 100000); //casts the random number as int
-        int interval = high - low;//interval in which to put the number ie 1-100
-        rand2 = rand2 % interval;//puts the number into the interval
-        rand2 = rand2 + low;//acertains that the number is above the minimum
-        int randNum = rand2;//assigns the random number's value
-        return randNum;//returns the random number's value
     }
 
     @Override

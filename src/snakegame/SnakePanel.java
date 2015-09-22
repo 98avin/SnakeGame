@@ -25,13 +25,41 @@ import javax.swing.*;
  */
 public class SnakePanel extends JPanel {
 
+    //**********************CONSTANTS*************************
+    ////GAMEPLAY
+
     public static boolean starfield = true;
+    public static final int MUSIC_THRESHOLD = 0;
+    public static String[] musicArray = {"sandstorm1.wav", "remix10.wav", "MEGA_MAN.wav", "9ts.wav"};
+    /////////////////////////////////////////////////////////////////////////////////////////
+    ////SNAKE WIDTH
+    public static final int WINNING_AI1SNAKE_WIDTH = 5;
+    public static final int LOSING_AI1SNAKE_WIDTH = 5;
 
-    public static boolean updateornaw = true;
-    // <<DATA>>
-    int colorOrder;
-    boolean colorDecreaseFlag;
+    public static final int WINNING_AI2SNAKE_WIDTH = 3;
+    public static final int LOSING_AI2SNAKE_WIDTH = 3;
 
+    public static final int WINNING_PLAYERSNAKE_WIDTH = 9;
+    public static final int LOSING_PLAYERSNAKE_WIDTH = 9;
+    /////////////////////////////////////////////////////////////////////////////////////////
+    ////# OF FOOD AND SNAKES
+    public static final int NUMBER_OF_FOOD = 10;
+    
+    public static final int NUM_PLAYERS = 1;
+    public static final int NUM_AI_M1000 = 10;
+    public static final int NUM_AI_M2000 = 100;
+    
+    private final int[] NUMBER_SNAKES = {NUM_PLAYERS, NUM_AI_M1000, NUM_AI_M2000};
+    public static Snake snakes[] = new Snake[(NUM_PLAYERS + NUM_AI_M1000 + NUM_AI_M2000)];
+    String[] modelName = {"Berninator", "Bern-OS", "Robo-Bernie", "Bernie-Prime", "Star Bern", "Telebernie", "iBernie", "B.E.R.N.I.E", "Bern Machine", "B3RN1E"};
+    /////////////////////////////////////////////////////////////////////////////////////////
+    ////OBJECT COLORS
+    public static final Color FOOD_COLOR = Color.white;
+    public static final Color PLAYER_SNAKE_COLOR = Color.blue;
+    public static final Color AI_SNAKE_COLOR = Color.red;
+    public static final Color DEFAULT_BACKGROUND_COLOR = Color.black;
+    /////////////////////////////////////////////////////////////////////////////////////////
+    //////RANDOM COLOR GENERATOR PREFERENCES
     public static Color COLOR_RAINBOW_CYCLE = new Color(0, 0, 0);
     public static Color COLOR_RAINBOW_CYCLE2 = new Color(0, 0, 0);
 
@@ -39,15 +67,12 @@ public class SnakePanel extends JPanel {
     public static final int MAX_COLOR_VALUE = 255;
     public static final int MIN_COLOR_VALUE = 0;
     public static final int COLOR_INCREMENT = 10;
+    /////////////////////////////////////////////////////////////////////////////////////////
+    //*********************************CONSTANTS END*****************************************
 
-    public static final Color DEFAULT_BACKGROUND_COLOR = Color.black;
-
-    public static final int MUSIC_THRESHOLD = 0;
-
-    public static final Color FOOD_COLOR = Color.white;
-    public static final Color PLAYER_SNAKE_COLOR = Color.blue;
-    public static final Color AI_SNAKE_COLOR = Color.red;
-    public static final int NUMBER_OF_FOOD = 10;
+    public static boolean updateornaw = true;
+    int colorOrder;
+    boolean colorDecreaseFlag;
 
     public static double WINDOW_WIDTH = 800.0;
     public static double WINDOW_HEIGHT = 800.0;
@@ -57,34 +82,13 @@ public class SnakePanel extends JPanel {
 
     double snakeWidth;
 
-    public static final int NUM_PLAYERS = 1;
-    public static final int NUM_AI_M1000 = 0;
-    public static final int NUM_AI_M2000 = 100;
-    private final int[] NUMBER_SNAKES = {NUM_PLAYERS, NUM_AI_M1000, NUM_AI_M2000};
-    public static Snake snakes[] = new Snake[(NUM_PLAYERS + NUM_AI_M1000 + NUM_AI_M2000)];
-    //Just a large list of names for AI snakes.
-    String[] modelName = {"Berninator", "Bern-OS", "Robo-Bernie", "Bernie-Prime", "Star Bern", "Telebernie", "iBernie", "B.E.R.N.I.E", "Bern Machine", "B3RN1E"};
-
-    public static final int WINNING_AI1SNAKE_WIDTH = 5;
-    public static final int LOSING_AI1SNAKE_WIDTH = 5;
-
-    public static final int WINNING_AI2SNAKE_WIDTH = 3;
-    public static final int LOSING_AI2SNAKE_WIDTH = 3;
-
-    public static final int WINNING_PLAYERSNAKE_WIDTH = 9;
-    public static final int LOSING_PLAYERSNAKE_WIDTH = 9;
-
     public boolean music;
-    public static String[] musicArray = {"sandstorm1.wav", "remix10.wav", "MEGA_MAN.wav", "9ts.wav"};
+    static AudioInputStream audioIn;
+    static Clip clip;
 
     public static ArrayList<Rect2d> food;
 
-    final double moveAccel = 1000.0;
     public static KeysPressed keysPressed;
-    static ImageIcon EXPLODE;
-
-    static AudioInputStream audioIn;
-    static Clip clip;
 
     static Menu menu;
 
@@ -393,12 +397,13 @@ public class SnakePanel extends JPanel {
                     Logger.getLogger(SnakePanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            //ENABLE FOR AI TESTING
             //g.setColor(Color.white);
             //g.drawLine((int) berninator.getHead().getCenter().x, (int) berninator.getHead().getCenter().y, (int) berninator.targettemp.getCenter().x, (int) berninator.targettemp.getCenter().y);
             //fillRect(g, bernie1.vision, Color.yellow);
             //fillRect(g, bernie1.pathX, Color.blue);
             //fillRect(g, bernie1.pathY, Color.red);
-            // Fill snake's body with colors
+            ///////////////////////
             moveStars(g);
             fillSnake(g);
 

@@ -6,6 +6,7 @@
 package snakegame;
 
 import java.awt.Color;
+import static snakegame.SnakePanel.random_number;
 
 /**
  *
@@ -34,14 +35,19 @@ public class AISnake2 extends Snake {
         target = Rect2d.EmptyRect;
     }
 
-    //DISABLE COMMENTS TO DIS-ENGAGE RANDOM SPAWNING
-    /*@Override
+    @Override
     public void setHeadLoc() {
-        startX = (double) random_number(0, SnakePanel.getScreenWidth());
-        startY = (double) random_number(0, SnakePanel.getScreenHeight());
-        head = new Rect2d(500, 500, snakeWidth, snakeWidth);
+        if(AI2_RANDOM_SPAWN_TOGGLE){
+        startX = (double) random_number(10, SnakePanel.getScreenWidth()-10);
+        startY = (double) random_number(10, SnakePanel.getScreenHeight()-10);
+        head = new Rect2d(startX, startY, snakeWidth, snakeWidth);
         this.addS(head);
-    }*/
+        }
+        else{
+        head = new Rect2d(AI2_NON_RANDOM_SPAWN_X, AI2_NON_RANDOM_SPAWN_Y, snakeWidth, snakeWidth);
+        this.addS(head);
+        }
+    }
 
     Rect2d scan() {// find the closest food
         double tempDist;
@@ -202,16 +208,6 @@ public class AISnake2 extends Snake {
             default:
                 System.out.println("I AM ERROR");
         }
-    }
-
-    public static int random_number(int low, int high) {
-        double rand = Math.random(); //generates a random number
-        int rand2 = (int) (rand * 100000); //casts the random number as int
-        int interval = high - low;//interval in which to put the number ie 1-100
-        rand2 = rand2 % interval;//puts the number into the interval
-        rand2 = rand2 + low;//acertains that the number is above the minimum
-        int randNum = rand2;//assigns the random number's value
-        return randNum;//returns the random number's value
     }
 
     @Override

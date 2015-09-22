@@ -31,6 +31,19 @@ public class Snake {
     public static final int DEFAULT_SPEED_MULTIPLIER = 1;
     public static final int AI1_SPEED_MULTIPLIER = 1;
     public static final int AI2_SPEED_MULTIPLIER = 2;
+    
+    public static final boolean DEFAULT_RANDOM_SPAWN_TOGGLE = true;
+    public static final boolean AI1_RANDOM_SPAWN_TOGGLE = true;
+    public static final boolean AI2_RANDOM_SPAWN_TOGGLE = true;
+    
+    public static final int DEFAULT_NON_RANDOM_SPAWN_X = 250;
+    public static final int DEFAULT_NON_RANDOM_SPAWN_Y = 250;
+    
+    public static final int AI1_NON_RANDOM_SPAWN_X = 500;
+    public static final int AI1_NON_RANDOM_SPAWN_Y = 500;
+    
+    public static final int AI2_NON_RANDOM_SPAWN_X = 750;
+    public static final int AI2_NON_RANDOM_SPAWN_Y = 750;
 
     public Snake(Color color, String name) {
         this.dir = Direction.Right;
@@ -47,10 +60,16 @@ public class Snake {
     }
 
     public void setHeadLoc() {
+        if(DEFAULT_RANDOM_SPAWN_TOGGLE){
         startX = (double) random_number(10, SnakePanel.getScreenWidth()-10);
         startY = (double) random_number(10, SnakePanel.getScreenHeight()-10);
         head = new Rect2d(startX, startY, snakeWidth, snakeWidth);
         this.addS(head);
+        }
+        else{
+        head = new Rect2d(DEFAULT_NON_RANDOM_SPAWN_X, DEFAULT_NON_RANDOM_SPAWN_Y, snakeWidth, snakeWidth);
+        this.addS(head);
+        }
     }
 
     String getName() {
