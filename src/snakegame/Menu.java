@@ -249,8 +249,8 @@ public class Menu {
             public void actionPerformed(ActionEvent e) {
                 sp.removeAll();
                 sp.requestFocusInWindow();
-                for (int i = 0; i < optArray.length; i++) {
-                    sp.add(optArray[i]);
+                for (Component optArray1 : optArray) {
+                    sp.add(optArray1);
                 }
                 visibleArray = optArray;
             }

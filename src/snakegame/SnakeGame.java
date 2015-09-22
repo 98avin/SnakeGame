@@ -109,8 +109,8 @@ public class SnakeGame {
     public static void updateScoreboard() {
         //FLICKERS
         statusLabel.setText("");
-        for (int i = 0; i < SnakePanel.snakes.length; i++) {
-            statusLabel.setText(statusLabel.getText() + " " + snakePanel.snakes[i].getName() + ":" + snakePanel.snakes[i].getScore());
+        for (Snake snake : SnakePanel.snakes) {
+            statusLabel.setText(statusLabel.getText() + " " + snake.getName() + ":" + snake.getScore());
         }
     }
 

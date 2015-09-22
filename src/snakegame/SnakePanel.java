@@ -244,8 +244,8 @@ public class SnakePanel extends JPanel {
                 }
             }
         }
-        for (int i = 0; i < snakes.length; i++) {
-            buildSnake(snakes[i]);
+        for (Snake snake : snakes) {
+            buildSnake(snake);
         }
     }
 
@@ -337,8 +337,8 @@ public class SnakePanel extends JPanel {
     public boolean checkLiving(Snake snake, Graphics g) {
         if (!snake.isLiving()) {
             //Convert snake to food
-            for (int i = 0; i < food.size(); i++) {
-                fillRect(g, food.get(i), FOOD_COLOR);
+            for (Rect2d food1 : food) {
+                fillRect(g, food1, FOOD_COLOR);
             }
             return true;
         }
@@ -347,8 +347,8 @@ public class SnakePanel extends JPanel {
 
     public boolean checkAllLiving(Snake[] snakes, Graphics g) {
         int temp = 0;
-        for (int i = 0; i < snakes.length; i++) {
-            if (checkLiving(snakes[i], g)) {
+        for (Snake snake : snakes) {
+            if (checkLiving(snake, g)) {
                 temp++;
             }
         }
@@ -381,8 +381,8 @@ public class SnakePanel extends JPanel {
         } else if (SnakeGame.state == SnakeGame.STATE.GAME) {
             if (checkLiving(snakes[0], g)) {
                 Menu.gameOver();
-                for (int i = 0; i < snakes.length; i++) {
-                    snakes[i].reset();
+                for (Snake snake : snakes) {
+                    snake.reset();
                 }
                 for (int i = 0; i < NUMBER_OF_FOOD; i++) {
                     food.add(new Rect2d(random_number(0, 1000), random_number(0, 500), 10, 10));
@@ -424,8 +424,8 @@ public class SnakePanel extends JPanel {
             fillSnake(g);
 
             //Draw food
-            for (int i = 0; i < food.size(); i++) {
-                fillRect(g, food.get(i), FOOD_COLOR);
+            for (Rect2d food1 : food) {
+                fillRect(g, food1, FOOD_COLOR);
             }
 
         }
@@ -475,8 +475,8 @@ public class SnakePanel extends JPanel {
 
     public boolean isBigger(Snake snake, int index) {
         int tempCount = 0;
-        for (int i = 0; i < snakes.length; i++) {
-            if (snake.getScore() > snakes[i].getScore()) {
+        for (Snake snake1 : snakes) {
+            if (snake.getScore() > snake1.getScore()) {
                 tempCount++;
             }
         }
@@ -516,8 +516,8 @@ public class SnakePanel extends JPanel {
 
     public void update() {
         if (updateornaw) {
-            for (int i = 0; i < snakes.length; i++) {
-                snakes[i].update();
+            for (Snake snake : snakes) {
+                snake.update();
             }
         }
     }

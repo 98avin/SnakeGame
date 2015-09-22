@@ -44,8 +44,8 @@ public class AISnake2 extends Snake {
     @Override
     public void setHeadLoc() {
         if(AI2_RANDOM_SPAWN_TOGGLE){
-        startX = (double) random_number(10, SnakePanel.getScreenWidth()-10);
-        startY = (double) random_number(10, SnakePanel.getScreenHeight()-10);
+        startX = (double) random_number(100, SnakePanel.getScreenWidth()-100);
+        startY = (double) random_number(100, SnakePanel.getScreenHeight()-100);
         head = new Rect2d(startX, startY, snakeWidth, snakeWidth);
         this.addS(head);
         }
