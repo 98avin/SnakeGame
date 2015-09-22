@@ -27,6 +27,13 @@ public class AISnake1 extends Snake {
     static ArrayList<Double> fooddist = new ArrayList<Double>();
     static ArrayList<Integer> whichfood = new ArrayList<Integer>();
     Rect2d targettemp;
+    
+    public static final int AI1_SPEED_MULTIPLIER = SnakePanel.AI1_SPEED_MULTIPLIER;
+    
+    public static final boolean AI1_RANDOM_SPAWN_TOGGLE = SnakePanel.AI1_RANDOM_SPAWN_TOGGLE;
+    
+    public static final int AI1_NON_RANDOM_SPAWN_X = SnakePanel.AI1_NON_RANDOM_SPAWN_X;
+    public static final int AI1_NON_RANDOM_SPAWN_Y = SnakePanel.AI1_NON_RANDOM_SPAWN_Y;
 
     public AISnake1(Color color, String name) {
         super(color, name);

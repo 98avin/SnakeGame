@@ -31,15 +31,32 @@ public class SnakePanel extends JPanel {
     public static final int MUSIC_THRESHOLD = 0;
     public static String[] musicArray = {"sandstorm1.wav", "remix10.wav", "MEGA_MAN.wav", "9ts.wav"};
     /////////////////////////////////////////////////////////////////////////////////////////
-    ////SNAKE WIDTH
-    public static final int WINNING_PLAYERSNAKE_WIDTH = 9;
-    public static final int LOSING_PLAYERSNAKE_WIDTH = 9;
+    ////SNAKE PROPERTIES
+    public static final int WINNING_PLAYERSNAKE_WIDTH = 7;
+    public static final int LOSING_PLAYERSNAKE_WIDTH = 7;
     
     public static final int WINNING_AI1SNAKE_WIDTH = 3;
     public static final int LOSING_AI1SNAKE_WIDTH = 3;
 
     public static final int WINNING_AI2SNAKE_WIDTH = 3;
     public static final int LOSING_AI2SNAKE_WIDTH = 3;
+    
+    public static final int PLAYER_SPEED_MULTIPLIER = 1;
+    public static final int AI1_SPEED_MULTIPLIER = 1;
+    public static final int AI2_SPEED_MULTIPLIER = 1;
+
+    public static final boolean PLAYER_RANDOM_SPAWN_TOGGLE = true;
+    public static final boolean AI1_RANDOM_SPAWN_TOGGLE = true;
+    public static final boolean AI2_RANDOM_SPAWN_TOGGLE = true;
+
+    public static final int PLAYER_NON_RANDOM_SPAWN_X = 250;
+    public static final int PLAYER_NON_RANDOM_SPAWN_Y = 250;
+
+    public static final int AI1_NON_RANDOM_SPAWN_X = 500;
+    public static final int AI1_NON_RANDOM_SPAWN_Y = 500;
+
+    public static final int AI2_NON_RANDOM_SPAWN_X = 750;
+    public static final int AI2_NON_RANDOM_SPAWN_Y = 750;
     /////////////////////////////////////////////////////////////////////////////////////////
     ////# OF FOOD AND SNAKES
     public static final int NUMBER_OF_FOOD = 10;

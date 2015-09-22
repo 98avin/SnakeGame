@@ -21,6 +21,13 @@ public class AISnake2 extends Snake {
 
     public static Color PATHING_COLOR = Color.red;
     public static Color NOT_PATHING_COLOR = Color.YELLOW;
+    
+    public static final int AI2_SPEED_MULTIPLIER = SnakePanel.AI2_SPEED_MULTIPLIER;
+    
+    public static final boolean AI2_RANDOM_SPAWN_TOGGLE = SnakePanel.AI2_RANDOM_SPAWN_TOGGLE;
+    
+    public static final int AI2_NON_RANDOM_SPAWN_X = SnakePanel.AI2_NON_RANDOM_SPAWN_X;
+    public static final int AI2_NON_RANDOM_SPAWN_Y = SnakePanel.AI2_NON_RANDOM_SPAWN_Y;
 
     public AISnake2(Color color, String name) {
         super(color, name);

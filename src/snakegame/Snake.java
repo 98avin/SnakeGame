@@ -27,22 +27,12 @@ public class Snake {
     String name;
     double startX, startY;
 
-    public static final int PLAYER_SPEED_MULTIPLIER = 1;
-    public static final int AI1_SPEED_MULTIPLIER = 1;
-    public static final int AI2_SPEED_MULTIPLIER = 1;
+    public static final int PLAYER_SPEED_MULTIPLIER = SnakePanel.PLAYER_SPEED_MULTIPLIER;
 
-    public static final boolean PLAYER_RANDOM_SPAWN_TOGGLE = true;
-    public static final boolean AI1_RANDOM_SPAWN_TOGGLE = true;
-    public static final boolean AI2_RANDOM_SPAWN_TOGGLE = true;
+    public static final boolean PLAYER_RANDOM_SPAWN_TOGGLE = SnakePanel.PLAYER_RANDOM_SPAWN_TOGGLE;
 
-    public static final int PLAYER_NON_RANDOM_SPAWN_X = 250;
-    public static final int PLAYER_NON_RANDOM_SPAWN_Y = 250;
-
-    public static final int AI1_NON_RANDOM_SPAWN_X = 500;
-    public static final int AI1_NON_RANDOM_SPAWN_Y = 500;
-
-    public static final int AI2_NON_RANDOM_SPAWN_X = 750;
-    public static final int AI2_NON_RANDOM_SPAWN_Y = 750;
+    public static final int PLAYER_NON_RANDOM_SPAWN_X = SnakePanel.PLAYER_NON_RANDOM_SPAWN_X;
+    public static final int PLAYER_NON_RANDOM_SPAWN_Y = SnakePanel.PLAYER_NON_RANDOM_SPAWN_Y;
 
     public Snake(Color color, String name) {
         this.dir = Direction.Right;
